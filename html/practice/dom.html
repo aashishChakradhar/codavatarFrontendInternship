@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Simple DOM example</title>
+    <style>
+      .highlight {
+        color: white;
+        background-color: black;
+        padding: 10px;
+        width: 250px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <section>
+      <img
+        src="dinosaur.png"
+        alt="A red Tyrannosaurus Rex: A two legged dinosaur standing upright like a human, with small arms, and a large head with lots of sharp teeth."
+      />
+      <p>Here we will add a link to the</p>
+      <a href="https://www.mozilla.org/">Mozilla homepage</a>
+    </section>
+    <section id="first">
+      <div id="second">
+        <button id="third">Click me</button>
+      </div>
+    </section>
+    <script>
+      const sect = document.querySelector("section");
+
+      const para = document.querySelector("p");
+
+      const paragh = document.createElement("p");
+      paragh.textContent = "hello world";
+      sect.appendChild(paragh);
+
+      para.style.color = "white";
+      para.style.backgroundColor = "black";
+      para.style.padding = "10px";
+      para.style.width = "250px";
+      para.style.textAlign = "center";
+
+      paragh.classList.add("highlight");
+
+      const first = document.querySelector("#first");
+      const second = document.querySelector("#second");
+      const third = document.querySelector("#third");
+
+      first.addEventListener("click", () => console.log("first clicked"));
+      second.addEventListener("click", (e) => {
+        e.stopPropagation();
+        console.log("second clicked");
+      });
+      third.addEventListener("click", () => console.log("third clicked"));
+    </script>
+  </body>
+</html>

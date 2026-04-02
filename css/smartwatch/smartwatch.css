@@ -1,0 +1,30 @@
+body {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  width: auto;
+  height: 100vh;
+  margin: 0;
+}
+
+main {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#container {
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 14px;
+  flex-flow: column nowrap;
+  padding: 18px;
+}
+
+#today {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 30px;
+}

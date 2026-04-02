@@ -1,0 +1,75 @@
+header {
+  /* background: fixed green; */
+  border: 2px solid black;
+  height: auto;
+  width: auto;
+  display: flex;
+  flex: row wrap;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 8px;
+  padding: 20px;
+  box-sizing: border-box;
+  background-color: honeydew;
+}
+.logo {
+  font-size: xx-large;
+  font-weight: 600;
+  align-items: start;
+  align-content: center;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+  /* border: 1px solid black; */
+  border-right: 2px solid firebrick;
+  padding: 0 10px;
+  text-transform: capitalize;
+  text-overflow: clip;
+  font-weight: 500;
+  font-size: 20px;
+  color: firebrick;
+}
+a:nth-last-child(1) {
+  border-right: none;
+}
+
+@media (min-width: 481px) and (max-width: 760px) {
+  header {
+    flex-direction: column;
+    width: auto;
+    height: auto;
+    gap: 15px;
+  }
+  a:nth-last-child(1) {
+    border: none;
+  }
+}
+
+@media (max-width: 480px) {
+  header {
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+  }
+  nav {
+    /* background-color: red; */
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    overflow: clip;
+  }
+  a {
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid firebrick;
+    align-content: center;
+  }
+  a:nth-last-child(1) {
+    border-bottom: 2px solid firebrick;
+  }
+}

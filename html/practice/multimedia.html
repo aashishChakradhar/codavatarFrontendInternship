@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <h1>Playing Youtube Video</h1>
+    <iframe
+      width="560"
+      height="315"
+      src="https://www.youtube.com/embed/iUtnZpzkbG8?si=zR-Mr_ajzZ6RnT1y?autoplay=1&muted=1"
+      title="YouTube video player"
+      frameborder="0"
+      allow="
+        accelerometer;
+        autoplay;
+        clipboard-write;
+        encrypted-media;
+        gyroscope;
+        picture-in-picture;
+        web-share;
+        muted;
+      "
+      referrerpolicy="strict-origin-when-cross-origin"
+      allowfullscreen
+    ></iframe>
+
+    <h1>Canvas</h1>
+    <canvas
+      id="myCanvas"
+      width="200"
+      height="200"
+      style="border: 2px solid black"
+    ></canvas>
+
+    <h1>SVG</h1>
+    <svg width="200" height="200" style="border: 2px solid black">
+      <circle
+        cx="100"
+        cy="100"
+        r="30"
+        stroke="yellow"
+        stroke-width="2"
+        fill="red"
+      ></circle>
+    </svg>
+
+    <svg width="400" height="400" style="border: 2px solid black">
+      <rect
+        x="30"
+        y="100"
+        height="100"
+        width="300"
+        fill="red"
+        stroke-width="4"
+        stroke="blue"
+      />
+    </svg>
+
+    <script>
+      var c = document.getElementById("myCanvas");
+      var ctx = c.getContext("2d");
+      ctx.beginPath();
+      ctx.arc(95, 50, 40, 0, 2 * Math.PI);
+      ctx.stroke();
+    </script>
+  </body>
+</html>

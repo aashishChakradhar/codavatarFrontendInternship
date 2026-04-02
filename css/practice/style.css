@@ -1,0 +1,17 @@
+.dropdown-container {
+  border: solid black;
+  width: fit-content;
+}
+.dropdown-content {
+  border: 1px solid black;
+  display: none;
+  box-shadow: 8px 4px 14px 0px;
+}
+
+.dropdown-container:hover .dropdown-content {
+  display: block;
+}
+ul {
+  list-style-type: none;
+  text-align: start;
+}

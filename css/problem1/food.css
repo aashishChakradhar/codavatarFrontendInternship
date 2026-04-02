@@ -1,0 +1,29 @@
+body {
+  display: flex;
+  flex-flow: column wrap;
+  text-align: center;
+}
+section {
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  padding: 50px;
+  gap: 40px;
+}
+#foodImg {
+  border-radius: 14px;
+}
+table {
+  border-collapse: collapse;
+}
+td,
+th {
+  padding: 8px 15px;
+  box-sizing: border-box;
+  text-align: start;
+  align-content: start;
+}
+.image-container {
+  text-align: center;
+  vertical-align: middle;
+}

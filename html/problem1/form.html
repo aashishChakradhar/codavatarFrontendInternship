@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Random_Form</title>
+    <link rel="stylesheet" href="../../css/problem1/form.css" />
+  </head>
+  <body>
+    <h1 style="text-align: center">Random Form</h1>
+    <form action="" autocomplete="on">
+      <fieldset>
+        <legend>Personal Information</legend>
+        <div class="form-section">
+          <div class="form-group">
+            <label for="fname">First Name:</label>
+            <input type="text" name="fname" id="fname" autofocus required />
+          </div>
+
+          <div class="form-group">
+            <label for="lname">Last Name:</label>
+            <input type="text" name="lname" id="lname" required />
+          </div>
+
+          <div class="form-group">
+            <label for="phone">Phone:</label>
+            <input
+              type="tel"
+              pattern="[9][7-8][0-9]{8}"
+              id="phone"
+              name="phone"
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="birthday">Birth Date:</label>
+            <input
+              type="datetime-local"
+              name="birthday"
+              id="birthday"
+              max="2018-01-01T00:01"
+              required
+            />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Temporary Address</legend>
+
+        <div class="form-section">
+          <div class="form-group">
+            <label for="t_country">Country:</label>
+            <input
+              type="text"
+              name="t_country"
+              id="t_country"
+              value="Nepal"
+              disabled
+            />
+            <datalist id="temp_province">
+              <option value="Bagmati"></option>
+              <option value="Gandaki"></option>
+              <option value="Karnali"></option>
+              <option value="Koshi"></option>
+              <option value="Lumbini"></option>
+              <option value="Madesh"></option>
+              <option value="Sudurpashchim"></option>
+            </datalist>
+          </div>
+
+          <div class="form-group">
+            <label for="t_province">Province:</label>
+            <input list="temp_province" name="t_province" id="t_province" />
+          </div>
+
+          <div class="form-group">
+            <label for="t_district">District:</label>
+            <input type="text" name="t_district" id="t_district" />
+          </div>
+
+          <div class="form-group">
+            <label for="t_city">City:</label>
+            <input type="text" name="t_city" id="t_city" />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Permanent Address</legend>
+
+        <div class="form-section">
+          <div class="form-group">
+            <label for="p_country">Country:</label>
+            <input
+              type="text"
+              name="p_country"
+              id="p_country"
+              value="Nepal"
+              disabled
+            />
+          </div>
+
+          <div class="form-group">
+            <label for="p_province">Province:</label>
+            <input list="temp_province" name="p_province" id="p_province" />
+          </div>
+
+          <div class="form-group">
+            <label for="p_district">District:</label>
+            <input type="text" name="p_district" id="p_district" />
+          </div>
+
+          <div class="form-group">
+            <label for="p_city">City:</label>
+            <input type="text" name="p_city" id="p_city" />
+          </div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Credentials</legend>
+        <div class="form-section">
+          <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" name="username" id="username" required />
+          </div>
+
+          <div class="form-group">
+            <label for="mail">Email:</label>
+            <input type="email" name="email" id="email" required />
+          </div>
+
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" required />
+          </div>
+        </div>
+      </fieldset>
+      <div class="button-group">
+        <input
+          type="submit"
+          name="submit"
+          id="submit"
+          class="btn submit"
+          value="Submit"
+        />
+        <input
+          type="reset"
+          name="reset"
+          id="reset"
+          class="btn reset"
+          value="Reset"
+        />
+      </div>
+    </form>
+  </body>
+</html>
