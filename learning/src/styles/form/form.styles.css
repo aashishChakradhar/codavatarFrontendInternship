@@ -1,0 +1,154 @@
+/* @media (min-width: 480px) { */
+body,
+root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+main {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  height: 100dvh;
+  padding: 10px;
+}
+.container {
+  flex: 1;
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+}
+h1 {
+  text-align: center;
+  padding: 0;
+  margin: 0;
+}
+
+form {
+  display: flex;
+  flex-flow: column wrap;
+  box-sizing: content-box;
+  align-self: center;
+  gap: 30px;
+  width: 50%;
+  border: 1px solid black;
+  border-radius: 14px;
+  padding: 25px;
+}
+fieldset {
+  border-radius: 8px;
+  display: flex;
+  flex-flow: row wrap;
+  box-sizing: border-box;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0px 15px 10px 15px;
+  border-color: darkgray;
+  background-color: aliceblue;
+}
+fieldset > div {
+  display: flex;
+  width: 49%;
+  justify-content: space-between;
+  margin-top: 15px;
+  align-items: center;
+  box-sizing: border-box;
+  flex-wrap: wrap;
+}
+fieldset > div > label {
+  display: block;
+  width: 100%;
+}
+fieldset > div > input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+.input-group {
+  display: flex;
+  justify-content: end;
+}
+.input-group > #password {
+  box-sizing: border-box;
+  width: 100%;
+  display: block;
+}
+legend {
+  background-color: aliceblue;
+  border: 1px solid darkgray;
+  border-radius: 4px;
+  padding: 2px 5px;
+  font-size: 0.8rem;
+}
+input {
+  border: 1px solid grey;
+  font-size: 1.1rem;
+  border-radius: 4px;
+  padding: 5px 15px;
+}
+#togglePassword {
+  cursor: pointer;
+}
+.button-group {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+button {
+  border-radius: 8px;
+  padding: 3px 15px;
+  cursor: pointer;
+}
+#submit-btn {
+  background-color: seagreen;
+}
+#reset-btn {
+  background-color: darkgray;
+}
+/* } */
+
+/* mobile */
+@media (max-width: 500px) {
+  form {
+    width: 90%;
+    margin: 10px 20px;
+    border: none;
+    box-sizing: border-box;
+    text-align: left;
+    padding: 0;
+  }
+  fieldset {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  fieldset > div {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    width: 100%;
+    gap: 8px;
+  }
+  .input-group {
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .button-group {
+    margin-bottom: 55px;
+  }
+}
+
+/* tablet */
+@media (max-width: 1200px) and (min-width: 501px) {
+  main {
+    padding: 10px;
+  }
+  form {
+    width: auto;
+    margin: 20px;
+  }
+}
