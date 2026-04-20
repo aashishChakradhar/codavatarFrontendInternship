@@ -11,40 +11,42 @@
     />
   </head>
   <body>
+
     <main>
       <span id="title-text">Calculator</span>
       <section id="display">
-        <div id="input">124+32</div>
-        <div id="output">123</div>
+        <input id="input"></input>
+        <div id="output"></div>
       </section>
       <section id="keypad">
-        <button>%</button>
-        <button>C</button>
+        <button class="symbol">%</button>
+        <button id="clear">C</button>
         <button>
           <span class="material-symbols-outlined"> backspace </span>
         </button>
-        <button>/</button>
+        <button class="symbol">/</button>
 
-        <button>7</button>
-        <button>8</button>
-        <button>9</button>
-        <button>*</button>
+        <button class="numbers">7</button>
+        <button class="numbers">8</button>
+        <button class="numbers">9</button>
+        <button class="symbol">*</button>
 
-        <button>4</button>
-        <button>5</button>
-        <button>6</button>
-        <button>-</button>
+        <button class="numbers">4</button>
+        <button class="numbers">5</button>
+        <button class="numbers">6</button>
+        <button class="symbol">-</button>
 
-        <button>1</button>
-        <button>2</button>
-        <button>3</button>
-        <button>+</button>
+        <button class="numbers">1</button>
+        <button class="numbers">2</button>
+        <button class="numbers">3</button>
+        <button class="symbol">+</button>
 
         <button>.</button>
-        <button>0</button>
+        <button class="numbers">0</button>
         <button>=</button>
       </section>
     </main>
+
     <script src="../../Script/calculator/script.js"></script>
   </body>
 </html>
