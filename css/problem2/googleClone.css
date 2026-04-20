@@ -29,6 +29,207 @@ body {
   display: flex;
   flex-flow: column nowrap;
 }
+
+body.is-loading .live-content {
+  opacity: 0;
+  transform: translateY(8px);
+  pointer-events: none;
+}
+
+body:not(.is-loading) .loading-skeleton {
+  display: none;
+}
+
+.live-content {
+  width: 100%;
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.loading-skeleton {
+  width: 100%;
+}
+
+.header-content {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.main-content {
+  display: flex;
+  width: 100%;
+  flex-flow: column nowrap;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer-content {
+  display: block;
+  width: 100%;
+}
+
+.header-skeleton {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 60px;
+  padding: 6px 20px 6px 30px;
+  box-sizing: border-box;
+}
+
+.skeleton-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeleton-row-right {
+  margin-left: auto;
+}
+
+.skeleton-pill,
+.skeleton-circle,
+.skeleton-logo,
+.skeleton-search-bar,
+.skeleton-search-fill {
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(90deg, #35373a 0%, #4b4f54 50%, #35373a 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.35s ease-in-out infinite;
+}
+
+.skeleton-pill,
+.skeleton-circle {
+  display: inline-block;
+}
+
+.skeleton-pill {
+  height: 14px;
+  border-radius: 999px;
+}
+
+.skeleton-pill-wide {
+  width: 74px;
+}
+
+.skeleton-pill-medium {
+  width: 56px;
+}
+
+.skeleton-pill-small {
+  width: 42px;
+}
+
+.skeleton-pill-search {
+  width: 82px;
+  margin-left: auto;
+}
+
+.skeleton-pill-button {
+  width: 132px;
+  height: 42px;
+}
+
+.skeleton-pill-footer {
+  width: min(520px, 72vw);
+  height: 16px;
+  margin: 0 auto 18px;
+}
+
+.skeleton-pill-footer-link {
+  width: 88px;
+  height: 12px;
+}
+
+.skeleton-circle {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.skeleton-circle-large {
+  width: 34px;
+  height: 34px;
+}
+
+.main-skeleton {
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 24px;
+  min-height: 420px;
+  justify-content: center;
+}
+
+.skeleton-logo {
+  width: 260px;
+  height: 88px;
+  border-radius: 24px;
+}
+
+.skeleton-search-bar {
+  width: min(60%, 720px);
+  height: 66px;
+  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 18px;
+  box-sizing: border-box;
+}
+
+.skeleton-dot {
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #35373a 0%, #4b4f54 50%, #35373a 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.35s ease-in-out infinite;
+  flex: 0 0 auto;
+}
+
+.skeleton-search-fill {
+  height: 18px;
+  border-radius: 999px;
+  flex: 1;
+}
+
+.skeleton-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.footer-skeleton {
+  background-color: #171717;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.skeleton-footer-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: space-between;
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
 a {
   cursor: pointer;
   color: white;
@@ -221,6 +422,29 @@ footer {
 }
 /* mobile */
 @media (max-width: 600px) {
+  .header-skeleton {
+    padding: 8px 10px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .skeleton-pill-wide {
+    width: 48px;
+  }
+
+  .skeleton-pill-medium {
+    width: 40px;
+  }
+
+  .skeleton-pill-small {
+    width: 28px;
+  }
+
+  .skeleton-circle-large {
+    width: 22px;
+    height: 22px;
+  }
+
   header {
     height: auto;
   }
@@ -241,6 +465,28 @@ footer {
     justify-content: start;
     padding-top: 100px;
   }
+
+  .main-skeleton {
+    min-height: 300px;
+    padding-top: 80px;
+  }
+
+  .skeleton-logo {
+    width: 150px;
+    height: 48px;
+  }
+
+  .skeleton-search-bar {
+    width: 80%;
+    height: 48px;
+    padding: 0 12px;
+  }
+
+  .skeleton-pill-button {
+    width: 88px;
+    height: 30px;
+  }
+
   .main_text {
     font-size: 40px;
   }
@@ -283,6 +529,39 @@ footer {
   .supports a {
     padding: 3px;
   }
+
+  .skeleton-pill-footer {
+    width: 82%;
+    margin-bottom: 12px;
+  }
+
+  .skeleton-pill-footer-link {
+    width: 52px;
+    height: 10px;
+  }
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black; /* Add dots under the hoverable text */
+  cursor: pointer;
+}
+.tooltiptext {
+  visibility: hidden; /* Hidden by default */
+  width: 130px;
+  background-color: black;
+  color: #ffffff;
+  text-align: center;
+  padding: 5px 0;
+  border-radius: 6px;
+  position: absolute;
+  top: 30px;
+  left: 0px;
+  z-index: 1; /* Ensure tooltip is displayed above content */
+}
+.tooltip:hover .tooltiptext {
+  visibility: visible;
 }
 
 /* tablet */

@@ -20,81 +20,135 @@
     <title>Google Clone</title>
     <link rel="stylesheet" href="../../css/problem2/googleClone.css" />
   </head>
-  <body>
+  <body class="is-loading">
     <header>
-      <div class="external_links">
-        <a href="">About </a>
-        <a href="">Store</a>
+      <div class="loading-skeleton header-skeleton" aria-hidden="true">
+        <div class="skeleton-row skeleton-row-left">
+          <span class="skeleton-pill skeleton-pill-wide"></span>
+          <span class="skeleton-pill skeleton-pill-medium"></span>
+        </div>
+        <div class="skeleton-row skeleton-row-right">
+          <span class="skeleton-pill skeleton-pill-small"></span>
+          <span class="skeleton-pill skeleton-pill-small"></span>
+          <span class="skeleton-circle"></span>
+          <span class="skeleton-circle"></span>
+          <span class="skeleton-circle skeleton-circle-large"></span>
+        </div>
       </div>
-      <div class="profile_links">
-        <a href="">Gmail</a>
-        <a href="">Images</a>
-        <a href="">
-          <span class="material-symbols-outlined icons"> science </span>
-        </a>
-        <a href="">
-          <span class="material-symbols-outlined icons"> apps </span>
-        </a>
-        <a href="">
-          <span class="material-symbols-outlined icons profile_icon">
-            account_circle
-          </span>
-        </a>
+      <div class="live-content header-content">
+        <div class="external_links">
+          <a href="" class="tooltip"
+            >About<span class="tooltiptext">learn</span>
+          </a>
+          <a href="">Store</a>
+        </div>
+        <div class="profile_links">
+          <a href="">Gmail</a>
+          <a href="">Images</a>
+          <a href="">
+            <span class="material-symbols-outlined icons"> science </span>
+          </a>
+          <a href="">
+            <span class="material-symbols-outlined icons"> apps </span>
+          </a>
+          <a href="">
+            <span class="material-symbols-outlined icons profile_icon">
+              account_circle
+            </span>
+          </a>
+        </div>
       </div>
     </header>
 
     <main>
-      <div class="main_text">Google</div>
-      <form action="" method="get">
-        <div class="search-container">
-          <div class="add_files">
-            <span class="material-symbols-outlined icons"> add </span>
-          </div>
-
-          <input type="text" name="search" id="search" />
-
-          <div class="features">
-            <span
-              class="material-symbols-outlined icons"
-              title="Search by voice"
-            >
-              mic
-            </span>
-            <span
-              class="material-symbols-outlined icons"
-              title="Search by image"
-            >
-              add_a_photo
-            </span>
-            <span class="search_option"
-              ><span class="material-symbols-outlined icons"> search </span> AI
-              Mode
-            </span>
-          </div>
+      <div class="loading-skeleton main-skeleton" aria-hidden="true">
+        <div class="skeleton-logo"></div>
+        <div class="skeleton-search-bar">
+          <span class="skeleton-dot"></span>
+          <span class="skeleton-search-fill"></span>
+          <span class="skeleton-dot"></span>
+          <span class="skeleton-dot"></span>
+          <span class="skeleton-pill skeleton-pill-search"></span>
         </div>
-      </form>
+        <div class="skeleton-actions">
+          <span class="skeleton-pill skeleton-pill-button"></span>
+          <span class="skeleton-pill skeleton-pill-button"></span>
+        </div>
+      </div>
+      <div class="live-content main-content">
+        <div class="main_text">Google</div>
+        <form action="" method="get">
+          <div class="search-container">
+            <div class="add_files">
+              <span class="material-symbols-outlined icons"> add </span>
+            </div>
 
-      <div class="option-group">
-        <span>Google Search</span> <span>I'm feeling lucky</span>
+            <input type="text" name="search" id="search" />
+
+            <div class="features">
+              <span
+                class="material-symbols-outlined icons"
+                title="Search by voice"
+              >
+                mic
+              </span>
+              <span
+                class="material-symbols-outlined icons"
+                title="Search by image"
+              >
+                add_a_photo
+              </span>
+              <span class="search_option"
+                ><span class="material-symbols-outlined icons"> search </span>
+                AI Mode
+              </span>
+            </div>
+          </div>
+        </form>
+
+        <div class="option-group">
+          <span>Google Search</span> <span>I'm feeling lucky</span>
+        </div>
       </div>
     </main>
 
     <footer>
-      <div class="statement">
-        <a href=""> Applying AI towards science and the enviroment </a>
-      </div>
-      <div class="supports">
-        <div class="first_section">
-          <a href="">Advertising</a>
-          <a href="">Business</a>
-          <a href="">How Search Works</a>
+      <div class="loading-skeleton footer-skeleton" aria-hidden="true">
+        <span class="skeleton-pill skeleton-pill-footer"></span>
+        <div class="skeleton-footer-links">
+          <span class="skeleton-pill skeleton-pill-footer-link"></span>
+          <span class="skeleton-pill skeleton-pill-footer-link"></span>
+          <span class="skeleton-pill skeleton-pill-footer-link"></span>
+          <span class="skeleton-pill skeleton-pill-footer-link"></span>
+          <span class="skeleton-pill skeleton-pill-footer-link"></span>
+          <span class="skeleton-pill skeleton-pill-footer-link"></span>
         </div>
-        <div class="second_section">
-          <a href="">Privacy</a>
-          <a href="">Terms</a>
-          <a href="">Settings</a>
+      </div>
+      <div class="live-content footer-content">
+        <div class="statement">
+          <a href=""> Applying AI towards science and the enviroment </a>
+        </div>
+        <div class="supports">
+          <div class="first_section">
+            <a href="">Advertising</a>
+            <a href="">Business</a>
+            <a href="">How Search Works</a>
+          </div>
+          <div class="second_section">
+            <a href="">Privacy</a>
+            <a href="">Terms</a>
+            <a href="">Settings</a>
+          </div>
         </div>
       </div>
     </footer>
+
+    <script>
+      window.addEventListener("load", () => {
+        window.setTimeout(() => {
+          document.body.classList.remove("is-loading");
+        }, 700);
+      });
+    </script>
   </body>
 </html>
