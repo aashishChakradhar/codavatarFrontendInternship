@@ -1,45 +1,60 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import styles from "../../styles/portals/portals.module.css";
+
+export interface PortalProps {
+  title?: string | null;
+  content?: string | null;
+  buttonText?: string | null;
+  handleButton?: () => void;
+}
 
 function Portals({
   isOpen,
-  onClose,
   children,
 }: {
   isOpen: boolean;
-  onClose: any;
-  children: any;
+  children: React.ReactNode;
 }) {
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const previousBodyOverflow = document.body.style.overflow;
+    const previousHtmlOverflow = document.documentElement.style.overflow;
+
+    document.body.style.overflow = "hidden";
+    document.documentElement.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = previousBodyOverflow;
+      document.documentElement.style.overflow = previousHtmlOverflow;
+    };
+  }, [isOpen]);
+
   if (!isOpen) return null;
   return createPortal(
-    <div
-      style={{
-        position: "fixed",
-        top: 0,
-        left: 0,
-        right: 0,
-        bottom: 0,
-        backgroundColor: "rgba(0, 0, 0, 0.5)",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      Portal Display,{children}
-      <button onClick={onClose}>Close</button>
+    <div className={styles.overlayContainer}>
+      <div className={styles.contentContainer}>{children}</div>
     </div>,
     document.body,
   );
 }
 
-export default function DisplayPortals() {
-  const [isOpen, setIsOpen] = useState(false);
+export default function DisplayPortals({
+  title,
+  content,
+  buttonText,
+}: PortalProps) {
+  const [isOpen, setIsOpen] = useState(true);
   return (
-    <div>
-      <button onClick={() => setIsOpen(true)}>Open Portal</button>
-      <Portals isOpen={isOpen} onClose={() => setIsOpen(false)}>
-        This is the portal
+    <section>
+      <Portals isOpen={isOpen}>
+        {title ? <h3>{title}</h3> : <h3>Portal Heading</h3>}
+        {content ? <p>{content}</p> : <p>Portal Content</p>}
+        <button className={styles.button} onClick={() => setIsOpen(false)}>
+          {buttonText?.toUpperCase() ?? "close".toUpperCase()}
+        </button>
       </Portals>
-    </div>
+    </section>
   );
 }

@@ -1,5 +1,6 @@
 import type { ChangeEventHandler, FormEventHandler } from "react";
 import { NavLink } from "react-router-dom";
+import "../../styles/form/form.css";
 
 interface FormProps {
   handleSubmit: FormEventHandler<HTMLFormElement>;
@@ -33,9 +34,9 @@ export function FormComp({
   password,
 }: FormProps) {
   return (
-    <main>
-      <NavLink to="/junk">Junk</NavLink>
-      <div className="container">
+    <div className="container">
+      <NavLink to="/app/converter">Converter</NavLink>
+      <section>
         <h1>Form</h1>
         <form onSubmit={handleSubmit}>
           <fieldset>
@@ -158,7 +159,7 @@ export function FormComp({
             </button>
           </div>
         </form>
-      </div>
-    </main>
+      </section>
+    </div>
   );
 }

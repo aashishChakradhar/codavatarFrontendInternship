@@ -1,6 +1,7 @@
 import type { ChangeEvent } from "react";
 import type { CurrencyProp } from "./currencyConverter.utils";
-import "../../styles/currencyConverter/currencyConverter.styles.css";
+import "../../styles/currencyConverter/currencyConverter.css";
+import { NavLink } from "react-router-dom";
 
 export interface ConverterViewProps {
   currencies: CurrencyProp[];
@@ -28,10 +29,12 @@ export default function ConverterView({
   onConvert,
 }: ConverterViewProps) {
   return (
-    <main className="mainContainer">
-      <div className="displayContainer">
-        <div className="sectionContainer">
-          <span>From:</span>
+    <div className="container">
+      <NavLink to="/">Form</NavLink>
+      <section className="displayContainer">
+        <h2>Currency Converter</h2>
+        <section>
+          <h3>From:</h3>
           <select
             name="fromCurrency"
             id="fromCurrency"
@@ -50,9 +53,9 @@ export default function ConverterView({
             value={fromValue}
             onChange={onFromValueChange}
           />
-        </div>
-        <div className="sectionContainer">
-          <span>To:</span>
+        </section>
+        <section>
+          <h3>To:</h3>
           <select
             name="toCurrency"
             id="toCurrency"
@@ -71,11 +74,11 @@ export default function ConverterView({
             value={toValue}
             onChange={onToValueChange}
           />
-        </div>
+        </section>
         <button onClick={onConvert} hidden={true}>
           Convert
         </button>
-      </div>
-    </main>
+      </section>
+    </div>
   );
 }

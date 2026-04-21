@@ -5,6 +5,7 @@ import {
   getCurrencyRate,
 } from "./currencyConverter.utils";
 import ConverterView from "./currencyConverter.component";
+import ErrorBoundary from "../errorBoundry/errorBoundry";
 
 export interface ConverterState {
   fromValue: number;
@@ -13,10 +14,7 @@ export interface ConverterState {
   toCurrency: string;
 }
 
-export default class ConverterClass extends React.Component<
-  {},
-  ConverterState
-> {
+class CurrencyClass extends React.Component<{}, ConverterState> {
   state: ConverterState = {
     fromValue: 1,
     toValue: 0,
@@ -120,3 +118,13 @@ export default class ConverterClass extends React.Component<
     );
   }
 }
+
+const ConverterClassComponent = () => {
+  return (
+    <ErrorBoundary>
+      <CurrencyClass />
+    </ErrorBoundary>
+  );
+};
+
+export default ConverterClassComponent;

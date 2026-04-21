@@ -1,6 +1,5 @@
 import { useState, type ChangeEvent, type FormEvent } from "react";
-import usePrompt from "../../pages/prompt.page";
-import "../../styles/form/form.styles.css";
+import usePrompt from "../../pages/prompt.tsx";
 import { FormComp } from "./form.component.tsx";
 import ErrorBoundary from "../errorBoundry/errorBoundry";
 
