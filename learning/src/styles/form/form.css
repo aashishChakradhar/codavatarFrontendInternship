@@ -5,19 +5,20 @@ root {
   padding: 0;
   box-sizing: border-box;
 }
-main {
+.container {
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
   height: 100dvh;
   padding: 10px;
 }
-.container {
+section {
   flex: 1;
   display: flex;
   flex-flow: column wrap;
   justify-content: center;
   align-items: center;
+  box-sizing: border-box;
 }
 h1 {
   text-align: center;
@@ -28,7 +29,7 @@ h1 {
 form {
   display: flex;
   flex-flow: column wrap;
-  box-sizing: content-box;
+  box-sizing: border-box;
   align-self: center;
   gap: 30px;
   width: 50%;
@@ -144,7 +145,7 @@ button {
 
 /* tablet */
 @media (max-width: 1200px) and (min-width: 501px) {
-  main {
+  .container {
     padding: 10px;
   }
   form {

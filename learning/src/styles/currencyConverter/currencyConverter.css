@@ -1,0 +1,54 @@
+body,
+root {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.container {
+  margin: 0;
+  padding: 0;
+  height: 100dvh;
+  display: flex;
+  flex-flow: column wrap;
+  box-sizing: border-box;
+}
+.container > a {
+  align-self: start;
+}
+.displayContainer {
+  display: flex;
+  flex-flow: column wrap;
+  justify-content: center;
+  align-items: center;
+  align-self: center;
+  flex: 1;
+  gap: 1.5rem;
+  width: fit-content;
+  font-size: 1.2rem;
+}
+
+.displayContainer > section {
+  display: flex;
+  flex: 0 0 auto;
+  flex-flow: row nowrap;
+  width: 100%;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+.displayContainer > h2 {
+  margin: 0;
+}
+.displayContainer > section > h3 {
+  flex: 1;
+  display: inline-block;
+  margin: 0;
+}
+section > select {
+  font-size: 1.2rem;
+  padding: 3px 15px;
+}
+section > input {
+  font-size: 1.2rem;
+  padding: 3px 15px;
+}
