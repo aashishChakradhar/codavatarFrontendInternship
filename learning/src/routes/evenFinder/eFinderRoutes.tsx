@@ -1,4 +1,4 @@
-import { createBrowserRouter, type RouteObject } from "react-router-dom";
+import { type RouteObject } from "react-router-dom";
 import { lazy, Suspense } from "react";
 
 function withSuspense(node: React.ReactNode) {
