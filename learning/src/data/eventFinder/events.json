@@ -1,0 +1,818 @@
+[
+    {
+        "id":  0,
+        "name":  "Tech Conference 2026",
+        "date":  "2026-04-22",
+        "description":  "Annual technology conference featuring keynote speeches and workshops. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, San Francisco",
+        "time":  "08:00 AM"
+    },
+    {
+        "id":  999,
+        "name":  "Tech Conference 2026",
+        "date":  "2026-04-22",
+        "description":  "Annual technology conference featuring keynote speeches and workshops. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, San Francisco",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  1,
+        "name":  "Tech Conference 2026",
+        "date":  "2026-01-15",
+        "description":  "Annual technology conference featuring keynote speeches and workshops. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, San Francisco",
+        "time":  "09:45 AM"
+    },
+    {
+        "id":  2,
+        "name":  "Spring Music Festival",
+        "date":  "2026-03-22",
+        "description":  "Live music performances from international artists. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Central Park, New York",
+        "time":  "10:30 AM"
+    },
+    {
+        "id":  3,
+        "name":  "Web Development Workshop",
+        "date":  "2026-02-10",
+        "description":  "Hands-on workshop on modern web development practices. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Hub, Austin",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  4,
+        "name":  "Food \u0026 Wine Expo",
+        "date":  "2026-04-18",
+        "description":  "Culinary celebration with food vendors and wine tasting. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Downtown Event Space, Los Angeles",
+        "time":  "12:00 PM"
+    },
+    {
+        "id":  5,
+        "name":  "Blockchain Summit",
+        "date":  "2026-05-30",
+        "description":  "Exploring cryptocurrency and blockchain innovations. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Marriott Hotel, Miami",
+        "time":  "01:45 PM"
+    },
+    {
+        "id":  6,
+        "name":  "Art Gallery Opening",
+        "date":  "2026-02-28",
+        "description":  "Contemporary art exhibition from emerging artists. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Modern Art Museum, Chicago",
+        "time":  "02:30 PM"
+    },
+    {
+        "id":  7,
+        "name":  "Marathon Race",
+        "date":  "2026-03-15",
+        "description":  "Community marathon event for fitness enthusiasts. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "City Running Track, Boston",
+        "time":  "03:15 PM"
+    },
+    {
+        "id":  8,
+        "name":  "AI \u0026 Machine Learning Bootcamp",
+        "date":  "2026-06-10",
+        "description":  "Intensive training on artificial intelligence applications. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "University Campus, Seattle",
+        "time":  "04:00 PM"
+    },
+    {
+        "id":  9,
+        "name":  "Jazz Night",
+        "date":  "2026-01-25",
+        "description":  "Evening of live jazz music and cocktails. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Blue Note Jazz Club, Denver",
+        "time":  "05:45 PM"
+    },
+    {
+        "id":  10,
+        "name":  "Summer Comic Con",
+        "date":  "2026-07-20",
+        "description":  "Comic book and pop culture convention. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, San Diego",
+        "time":  "06:30 PM"
+    },
+    {
+        "id":  11,
+        "name":  "Photography Workshop",
+        "date":  "2026-04-05",
+        "description":  "Learn professional photography techniques and editing. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Creative Studio, Portland",
+        "time":  "07:15 PM"
+    },
+    {
+        "id":  12,
+        "name":  "Startup Pitch Event",
+        "date":  "2026-05-12",
+        "description":  "Entrepreneurs pitch ideas to investors. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Innovation Hub, Austin",
+        "time":  "08:00 AM"
+    },
+    {
+        "id":  13,
+        "name":  "Yoga Retreat",
+        "date":  "2026-06-22",
+        "description":  "Weekend wellness and meditation retreat. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Mountain Resort, Colorado",
+        "time":  "09:45 AM"
+    },
+    {
+        "id":  14,
+        "name":  "Film Festival",
+        "date":  "2026-08-14",
+        "description":  "Independent film screening and awards ceremony. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Cinema Complex, Toronto",
+        "time":  "10:30 AM"
+    },
+    {
+        "id":  15,
+        "name":  "Book Launch Party",
+        "date":  "2026-02-18",
+        "description":  "Author reading and book signing event. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Bookstore, Brooklyn",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  16,
+        "name":  "Cloud Computing Conference",
+        "date":  "2026-07-08",
+        "description":  "Advanced topics in cloud infrastructure and services. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Center, Virginia",
+        "time":  "12:00 PM"
+    },
+    {
+        "id":  17,
+        "name":  "Fashion Week",
+        "date":  "2026-09-10",
+        "description":  "Designer fashion showcase and runway shows. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Fashion District, Paris",
+        "time":  "01:45 PM"
+    },
+    {
+        "id":  18,
+        "name":  "Gaming Expo",
+        "date":  "2026-08-25",
+        "description":  "Video game tournaments and new game releases. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Arena Hall, Las Vegas",
+        "time":  "02:30 PM"
+    },
+    {
+        "id":  19,
+        "name":  "Cooking Class",
+        "date":  "2026-03-20",
+        "description":  "Learn international cuisine from professional chefs. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Culinary School, San Francisco",
+        "time":  "03:15 PM"
+    },
+    {
+        "id":  20,
+        "name":  "Science Fair",
+        "date":  "2026-04-28",
+        "description":  "Student projects and scientific demonstrations. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "High School, Phoenix",
+        "time":  "04:00 PM"
+    },
+    {
+        "id":  21,
+        "name":  "Robotics Championship",
+        "date":  "2026-05-15",
+        "description":  "Robot competition featuring advanced engineering projects. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, Detroit",
+        "time":  "05:45 PM"
+    },
+    {
+        "id":  22,
+        "name":  "Podcast Conference",
+        "date":  "2026-06-30",
+        "description":  "Content creators and podcast enthusiasts networking event. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Media Hub, Nashville",
+        "time":  "06:30 PM"
+    },
+    {
+        "id":  23,
+        "name":  "Music Production Masterclass",
+        "date":  "2026-07-18",
+        "description":  "Learn music production from Grammy-winning producers. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Recording Studio, Los Angeles",
+        "time":  "07:15 PM"
+    },
+    {
+        "id":  24,
+        "name":  "Environmental Summit",
+        "date":  "2026-08-05",
+        "description":  "Addressing climate change and sustainability. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, Vancouver",
+        "time":  "08:00 AM"
+    },
+    {
+        "id":  25,
+        "name":  "Digital Marketing Expo",
+        "date":  "2026-09-02",
+        "description":  "Latest trends in online marketing and SEO strategies. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Business Center, New York",
+        "time":  "09:45 AM"
+    },
+    {
+        "id":  26,
+        "name":  "Fitness Challenge",
+        "date":  "2026-03-10",
+        "description":  "Community fitness competition with prizes. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Sports Complex, Miami",
+        "time":  "10:30 AM"
+    },
+    {
+        "id":  27,
+        "name":  "Virtual Reality Summit",
+        "date":  "2026-05-25",
+        "description":  "Exploring VR technology and immersive experiences. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Park, Silicon Valley",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  28,
+        "name":  "Tea Ceremony Workshop",
+        "date":  "2026-04-12",
+        "description":  "Traditional Japanese tea ceremony and culture. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Cultural Center, Portland",
+        "time":  "12:00 PM"
+    },
+    {
+        "id":  29,
+        "name":  "Data Science Conference",
+        "date":  "2026-06-15",
+        "description":  "Analytics, big data, and data-driven decision making. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "University Hall, Boston",
+        "time":  "01:45 PM"
+    },
+    {
+        "id":  30,
+        "name":  "Winter Holiday Market",
+        "date":  "2026-12-01",
+        "description":  "Local vendors and holiday crafts and gifts. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Downtown Square, Seattle",
+        "time":  "02:30 PM"
+    },
+    {
+        "id":  31,
+        "name":  "Cybersecurity Seminar",
+        "date":  "2026-05-20",
+        "description":  "Network security and threat prevention strategies. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Enterprise Center, Austin",
+        "time":  "03:15 PM"
+    },
+    {
+        "id":  32,
+        "name":  "Street Art Festival",
+        "date":  "2026-07-12",
+        "description":  "Urban art exhibition and live street painting. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Arts District, Miami",
+        "time":  "04:00 PM"
+    },
+    {
+        "id":  33,
+        "name":  "Mobile App Development Conference",
+        "date":  "2026-08-18",
+        "description":  "iOS and Android development best practices. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Hub, San Francisco",
+        "time":  "05:45 PM"
+    },
+    {
+        "id":  34,
+        "name":  "Wine Tasting Evening",
+        "date":  "2026-04-25",
+        "description":  "Premium wine selection and sommelier guidance. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Wine Cellar, Napa Valley",
+        "time":  "06:30 PM"
+    },
+    {
+        "id":  35,
+        "name":  "Mental Health Awareness Day",
+        "date":  "2026-05-08",
+        "description":  "Community support and wellness resources. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Community Center, Chicago",
+        "time":  "07:15 PM"
+    },
+    {
+        "id":  36,
+        "name":  "Horror Film Fest",
+        "date":  "2026-10-22",
+        "description":  "Scary movies and thrilling horror experiences. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Independent Cinema, Austin",
+        "time":  "08:00 AM"
+    },
+    {
+        "id":  37,
+        "name":  "Gardening Expo",
+        "date":  "2026-06-05",
+        "description":  "Plant care tips and landscaping ideas. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Botanical Garden, San Diego",
+        "time":  "09:45 AM"
+    },
+    {
+        "id":  38,
+        "name":  "Career Fair",
+        "date":  "2026-03-18",
+        "description":  "Job opportunities from leading companies. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "University Campus, New York",
+        "time":  "10:30 AM"
+    },
+    {
+        "id":  39,
+        "name":  "Comedy Night",
+        "date":  "2026-02-22",
+        "description":  "Stand-up comedy from popular comedians. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Comedy Club, Los Angeles",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  40,
+        "name":  "Sports Analytics Summit",
+        "date":  "2026-07-25",
+        "description":  "Data analysis in professional sports. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Stadium Complex, Boston",
+        "time":  "12:00 PM"
+    },
+    {
+        "id":  41,
+        "name":  "Travel Expo",
+        "date":  "2026-09-15",
+        "description":  "Destination showcases and travel planning tips. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, Denver",
+        "time":  "01:45 PM"
+    },
+    {
+        "id":  42,
+        "name":  "Quantum Computing Workshop",
+        "date":  "2026-08-10",
+        "description":  "Advanced quantum computing concepts and applications. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Research Institute, Cambridge",
+        "time":  "02:30 PM"
+    },
+    {
+        "id":  43,
+        "name":  "Fashion Design Bootcamp",
+        "date":  "2026-06-12",
+        "description":  "Learn fashion design and garment construction. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Design School, New York",
+        "time":  "03:15 PM"
+    },
+    {
+        "id":  44,
+        "name":  "Ecology Lecture Series",
+        "date":  "2026-04-30",
+        "description":  "Environmental science and conservation efforts. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Museum, Washington DC",
+        "time":  "04:00 PM"
+    },
+    {
+        "id":  45,
+        "name":  "Indie Film Showcase",
+        "date":  "2026-09-20",
+        "description":  "Independent filmmakers and short film presentations. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Art Theater, Portland",
+        "time":  "05:45 PM"
+    },
+    {
+        "id":  46,
+        "name":  "Networking Breakfast",
+        "date":  "2026-02-05",
+        "description":  "Professional networking and business connections. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Executive Club, San Francisco",
+        "time":  "06:30 PM"
+    },
+    {
+        "id":  47,
+        "name":  "Graphic Design Conference",
+        "date":  "2026-05-18",
+        "description":  "Visual design trends and creative techniques. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Design Hub, Austin",
+        "time":  "07:15 PM"
+    },
+    {
+        "id":  48,
+        "name":  "Music Festival Weekend",
+        "date":  "2026-08-02",
+        "description":  "Multi-genre music festival with camping. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Outdoor Venue, California",
+        "time":  "08:00 AM"
+    },
+    {
+        "id":  49,
+        "name":  "Education Technology Expo",
+        "date":  "2026-07-30",
+        "description":  "EdTech solutions and online learning platforms. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, Chicago",
+        "time":  "09:45 AM"
+    },
+    {
+        "id":  50,
+        "name":  "Fitness Bootcamp",
+        "date":  "2026-06-20",
+        "description":  "Intensive fitness training and wellness program. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Training Facility, Los Angeles",
+        "time":  "10:30 AM"
+    },
+    {
+        "id":  51,
+        "name":  "IoT Innovation Summit",
+        "date":  "2026-05-28",
+        "description":  "Internet of Things and smart devices. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Technology Park, Seattle",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  52,
+        "name":  "Dance Performance",
+        "date":  "2026-04-15",
+        "description":  "Contemporary and classical dance performances. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Theater, New York",
+        "time":  "12:00 PM"
+    },
+    {
+        "id":  53,
+        "name":  "Supply Chain Conference",
+        "date":  "2026-09-08",
+        "description":  "Logistics and supply chain optimization. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Business Center, Atlanta",
+        "time":  "01:45 PM"
+    },
+    {
+        "id":  54,
+        "name":  "Meditation Retreat",
+        "date":  "2026-07-05",
+        "description":  "Mindfulness and spiritual growth workshop. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Retreat Center, Colorado",
+        "time":  "02:30 PM"
+    },
+    {
+        "id":  55,
+        "name":  "Automotive Technology Expo",
+        "date":  "2026-06-28",
+        "description":  "Electric vehicles and autonomous driving tech. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Auto Show, Detroit",
+        "time":  "03:15 PM"
+    },
+    {
+        "id":  56,
+        "name":  "Literary Reading Series",
+        "date":  "2026-03-25",
+        "description":  "Poets and authors sharing their works. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Library, San Francisco",
+        "time":  "04:00 PM"
+    },
+    {
+        "id":  57,
+        "name":  "Networking Event",
+        "date":  "2026-08-20",
+        "description":  "Business professionals and entrepreneurs meet. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Hotel Ballroom, Miami",
+        "time":  "05:45 PM"
+    },
+    {
+        "id":  58,
+        "name":  "Sustainability Conference",
+        "date":  "2026-09-18",
+        "description":  "Green business practices and renewable energy. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, Portland",
+        "time":  "06:30 PM"
+    },
+    {
+        "id":  59,
+        "name":  "Culinary Arts Festival",
+        "date":  "2026-10-10",
+        "description":  "Food demonstrations and celebrity chefs. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Downtown Park, San Diego",
+        "time":  "07:15 PM"
+    },
+    {
+        "id":  60,
+        "name":  "Software Testing Bootcamp",
+        "date":  "2026-05-05",
+        "description":  "QA automation and testing methodologies. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Academy, Austin",
+        "time":  "08:00 AM"
+    },
+    {
+        "id":  61,
+        "name":  "Community Theater Performance",
+        "date":  "2026-04-20",
+        "description":  "Local theater production and drama showcase. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Community Theater, Denver",
+        "time":  "09:45 AM"
+    },
+    {
+        "id":  62,
+        "name":  "Healthcare Innovation Summit",
+        "date":  "2026-07-15",
+        "description":  "Medical technology and digital health solutions. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Medical Center, Boston",
+        "time":  "10:30 AM"
+    },
+    {
+        "id":  63,
+        "name":  "Anime Convention",
+        "date":  "2026-08-08",
+        "description":  "Anime screenings and cosplay competitions. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, Los Angeles",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  64,
+        "name":  "Cryptocurrency Workshop",
+        "date":  "2026-06-08",
+        "description":  "Bitcoin trading and crypto investment strategies. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Finance Building, New York",
+        "time":  "12:00 PM"
+    },
+    {
+        "id":  65,
+        "name":  "Urban Farming Summit",
+        "date":  "2026-05-10",
+        "description":  "City gardening and sustainable food production. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Agricultural Center, Chicago",
+        "time":  "01:45 PM"
+    },
+    {
+        "id":  66,
+        "name":  "Product Management Conference",
+        "date":  "2026-09-12",
+        "description":  "Building successful digital products. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Hub, San Francisco",
+        "time":  "02:30 PM"
+    },
+    {
+        "id":  67,
+        "name":  "Wellness Fair",
+        "date":  "2026-04-08",
+        "description":  "Health screenings and wellness demonstrations. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Community Center, Phoenix",
+        "time":  "03:15 PM"
+    },
+    {
+        "id":  68,
+        "name":  "Adventure Sports Festival",
+        "date":  "2026-06-18",
+        "description":  "Rock climbing, zip-lining, and extreme sports. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Mountain Venue, Colorado",
+        "time":  "04:00 PM"
+    },
+    {
+        "id":  69,
+        "name":  "Public Speaking Masterclass",
+        "date":  "2026-05-22",
+        "description":  "Presentation skills and public speaking techniques. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Training Center, Seattle",
+        "time":  "05:45 PM"
+    },
+    {
+        "id":  70,
+        "name":  "Renaissance Faire",
+        "date":  "2026-10-05",
+        "description":  "Historical entertainment and craft vendors. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Fairground, California",
+        "time":  "06:30 PM"
+    },
+    {
+        "id":  71,
+        "name":  "UX Design Conference",
+        "date":  "2026-07-22",
+        "description":  "User experience design and usability testing. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Design Center, Austin",
+        "time":  "07:15 PM"
+    },
+    {
+        "id":  72,
+        "name":  "Jazz Appreciation Workshop",
+        "date":  "2026-03-12",
+        "description":  "History and appreciation of jazz music. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Music School, New Orleans",
+        "time":  "08:00 AM"
+    },
+    {
+        "id":  73,
+        "name":  "Business Pitch Competition",
+        "date":  "2026-08-30",
+        "description":  "Startup ideas compete for investor funding. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Innovation Hub, Silicon Valley",
+        "time":  "09:45 AM"
+    },
+    {
+        "id":  74,
+        "name":  "Travel Photography Expo",
+        "date":  "2026-06-25",
+        "description":  "Photography tips for travel and landscape. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Gallery, Portland",
+        "time":  "10:30 AM"
+    },
+    {
+        "id":  75,
+        "name":  "Biotech Conference",
+        "date":  "2026-09-22",
+        "description":  "Biotechnology advances and genetic research. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Research Center, San Francisco",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  76,
+        "name":  "Comedy Festival",
+        "date":  "2026-10-15",
+        "description":  "Multiple comedians performing over weekend. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Comedy Theater, Los Angeles",
+        "time":  "12:00 PM"
+    },
+    {
+        "id":  77,
+        "name":  "Renewable Energy Seminar",
+        "date":  "2026-05-31",
+        "description":  "Solar and wind energy technologies. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, Denver",
+        "time":  "01:45 PM"
+    },
+    {
+        "id":  78,
+        "name":  "Video Marketing Workshop",
+        "date":  "2026-07-10",
+        "description":  "Creating engaging video content for marketing. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Media Studio, New York",
+        "time":  "02:30 PM"
+    },
+    {
+        "id":  79,
+        "name":  "Craft Beer Festival",
+        "date":  "2026-09-25",
+        "description":  "Local breweries and craft beer tastings. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Park Grounds, Portland",
+        "time":  "03:15 PM"
+    },
+    {
+        "id":  80,
+        "name":  "Content Creation Summit",
+        "date":  "2026-06-16",
+        "description":  "Blogging, vlogging, and social media strategies. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Content Hub, Austin",
+        "time":  "04:00 PM"
+    },
+    {
+        "id":  81,
+        "name":  "Classical Music Concert",
+        "date":  "2026-04-10",
+        "description":  "Symphony orchestra performance. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Concert Hall, Chicago",
+        "time":  "05:45 PM"
+    },
+    {
+        "id":  82,
+        "name":  "DevOps Conference",
+        "date":  "2026-08-15",
+        "description":  "Infrastructure automation and deployment strategies. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Center, Boston",
+        "time":  "06:30 PM"
+    },
+    {
+        "id":  83,
+        "name":  "Fashion Show",
+        "date":  "2026-07-28",
+        "description":  "Designer collections and runway presentation. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Fashion Venue, New York",
+        "time":  "07:15 PM"
+    },
+    {
+        "id":  84,
+        "name":  "Science Education Workshop",
+        "date":  "2026-05-14",
+        "description":  "Teaching science and STEM education methods. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "University, Seattle",
+        "time":  "08:00 AM"
+    },
+    {
+        "id":  85,
+        "name":  "Outdoor Adventure Expo",
+        "date":  "2026-06-02",
+        "description":  "Camping, hiking, and outdoor gear showcase. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, Denver",
+        "time":  "09:45 AM"
+    },
+    {
+        "id":  86,
+        "name":  "Legal Tech Summit",
+        "date":  "2026-09-05",
+        "description":  "Technology solutions for legal professionals. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Law Center, New York",
+        "time":  "10:30 AM"
+    },
+    {
+        "id":  87,
+        "name":  "Blockchain Developer Meetup",
+        "date":  "2026-08-12",
+        "description":  "Ethereum and smart contract development. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Hub, San Francisco",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  88,
+        "name":  "Yoga and Wellness Summit",
+        "date":  "2026-06-09",
+        "description":  "Holistic health and wellness practices. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Wellness Center, California",
+        "time":  "12:00 PM"
+    },
+    {
+        "id":  89,
+        "name":  "Marketing Analytics Conference",
+        "date":  "2026-07-16",
+        "description":  "Data-driven marketing strategies and metrics. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Business Center, Austin",
+        "time":  "01:45 PM"
+    },
+    {
+        "id":  90,
+        "name":  "Local Artisan Market",
+        "date":  "2026-05-03",
+        "description":  "Handmade crafts and artisan products. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Downtown Market, Portland",
+        "time":  "02:30 PM"
+    },
+    {
+        "id":  91,
+        "name":  "Software Architecture Workshop",
+        "date":  "2026-06-11",
+        "description":  "Design patterns and system architecture. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Engineering Center, Boston",
+        "time":  "03:15 PM"
+    },
+    {
+        "id":  92,
+        "name":  "Music Production Conference",
+        "date":  "2026-08-28",
+        "description":  "Beat making and music production techniques. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Recording Studio, Los Angeles",
+        "time":  "04:00 PM"
+    },
+    {
+        "id":  93,
+        "name":  "API Design Summit",
+        "date":  "2026-07-02",
+        "description":  "RESTful API design and microservices. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Hub, Seattle",
+        "time":  "05:45 PM"
+    },
+    {
+        "id":  94,
+        "name":  "Cultural Festival",
+        "date":  "2026-09-30",
+        "description":  "Diverse cultural performances and cuisine. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "City Park, San Francisco",
+        "time":  "06:30 PM"
+    },
+    {
+        "id":  95,
+        "name":  "Machine Learning Workshop",
+        "date":  "2026-05-27",
+        "description":  "Deep learning and neural networks training. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Academy, Austin",
+        "time":  "07:15 PM"
+    },
+    {
+        "id":  96,
+        "name":  "Vintage Fair",
+        "date":  "2026-10-02",
+        "description":  "Antiques and vintage collectibles market. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Fairground, San Diego",
+        "time":  "08:00 AM"
+    },
+    {
+        "id":  97,
+        "name":  "Digital Transformation Expo",
+        "date":  "2026-08-22",
+        "description":  "Enterprise digital transformation strategies. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Convention Center, New York",
+        "time":  "09:45 AM"
+    },
+    {
+        "id":  98,
+        "name":  "Sustainability Workshop",
+        "date":  "2026-06-21",
+        "description":  "Eco-friendly living and green practices. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Community Center, Portland",
+        "time":  "10:30 AM"
+    },
+    {
+        "id":  99,
+        "name":  "Frontend Framework Conference",
+        "date":  "2026-07-20",
+        "description":  "React, Vue, Angular and modern web frameworks. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Tech Center, San Francisco",
+        "time":  "11:15 AM"
+    },
+    {
+        "id":  100,
+        "name":  "Year-End Gala",
+        "date":  "2026-12-31",
+        "description":  "Celebration and New Year party with entertainment. Includes networking sessions, interactive activities, and practical takeaways for attendees.",
+        "place":  "Grand Ballroom, New York",
+        "time":  "12:00 PM"
+    }
+]
