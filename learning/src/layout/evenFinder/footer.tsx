@@ -1,4 +1,4 @@
 const Footer = () => {
-  return <>This is footer</>;
+  return <div>All rights reserved. &copy; {new Date().getFullYear()}</div>;
 };
 export default Footer;

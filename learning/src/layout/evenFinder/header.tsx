@@ -1,4 +1,4 @@
 const Header = () => {
-  return <>This is Header</>;
+  return <div className="text-xl font-bold">Eventify</div>;
 };
 export default Header;

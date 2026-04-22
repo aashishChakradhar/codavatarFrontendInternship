@@ -1,4 +1,4 @@
 const Sidebar = () => {
-  return <>This is sibebar</>;
+  return <div>This is sibebar</div>;
 };
 export default Sidebar;
