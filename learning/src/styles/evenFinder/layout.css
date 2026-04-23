@@ -31,15 +31,16 @@ header {
   display: flex;
   flex-flow: column wrap;
   padding: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid black;
   box-sizing: border-box;
 }
 main {
   flex: 1;
   display: flex;
   flex-flow: column wrap;
-  padding: 20px;
   box-sizing: border-box;
-  border: 1px solid black;
+  /* border: 1px solid black; */
 }
 footer {
   display: flex;
@@ -48,4 +49,22 @@ footer {
   align-items: center;
   padding: 20px;
   box-sizing: border-box;
+}
+
+.eventListScroll {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.35) transparent;
+}
+
+.eventListScroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.eventListScroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.eventListScroll::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.35);
+  border-radius: 999px;
 }
