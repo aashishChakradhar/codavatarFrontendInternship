@@ -102,7 +102,7 @@ export default function DateCalendarServerRequest({
   };
 
   return (
-    <div>
+    <div className="flex-1 flex align-middle justify-center">
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DateCalendar
           value={selectedDate}
