@@ -2,9 +2,7 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import Button from "@mui/material/Button";
 import CardActionArea from "@mui/material/CardActionArea";
-import CardActions from "@mui/material/CardActions";
 import image from "../../../assets/react.svg";
 // const image = "../..";
 
@@ -32,8 +30,11 @@ export default function EventCard({
         borderRadius: "8px",
         boxShadow: " 0px 10px 10px 5px rgba(0, 0, 0, 0.15)",
       }}
+      onClick={() => console.log("card clicked")}
     >
-      <CardActionArea>
+      <CardActionArea
+        sx={{ width: "250px", height: "400px", overflow: "clip" }}
+      >
         <CardMedia
           component="img"
           image={image}
@@ -63,11 +64,6 @@ export default function EventCard({
           </Typography>
         </CardContent>
       </CardActionArea>
-      <CardActions>
-        <Button size="small" color="primary" variant="outlined">
-          Learn More {">>"}
-        </Button>
-      </CardActions>
     </Card>
   );
 }
