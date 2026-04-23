@@ -6,10 +6,10 @@ function withSuspense(node: React.ReactNode) {
 }
 
 const EventFinderLayout = lazy(() => import("../../layout/evenFinder/layout"));
-const CurrencyConverter = lazy(
-  () => import("../../pages/currencyConverter/currencyConverter"),
-);
 const Index = lazy(() => import("../../pages/evenFinder/index"));
+const EventPage = lazy(
+  () => import("../../pages/evenFinder/eventDetail/eventPage"),
+);
 
 export const eventFinderRoutes: RouteObject[] = [
   {
@@ -18,7 +18,7 @@ export const eventFinderRoutes: RouteObject[] = [
     children: [
       { index: true, element: withSuspense(<Index />) },
       { path: "index", element: withSuspense(<Index />) },
-      { path: "currency", element: withSuspense(<CurrencyConverter />) },
+      { path: "page/:id", element: withSuspense(<EventPage />) },
     ],
   },
 ];
