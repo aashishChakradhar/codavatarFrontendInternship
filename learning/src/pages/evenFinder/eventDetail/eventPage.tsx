@@ -1,5 +1,4 @@
 import { useNavigate, useParams } from "react-router-dom";
-import { EventContentComponent } from "../../../components/evenFinder/content/eventContent.component";
 import EventContentContainer from "../../../components/evenFinder/content/eventContent.container";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
 

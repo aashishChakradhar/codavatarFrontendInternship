@@ -7,7 +7,7 @@ import "../../styles/evenFinder/layout.css";
 
 export default function EventFinderLayout() {
   return (
-    <div id="layout">
+    <div id="layout" className="eventListScroll">
       <aside>
         <Sidebar />
       </aside>

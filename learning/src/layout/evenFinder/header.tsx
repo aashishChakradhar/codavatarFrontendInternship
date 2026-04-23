@@ -1,4 +1,14 @@
+import { useNavigate } from "react-router-dom";
+
 const Header = () => {
-  return <div className="text-xl font-bold">Eventify</div>;
+  const navigate = useNavigate();
+  const handleClick = () => {
+    navigate("/event-finder/");
+  };
+  return (
+    <div className="text-xl font-bold cursor-pointer" onClick={handleClick}>
+      Eventify
+    </div>
+  );
 };
 export default Header;
