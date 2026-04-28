@@ -28,12 +28,6 @@ export default function Pokemon() {
     setSearchPokemon(e.target.value);
   };
 
-  const handleClick = () => {
-    const nextPokemon = searchPokemon.trim();
-    if (!nextPokemon) return;
-    setSelectedPokemon(nextPokemon);
-  };
-
   return (
     <div className="border w-2/5 min-h-2/3">
       Pokemon Api Component
