@@ -2,6 +2,8 @@ import { useState, type ChangeEvent } from "react";
 import usePokemon from "../../api/pokemon/pokemon";
 import { Suspense } from "react";
 
+import { SpinnerCustom } from "../spinner/spinner";
+
 function PokemonResult({ name }: { name: string }) {
   const { pokemon, errorMessage } = usePokemon(name);
 
@@ -41,10 +43,7 @@ export default function Pokemon() {
         onChange={handleChange}
         value={searchPokemon}
       />
-      <button type="button" onClick={handleClick}>
-        Search
-      </button>
-      <Suspense fallback={<h2>Searching...</h2>}>
+      <Suspense fallback={<SpinnerCustom />}>
         <PokemonResult name={selectedPokemon} />
       </Suspense>
     </div>

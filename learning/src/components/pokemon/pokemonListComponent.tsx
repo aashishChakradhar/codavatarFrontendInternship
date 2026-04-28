@@ -7,6 +7,7 @@ import {
   type GetPokemonQueryProps,
   type PokemonDetailQueryVariables,
 } from "../../api/pokemon/pokemonRef";
+import { SkeletonCard } from "../skeleton/skeleton";
 
 type Pokemon = {
   id: number;
@@ -51,7 +52,7 @@ export default function PokemonList() {
         ))}
       </ul>
 
-      <Suspense fallback={<p>Loading selected Pokémon...</p>}>
+      <Suspense fallback={<SkeletonCard />}>
         {!detailQueryRef ? (
           <p>Preparing selected Pokémon query...</p>
         ) : (

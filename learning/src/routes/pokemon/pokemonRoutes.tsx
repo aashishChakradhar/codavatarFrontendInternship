@@ -2,8 +2,10 @@ import { type RouteObject } from "react-router-dom";
 
 import { lazy, Suspense } from "react";
 
+import { SpinnerCustom } from "@/components/spinner/spinner";
+
 function withSuspense(node: React.ReactNode) {
-  return <Suspense fallback={<h2>Loading...</h2>}>{node}</Suspense>;
+  return <Suspense fallback={<SpinnerCustom />}>{node}</Suspense>;
 }
 
 const PokemonLayout = lazy(() => import("../../layout/Pokemon/pokemonLayout"));
