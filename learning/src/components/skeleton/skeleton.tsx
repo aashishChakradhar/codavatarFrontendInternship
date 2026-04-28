@@ -3,13 +3,19 @@ import { Skeleton } from "@/components/ui/skeleton";
 
 export function SkeletonCard() {
   return (
-    <Card className="w-full max-w-xs">
+    <Card className="w-full max-w-sm mx-auto">
       <CardHeader>
-        <Skeleton className="h-4 w-2/3" />
-        <Skeleton className="h-4 w-1/2" />
+        <Skeleton className="aspect-video w-full mb-5" />
+        <div className="flex gap-15">
+          <Skeleton className="h-4 w-1/2" />
+          <Skeleton className="h-4 w-1/4" />
+        </div>
       </CardHeader>
-      <CardContent>
-        <Skeleton className="aspect-video w-full" />
+      <CardContent className="flex flex-col gap-5">
+        <Skeleton className="h-4 " />
+        <Skeleton className="h-4 " />
+        <Skeleton className="h-4 " />
+        <div></div>
       </CardContent>
     </Card>
   );
