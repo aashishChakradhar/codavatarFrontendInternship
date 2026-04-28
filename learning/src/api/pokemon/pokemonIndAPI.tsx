@@ -7,8 +7,11 @@ interface PokemonProps {
 
 // export type PokemonData = NonNullable<GetPokemonQueryProps["pokemon"]>;
 
-export type GetPokemonQueryProps = {
+interface GetPokemonQueryProps {
   pokemon: {
+    sprites: {
+      front_default: string | null;
+    } | null;
     name: string | null;
     height: number | null;
     weight: number | null;
@@ -24,11 +27,15 @@ export type GetPokemonQueryProps = {
       name: string | null;
     } | null;
   } | null;
-};
+}
 
+// query
 const GET_POKEMON = gql`
   query GetPokemon($name: String!) {
     pokemon(name: $name) {
+      sprites {
+        front_default
+      }
       name
       height
       weight
@@ -45,10 +52,12 @@ const GET_POKEMON = gql`
   }
 `;
 
+// custom hook
 export default function usePokemon(name: string): {
   pokemon: GetPokemonQueryProps["pokemon"];
   errorMessage: string | null;
 } {
+  // fetching data
   const { error, data } = useSuspenseQuery<GetPokemonQueryProps, PokemonProps>(
     GET_POKEMON,
     {
