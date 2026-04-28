@@ -1,64 +1,62 @@
-import { useBackgroundQuery, useReadQuery } from "@apollo/client/react";
-import { GET_POKEMONS } from "../../api/pokemon/pokemonlist";
-import { Suspense, useState } from "react";
-import PokemonRef from "./pokemonRefComponent";
+import usePokemonList from "../../api/pokemon/pokemonlistAPI";
+
 import {
-  GET_POKEMON,
-  type GetPokemonQueryProps,
-  type PokemonDetailQueryVariables,
-} from "../../api/pokemon/pokemonRef";
-import { SkeletonCard } from "../skeleton/skeleton";
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
-type Pokemon = {
-  id: number;
-  name: string;
+type Props = {
+  selected?: string;
+  onSelect?: (name: string) => void;
 };
 
-type GetPokemonsQuery = {
-  pokemons: {
-    results: Pokemon[];
-  };
-};
-
-export default function PokemonList() {
-  const [listQueryRef] = useBackgroundQuery<GetPokemonsQuery>(GET_POKEMONS);
-  const { error, data } = useReadQuery(listQueryRef);
-
-  const [selected, setSelected] = useState<string>("pikachu");
-  const [detailQueryRef] = useBackgroundQuery<
-    GetPokemonQueryProps,
-    PokemonDetailQueryVariables
-  >(GET_POKEMON, {
-    variables: {
-      name: selected,
-    },
-  });
-
-  if (error) return <p>Error loading Pokémon</p>;
+export default function PokemonList({ selected, onSelect }: Props) {
+  const { pokemons, errorMessage, loading } = usePokemonList();
+  if (errorMessage) return <p>{errorMessage}</p>;
 
   return (
-    <div className="p-5 ">
+    <div>
       <h2>10 Pokémon</h2>
 
-      <ul>
-        {data?.pokemons.results.map((p) => (
-          <li
-            key={p.id}
-            className="p-1 border cursor-pointer"
-            onClick={() => setSelected(p.name)}
-          >
-            {p.name}
-          </li>
-        ))}
-      </ul>
-
-      <Suspense fallback={<SkeletonCard />}>
-        {!detailQueryRef ? (
-          <p>Preparing selected Pokémon query...</p>
-        ) : (
-          <PokemonRef queryRef={detailQueryRef} />
-        )}
-      </Suspense>
+      {loading ? (
+        <p>Loading Pokémon...</p>
+      ) : (
+        <Table>
+          <TableCaption>A list of pokemons.</TableCaption>
+          <TableHeader>
+            <TableRow>
+              <TableHead className="w-25 text-center">Name</TableHead>
+              <TableHead>Type</TableHead>
+            </TableRow>
+          </TableHeader>
+          <TableBody>
+            {pokemons.map((p) => (
+              <TableRow
+                key={p.id}
+                className={`cursor-pointer ${selected === p.name ? "bg-muted" : ""}`}
+                onClick={() => onSelect?.(p.name)}
+              >
+                <TableCell className="font-medium flex items-center justify-center px-15 gap-5">
+                  {p.image ? (
+                    <img src={p.image} alt={p.name} className="h-12 w-12" />
+                  ) : (
+                    "Unknown"
+                  )}
+                  {p.name}
+                </TableCell>
+                <TableCell>
+                  {p.types.length > 0 ? p.types.join(", ") : "Unknown"}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
     </div>
   );
 }
