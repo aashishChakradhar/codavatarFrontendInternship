@@ -21,6 +21,7 @@ const JunkApp = lazy(() => import("../pages/junk/junk"));
 const CurrencyConverter = lazy(
   () => import("../pages/currencyConverter/currencyConverter"),
 );
+const CounterPage = lazy(() => import("../pages/counter/counterPage"));
 
 const isUserAuthenticated = true;
 
@@ -40,6 +41,10 @@ export const allRoutes: RouteObject[] = [
       {
         path: "submit",
         element: withSuspense(<Submit />),
+      },
+      {
+        path: "counter",
+        element: withSuspense(<CounterPage />),
       },
     ],
   },
