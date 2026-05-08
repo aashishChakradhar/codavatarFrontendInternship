@@ -1,0 +1,156 @@
+export interface MenuType {
+  id: number
+  name: string
+  price: number
+  description: string
+  category: string
+}
+export const menuData = [
+  {
+    id: 1,
+    name: "Pizza",
+    price: 350,
+    description: "wonderful pizza",
+    category: "food",
+  },
+  {
+    id: 2,
+    name: "Burger",
+    price: 220,
+    description: "juicy burger",
+    category: "food",
+  },
+  {
+    id: 3,
+    name: "Pasta",
+    price: 280,
+    description: "creamy pasta",
+    category: "food",
+  },
+  {
+    id: 4,
+    name: "Sandwich",
+    price: 180,
+    description: "fresh sandwich",
+    category: "food",
+  },
+  {
+    id: 5,
+    name: "Fries",
+    price: 120,
+    description: "crispy fries",
+    category: "snack",
+  },
+  {
+    id: 6,
+    name: "Salad",
+    price: 160,
+    description: "fresh green salad",
+    category: "healthy",
+  },
+  {
+    id: 7,
+    name: "Taco",
+    price: 240,
+    description: "spicy taco",
+    category: "food",
+  },
+  {
+    id: 8,
+    name: "Noodles",
+    price: 260,
+    description: "hot noodles",
+    category: "food",
+  },
+  {
+    id: 9,
+    name: "Soup",
+    price: 150,
+    description: "warm soup",
+    category: "starter",
+  },
+  {
+    id: 10,
+    name: "Steak",
+    price: 520,
+    description: "grilled steak",
+    category: "main",
+  },
+  {
+    id: 11,
+    name: "Chicken Wings",
+    price: 300,
+    description: "spicy wings",
+    category: "starter",
+  },
+  {
+    id: 12,
+    name: "Paneer Wrap",
+    price: 210,
+    description: "soft paneer wrap",
+    category: "food",
+  },
+  {
+    id: 13,
+    name: "Momos",
+    price: 190,
+    description: "steamed momos",
+    category: "snack",
+  },
+  {
+    id: 14,
+    name: "Coffee",
+    price: 90,
+    description: "hot coffee",
+    category: "drink",
+  },
+  {
+    id: 15,
+    name: "Tea",
+    price: 70,
+    description: "classic tea",
+    category: "drink",
+  },
+  {
+    id: 16,
+    name: "Juice",
+    price: 110,
+    description: "fresh fruit juice",
+    category: "drink",
+  },
+  {
+    id: 17,
+    name: "Ice Cream",
+    price: 130,
+    description: "sweet ice cream",
+    category: "dessert",
+  },
+  {
+    id: 18,
+    name: "Cake",
+    price: 240,
+    description: "soft cake slice",
+    category: "dessert",
+  },
+  {
+    id: 19,
+    name: "Dosa",
+    price: 170,
+    description: "crispy dosa",
+    category: "food",
+  },
+  {
+    id: 20,
+    name: "Biryani",
+    price: 390,
+    description: "aromatic biryani",
+    category: "main",
+  },
+  {
+    id: 21,
+    name: "Falooda",
+    price: 140,
+    description: "cool falooda",
+    category: "dessert",
+  },
+]
