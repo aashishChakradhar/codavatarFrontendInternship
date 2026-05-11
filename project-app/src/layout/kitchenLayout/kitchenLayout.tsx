@@ -1,4 +1,4 @@
-import { Outlet } from "react-router-dom"
+import { Outlet, useNavigate } from "react-router-dom"
 
 import { AppSidebar } from "../sidebar/app-sidebar"
 import {
@@ -15,16 +15,29 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import ThemeToggle from "@/components/themeToggle/themeToggle"
+import RestaurantOutlinedIcon from "@mui/icons-material/RestaurantOutlined"
+
 import { data, kitchenData } from "@/data/navData"
 import { useSelector } from "react-redux"
 import type { RootState } from "@/redux/store"
+import { Button } from "@/components/ui/button"
 
 export default function KitchenLayout() {
   const currentUser = useSelector((state: RootState) => state.user)
   const sidebarData = currentUser.isAdmin
     ? { ...kitchenData, teams: data.teams }
     : kitchenData
+
+  const page = location.pathname
+    .split("/")
+    .filter(Boolean)
+    .at(-1)
+    ?.replace(/-/g, " ")
+    .replace(/\b\w/g, (character) => character.toUpperCase())
+
+  const pageTitle = page === "restro" ? "" : page
+
+  const navigate = useNavigate()
 
   return (
     <SidebarProvider>
@@ -40,27 +53,23 @@ export default function KitchenLayout() {
             <Breadcrumb>
               <BreadcrumbList>
                 <BreadcrumbItem className="hidden md:block">
-                  <BreadcrumbLink href="/kitchen/">Kitchen</BreadcrumbLink>
+                  <BreadcrumbLink href="/kitchen">Kitchen</BreadcrumbLink>
                 </BreadcrumbItem>
                 <BreadcrumbSeparator className="hidden md:block" />
                 <BreadcrumbItem>
-                  <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                  <BreadcrumbPage>{pageTitle}</BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
           </div>
           <div className="justify-end pr-4">
-            <ThemeToggle />
+            <Button variant={"outline"} onClick={() => navigate("order")}>
+              <RestaurantOutlinedIcon />
+            </Button>
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
           <Outlet />
-          {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
         </div>
       </SidebarInset>
     </SidebarProvider>
