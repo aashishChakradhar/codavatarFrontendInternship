@@ -7,14 +7,14 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import type { MenuType } from "@/data/menuData"
+import type { MenuDataInterface } from "@/data/menuData"
 import { type AppDispatch, type RootState } from "@/redux/store"
 
 import { useDispatch, useSelector } from "react-redux"
 import { addItem, removeItem } from "@/redux/order/orderSlice"
 import image from "../../assets/react.svg"
 
-export function MenuCardComponent(item: MenuType) {
+export function MenuCardComponent(item: MenuDataInterface) {
   const count = useSelector((state: RootState) => {
     const order = state.order.orderTemp.find(
       (order) => order.itemId === item.id

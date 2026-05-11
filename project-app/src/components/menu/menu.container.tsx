@@ -1,11 +1,11 @@
-// import { ChartLineInteractive } from "@/components/charts/chart-line-interactive"
 import { MenuCardComponent } from "@/components/menu/menu.component"
 import { SearchBar } from "@/components/searchBar/searchBar"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { fetchMenu } from "@/redux/menu/menuSlice"
 import type { AppDispatch, RootState } from "@/redux/store"
-import OrderSummary from "@/components/orderPlace/orderSummary"
+import OrderSummary from "@/components/orders/orderCart/orderSummary"
+
 function Menu() {
   const dispatch = useDispatch<AppDispatch>()
   const { menus, status, error } = useSelector((state: RootState) => state.menu)
