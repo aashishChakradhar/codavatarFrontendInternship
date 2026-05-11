@@ -1,26 +1,26 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import type { MenuType as MenuItemType } from "@/data/menuData"
-
-interface MenuState {
-  menus: MenuItemType[]
-  status: "idle" | "pending" | "succeeded" | "failed"
+import { type MenuDataInterface } from "@/data/menuData"
+import { type StatusType } from "@/constants/constants"
+interface MenuStateInterface {
+  menus: MenuDataInterface[]
+  status: StatusType
   error: string | null
 }
 
-const initialState: MenuState = {
+const initialState: MenuStateInterface = {
   menus: [],
   status: "idle",
   error: null,
 }
 
 // Load the local menu data asynchronously using dynamic import
-export const fetchMenu = createAsyncThunk<MenuItemType[]>(
+export const fetchMenu = createAsyncThunk<MenuDataInterface[]>(
   "menu/fetchMenu",
   async (_, thunkAPI) => {
     try {
       const mod = await import("@/data/menuData")
       // module exports `menuData`
-      return mod.menuData as MenuItemType[]
+      return mod.menuData as MenuDataInterface[]
     } catch (err) {
       return thunkAPI.rejectWithValue("Failed to load menu data")
     }

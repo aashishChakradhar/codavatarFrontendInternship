@@ -5,51 +5,44 @@ import {
 } from "@reduxjs/toolkit"
 import { fetchTable } from "../table/tableSlice"
 
-import { type OrderStateProp, type statusProp } from "../constants/constants"
+import { type OrderStateType, type StatusType } from "../../constants/constants"
+import type { OrderDataInterface } from "@/data/orderData"
 
-export interface OrderTempProp {
+export interface OrderTempInterface {
   itemId: number
   name: string
   quantity: number
   price: number
 }
-export interface OrderProp {
-  itemId: number
-  name: string
-  quantity: number
-  price: number
-  section: string
-  table: number
-  state: OrderStateProp
-}
-export interface OrderSliceProp {
-  orderTemp: OrderTempProp[]
-  orders: OrderProp[]
-  status: statusProp
+
+export interface OrderSliceInterface {
+  orderTemp: OrderTempInterface[]
+  orders: OrderDataInterface[]
+  status: StatusType
   error: string | null
 }
 
-interface ConfirmOrderPayload {
-  orderList: OrderTempProp[]
+interface ConfirmOrderPayloadInterface {
+  orderList: OrderTempInterface[]
   table: number
   section: string
 }
-interface AcceptOrderPayload {
-  orderList: OrderProp
+interface AcceptOrderPayloadInterface {
+  orderList: OrderDataInterface
 }
-interface ChangeOrderPayload {
-  order: OrderProp
-  orderState: OrderStateProp
+interface ChangeOrderPayloadInterface {
+  order: OrderDataInterface
+  orderState: OrderStateType
 }
 
-const initialState: OrderSliceProp = {
+const initialState: OrderSliceInterface = {
   orderTemp: [],
   orders: [],
   status: "idle",
   error: null,
 }
 
-export const fetchOrder = createAsyncThunk<OrderProp[]>(
+export const fetchOrder = createAsyncThunk<OrderDataInterface[]>(
   "order/fetchOrder",
   async (_, thunkAPI) => {
     try {
@@ -107,14 +100,20 @@ const orderSlice = createSlice({
       }
     },
 
-    confirmOrder: (state, action: PayloadAction<ConfirmOrderPayload>) => {
+    confirmOrder: (
+      state,
+      action: PayloadAction<ConfirmOrderPayloadInterface>
+    ) => {
       const { orderList, table, section } = action.payload
 
-      orderList.forEach((order: OrderTempProp) => {
+      orderList.forEach((order: OrderTempInterface) => {
         state.orders.push({ ...order, table, section, state: "pending" })
       })
     },
-    acceptOrder: (state, action: PayloadAction<AcceptOrderPayload>) => {
+    acceptOrder: (
+      state,
+      action: PayloadAction<AcceptOrderPayloadInterface>
+    ) => {
       const { orderList } = action.payload
 
       state.orders.forEach((order) => {
@@ -124,7 +123,10 @@ const orderSlice = createSlice({
       })
     },
 
-    changeOrderState: (state, action: PayloadAction<ChangeOrderPayload>) => {
+    changeOrderState: (
+      state,
+      action: PayloadAction<ChangeOrderPayloadInterface>
+    ) => {
       const { order, orderState } = action.payload
 
       const targetOrder = state.orders.find(

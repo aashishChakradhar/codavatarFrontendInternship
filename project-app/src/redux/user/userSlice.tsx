@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit"
 import type { PayloadAction } from "@reduxjs/toolkit"
 
-interface UserSliceProp {
+interface UserSliceInterface {
   isAuthenticated: boolean
   isAdmin: boolean
   role: string
@@ -12,7 +12,7 @@ interface UserSliceProp {
 
 const roles = ["kitchen", "restro", "reception"]
 
-const initialState: UserSliceProp = {
+const initialState: UserSliceInterface = {
   isAuthenticated: true,
   isAdmin: false,
   role: roles[1],

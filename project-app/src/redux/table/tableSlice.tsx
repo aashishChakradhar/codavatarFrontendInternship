@@ -3,20 +3,20 @@ import {
   createAsyncThunk,
   type PayloadAction,
 } from "@reduxjs/toolkit"
-import type { TableDataProp } from "@/data/table"
-import type { statusProp } from "../constants/constants"
+import type { TableDataInterface } from "@/data/tableData"
+import type { StatusType } from "../../constants/constants"
 
 interface TablesType {
-  tables: TableDataProp[]
+  tables: TableDataInterface[]
 }
-export interface TableSliceProp {
-  tables: TableDataProp[]
-  selectedTable: TableDataProp
-  status: statusProp
+export interface TableSliceInterface {
+  tables: TableDataInterface[]
+  selectedTable: TableDataInterface
+  status: StatusType
   error: string | null
 }
 
-const initialState: TableSliceProp = {
+const initialState: TableSliceInterface = {
   tables: [],
   selectedTable: {
     section: "unknown",
@@ -33,7 +33,7 @@ export const fetchTable = createAsyncThunk<TablesType["tables"][number][]>(
   "table/fetchTable",
   async (_, thunkAPI) => {
     try {
-      const mod = await import("@/data/table")
+      const mod = await import("@/data/tableData")
       // tableData is { tables: [...] }, so return the inner array
       return mod.tableData.tables
     } catch (err) {
@@ -47,7 +47,7 @@ const tableSlice = createSlice({
   initialState,
   reducers: {
     //payload section number capacity status
-    occupyTable: (state, action: PayloadAction<TableDataProp>) => {
+    occupyTable: (state, action: PayloadAction<TableDataInterface>) => {
       state.tables = state.tables.map((table) =>
         table.section === action.payload.section &&
         table.number === action.payload.number
@@ -55,7 +55,7 @@ const tableSlice = createSlice({
           : table
       )
     },
-    reserveTable: (state, action: PayloadAction<TableDataProp>) => {
+    reserveTable: (state, action: PayloadAction<TableDataInterface>) => {
       state.tables = state.tables.map((table) =>
         table.section === action.payload.section &&
         table.number === action.payload.number
@@ -63,7 +63,7 @@ const tableSlice = createSlice({
           : table
       )
     },
-    cleanTable: (state, action: PayloadAction<TableDataProp>) => {
+    cleanTable: (state, action: PayloadAction<TableDataInterface>) => {
       state.tables = state.tables.map((table) =>
         table.section === action.payload.section &&
         table.number === action.payload.number
@@ -71,7 +71,7 @@ const tableSlice = createSlice({
           : table
       )
     },
-    emptyTable: (state, action: PayloadAction<TableDataProp>) => {
+    emptyTable: (state, action: PayloadAction<TableDataInterface>) => {
       state.tables = state.tables.map((table) =>
         table.section === action.payload.section &&
         table.number === action.payload.number
@@ -79,7 +79,7 @@ const tableSlice = createSlice({
           : table
       )
     },
-    selectTable: (state, action: PayloadAction<TableDataProp>) => {
+    selectTable: (state, action: PayloadAction<TableDataInterface>) => {
       state.selectedTable = action.payload
     },
     resetTableData: () => initialState,
