@@ -1,8 +1,7 @@
 import { type TableComponentProps } from "./table.container"
-import { type TableDataProp } from "@/data/table"
+import { type TableDataInterface } from "@/data/tableData"
 import { TableDrop } from "./tableDrop"
 
-// export function DrawerWithSides() {
 function TableComponent(props: TableComponentProps) {
   const { tableData } = props
 
@@ -12,7 +11,7 @@ function TableComponent(props: TableComponentProps) {
         <div key={section}>
           <h2 className="text-lg font-bold capitalize">{section}</h2>
           <div className="m-auto flex flex-wrap gap-3">
-            {sectionTables.map((table: TableDataProp) => (
+            {sectionTables.map((table: TableDataInterface) => (
               <div key={table.number}>
                 <TableDrop table={table} />
               </div>

@@ -7,8 +7,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import type { TableDataProp } from "@/data/table"
-// import { placeOrder } from "@/redux/order/orderSlice"
+import type { TableDataInterface } from "@/data/tableData"
 import type { AppDispatch } from "@/redux/store"
 import {
   selectTable,
@@ -34,9 +33,9 @@ const buttonClass = (status: string) => {
   }
 }
 
-export function TableDrop({ table }: { table: TableDataProp }) {
+export function TableDrop({ table }: { table: TableDataInterface }) {
   const dispatch = useDispatch<AppDispatch>()
-  const handleClick = (table: TableDataProp, action: string) => {
+  const handleClick = (table: TableDataInterface, action: string) => {
     console.log(`${table.section} ${table.number}`)
     switch (action) {
       case "occupy":

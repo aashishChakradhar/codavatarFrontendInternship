@@ -2,16 +2,16 @@ import { type AppDispatch, type RootState } from "@/redux/store"
 import { fetchTable } from "@/redux/table/tableSlice"
 import { useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import type { TableDataProp } from "@/data/table"
+import type { TableDataInterface } from "@/data/tableData"
 import TableComponent from "@/components/table/table.component"
 
 export interface TableComponentProps {
-  tableData: Record<string, TableDataProp[]>
+  tableData: Record<string, TableDataInterface[]>
 }
 
 function groupTablesBySection(
-  tables: TableDataProp[]
-): Record<string, TableDataProp[]> {
+  tables: TableDataInterface[]
+): Record<string, TableDataInterface[]> {
   return tables.reduce(
     (acc, table) => {
       const section = table.section
@@ -21,11 +21,10 @@ function groupTablesBySection(
       acc[section].push(table)
       return acc
     },
-    {} as Record<string, TableDataProp[]>
+    {} as Record<string, TableDataInterface[]>
   )
 }
 
-// export function DrawerWithSides() {
 function TableContainer() {
   const dispatch = useDispatch<AppDispatch>()
   const { tables, status } = useSelector((state: RootState) => state.table)
