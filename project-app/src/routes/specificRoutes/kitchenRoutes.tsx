@@ -11,7 +11,7 @@ const withSuspense = (node: React.ReactNode) => {
 const KitchenLayout = lazy(() => import("@/layout/kitchenLayout/kitchenLayout"))
 const All = lazy(() => import("@/pages/all"))
 const Report = lazy(() => import("@/pages/forms/reportFormPage"))
-const DashboardPage = lazy(() => import("@/pages/menuPage/menuPage"))
+const OrderPage = lazy(() => import("@/pages/orderPage/orderKitchenPage"))
 
 export const kitchenRoutes: RouteObject[] = [
   {
@@ -28,12 +28,8 @@ export const kitchenRoutes: RouteObject[] = [
         element: withSuspense(<All />),
       },
       {
-        path: "dashboard",
-        element: withSuspense(<DashboardPage />),
-      },
-      {
-        path: "all",
-        element: withSuspense(<All />),
+        path: "order",
+        element: withSuspense(<OrderPage />),
       },
       {
         path: "report",

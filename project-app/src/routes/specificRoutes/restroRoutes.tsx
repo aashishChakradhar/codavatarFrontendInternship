@@ -12,7 +12,7 @@ const RestroLayout = lazy(() => import("@/layout/restroLayout/restroLayout"))
 const Report = lazy(() => import("@/pages/forms/reportFormPage"))
 const TablePage = lazy(() => import("@/pages/tablePage/tablePage"))
 const MenuPage = lazy(() => import("@/pages/menuPage/menuPage"))
-const OrderPage = lazy(() => import("@/pages/orderPage/orderPage"))
+const OrderPage = lazy(() => import("@/pages/orderPage/orderRestroPage"))
 
 export const restroRoutes: RouteObject[] = [
   {
