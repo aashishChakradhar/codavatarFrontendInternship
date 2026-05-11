@@ -16,33 +16,35 @@ import {
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined"
 import RestaurantOutlinedIcon from "@mui/icons-material/RestaurantOutlined"
 import ChairOutlinedIcon from "@mui/icons-material/ChairOutlined"
-export interface DataInterface {
-  teams: {
-    name: string
-    logo: ElementType
-    plan: string
-    path: string
-  }[]
-  navMain: {
+
+export interface TeamsDataInterface {
+  name: string
+  logo: ElementType
+  plan: string
+  path: string
+}
+export interface NavMainDataInterface {
+  title: string
+  url: string
+  icon?: ElementType
+  isActive?: boolean
+  items?: {
     title: string
     url: string
-    icon?: ElementType
-    isActive?: boolean
-    items?: {
-      title: string
-      url: string
-    }[]
   }[]
-  projects:
-    | {
-        name: string
-        url: string
-        icon: ElementType
-      }[]
-    | null
+}
+export interface ProjectsDataInterface {
+  name: string
+  url: string
+  icon: ElementType
+}
+export interface NavigationDataInterface {
+  teams: TeamsDataInterface[]
+  navMain: NavMainDataInterface[]
+  projects: ProjectsDataInterface[] | null
 }
 
-export const data: DataInterface = {
+export const data: NavigationDataInterface = {
   teams: [
     {
       name: "Restify Reception",
@@ -177,7 +179,7 @@ export const data: DataInterface = {
   ],
 }
 
-export const restroData = {
+export const restroData: NavigationDataInterface = {
   teams: [
     {
       name: "Restify Restro",
@@ -313,7 +315,7 @@ export const restroData = {
   // ],
 }
 
-export const receptionData = {
+export const receptionData: NavigationDataInterface = {
   teams: [
     {
       name: "Restify Reception",
@@ -436,7 +438,7 @@ export const receptionData = {
   ],
 }
 
-export const kitchenData = {
+export const kitchenData: NavigationDataInterface = {
   teams: [
     {
       name: "Restify Kitchen",
@@ -447,114 +449,116 @@ export const kitchenData = {
   ],
 
   navMain: [
+    // {
+    //   title: "Dashboard",
+    //   url: "/dashboard",
+    //   icon: SquareTerminal,
+    //   isActive: true,
+    // },
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: SquareTerminal,
-      isActive: true,
-    },
-    {
-      title: "Playground",
-      url: "#",
+      title: "Orders",
+      url: "order",
       icon: SquareTerminal,
       // isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      // items: [
+      //   {
+      //     title: "History",
+      //     url: "#",
+      //   },
+      //   {
+      //     title: "Starred",
+      //     url: "#",
+      //   },
+      //   {
+      //     title: "Settings",
+      //     url: "#",
+      //   },
+      // ],
     },
-    {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
-    },
+
+    //   {
+    //     title: "Models",
+    //     url: "#",
+    //     icon: Bot,
+    //     items: [
+    //       {
+    //         title: "Genesis",
+    //         url: "#",
+    //       },
+    //       {
+    //         title: "Explorer",
+    //         url: "#",
+    //       },
+    //       {
+    //         title: "Quantum",
+    //         url: "#",
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     title: "Documentation",
+    //     url: "#",
+    //     icon: BookOpen,
+    //     items: [
+    //       {
+    //         title: "Introduction",
+    //         url: "#",
+    //       },
+    //       {
+    //         title: "Get Started",
+    //         url: "#",
+    //       },
+    //       {
+    //         title: "Tutorials",
+    //         url: "#",
+    //       },
+    //       {
+    //         title: "Changelog",
+    //         url: "#",
+    //       },
+    //     ],
+    //   },
+    //   {
+    //     title: "Settings",
+    //     url: "#",
+    //     icon: Settings2,
+    //     items: [
+    //       {
+    //         title: "General",
+    //         url: "#",
+    //       },
+    //       {
+    //         title: "Team",
+    //         url: "#",
+    //       },
+    //       {
+    //         title: "Billing",
+    //         url: "#",
+    //       },
+    //       {
+    //         title: "Limits",
+    //         url: "#",
+    //       },
+    //     ],
+    //   },
   ],
 
-  projects: [
-    {
-      name: "Kitchen Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
+  projects: null,
+  // projects: [
+  //   {
+  //     name: "Kitchen Design Engineering",
+  //     url: "#",
+  //     icon: Frame,
+  //   },
+  //   {
+  //     name: "Sales & Marketing",
+  //     url: "#",
+  //     icon: PieChart,
+  //   },
+  //   {
+  //     name: "Travel",
+  //     url: "#",
+  //     icon: Map,
+  //   },
+  // ],
 }

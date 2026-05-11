@@ -1,6 +1,16 @@
-import { type OrderProp } from "@/redux/order/orderSlice"
+import { type OrderStateType } from "@/constants/constants"
 
-export const orderData: OrderProp[] = [
+export interface OrderDataInterface {
+  itemId: number
+  name: string
+  quantity: number
+  price: number
+  section: string
+  table: number
+  state: OrderStateType
+}
+
+export const orderData: OrderDataInterface[] = [
   {
     itemId: 1,
     name: "Margherita Pizza",

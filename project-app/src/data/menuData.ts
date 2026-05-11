@@ -1,11 +1,11 @@
-export interface MenuType {
+export interface MenuDataInterface {
   id: number
   name: string
   price: number
   description: string
   category: string
 }
-export const menuData = [
+export const menuData: MenuDataInterface[] = [
   {
     id: 1,
     name: "Pizza",
