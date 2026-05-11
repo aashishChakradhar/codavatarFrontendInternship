@@ -1,11 +1,5 @@
 import { Button } from "@/components/ui/button"
 import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
-import {
   Table,
   TableBody,
   TableCell,
@@ -15,22 +9,18 @@ import {
 } from "@/components/ui/table"
 import { changeOrderState } from "@/redux/order/orderSlice"
 import { type OrderStateType } from "@/constants/constants"
-import { useDispatch, useSelector } from "react-redux"
-import type { AppDispatch, RootState } from "@/redux/store"
-import { orderStateColor } from "./viewOrder.container"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "@/redux/store"
+import { orderStateColor } from "@/constants/constants"
 import { useState } from "react"
 import { ConfirmChange } from "./changeOrder"
 import type { OrderDataInterface } from "@/data/orderData"
 
 export function ViewOrderComponent({
   orders,
-  states,
 }: {
   orders: OrderDataInterface[]
-  states: OrderStateType[]
 }) {
-  const user = useSelector((state: RootState) => state.user)
-
   const [open, setOpen] = useState<boolean>(false)
   const [selectedOrder, setSelectedOrder] = useState<OrderDataInterface | null>(
     null
@@ -79,33 +69,12 @@ export function ViewOrderComponent({
               {order.section}-{order.table}
             </TableCell>
             <TableCell className="text-center">
-              {user.role === "restro" ? (
-                <Button
-                  className={`${orderStateColor(order.state)}`}
-                  onClick={() => handleClick(order, "delivered")}
-                >
-                  {order.state}
-                </Button>
-              ) : (
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button className={`${orderStateColor(order.state)}`}>
-                      {order.state}
-                      <span className="sr-only">{order.state}</span>
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end">
-                    {states.map((s) => (
-                      <DropdownMenuItem
-                        key={s}
-                        onClick={() => handleClick(order, s)}
-                      >
-                        {s}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-              )}
+              <Button
+                className={`${orderStateColor(order.state)}`}
+                onClick={() => handleClick(order, "delivered")}
+              >
+                {order.state}
+              </Button>
             </TableCell>
           </TableRow>
         ))}
