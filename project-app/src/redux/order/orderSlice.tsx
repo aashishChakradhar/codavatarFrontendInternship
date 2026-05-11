@@ -107,7 +107,13 @@ const orderSlice = createSlice({
       const { orderList, table, section } = action.payload
 
       orderList.forEach((order: OrderTempInterface) => {
-        state.orders.push({ ...order, table, section, state: "pending" })
+        state.orders.push({
+          orderId: 1001,
+          ...order,
+          table,
+          section,
+          state: "pending",
+        })
       })
     },
     acceptOrder: (
@@ -146,6 +152,7 @@ const orderSlice = createSlice({
       state.orderTemp = []
     },
   },
+
   extraReducers: (builder) => {
     builder
       .addCase(fetchTable.pending, (state) => {
