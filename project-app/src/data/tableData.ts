@@ -1,6 +1,6 @@
 import type { TableStateType } from "@/constants/constants"
 
-export interface TableDataProp {
+export interface TableDataInterface {
   section: string
   number: number
   capacity: number
@@ -8,7 +8,7 @@ export interface TableDataProp {
 }
 
 interface TablesType {
-  tables: TableDataProp[]
+  tables: TableDataInterface[]
 }
 
 export const tableData: TablesType = {
