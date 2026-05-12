@@ -1,11 +1,29 @@
+import { changeRole } from "@/constants/role"
 import type { RootState } from "@/redux/store"
+import type { Role } from "@/utils/authentication/authentication"
 import { useSelector } from "react-redux"
-import { Link, isRouteErrorResponse, useRouteError } from "react-router-dom"
+import {
+  Link,
+  Navigate,
+  isRouteErrorResponse,
+  useRouteError,
+} from "react-router-dom"
 
 export default function RouteErrorBoundary() {
   const error = useRouteError()
 
-  const currentUser = useSelector((state: RootState) => state.user)
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
+
+  const loading = useSelector((state: RootState) => state.user.loading)
+  const hasToken = Boolean(localStorage.getItem("access_token"))
+
+  if (!currentUser) {
+    if (loading || hasToken) {
+      return null
+    }
+    return <Navigate to="/login" replace />
+  }
+  const effectiveRole = changeRole(currentUser.role)
 
   let title = "Access Denied"
   let description = "You cannot access this page."
@@ -27,10 +45,10 @@ export default function RouteErrorBoundary() {
         <p className="max-w-md text-sm text-muted-foreground">{description}</p>
       </div>
       <Link
-        to={`/${currentUser.role}/`}
+        to={`/${effectiveRole}/`}
         className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground"
       >
-        Go to home {currentUser.role}
+        Go to home {effectiveRole}
       </Link>
     </div>
   )
