@@ -11,6 +11,7 @@ const withSuspense = (node: React.ReactNode) => {
 const RestroLayout = lazy(() => import("@/layout/restroLayout/restroLayout"))
 const Report = lazy(() => import("@/pages/forms/reportFormPage"))
 const TablePage = lazy(() => import("@/pages/tablePage/tablePage"))
+const DashboardPage = lazy(() => import("@/pages/all"))
 const MenuPage = lazy(() => import("@/pages/menuPage/menuPage"))
 const OrderPage = lazy(() => import("@/pages/orderPage/orderRestroPage"))
 
@@ -28,6 +29,7 @@ export const restroRoutes: RouteObject[] = [
         index: true,
         element: withSuspense(<MenuPage />),
       },
+      { path: "dashboard", element: withSuspense(<DashboardPage />) },
       {
         path: "menu",
         element: withSuspense(<MenuPage />),
