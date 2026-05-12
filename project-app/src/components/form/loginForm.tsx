@@ -10,9 +10,12 @@ import {
 import { Input } from "@/components/ui/input"
 import { useDispatch } from "react-redux"
 import { type AppDispatch } from "@/redux/store"
-import { store } from "@/redux/store"
-import { login, user } from "@/redux/user/userSlice"
+import { login, fetchCurrentUser } from "@/redux/user/userSlice"
 import { useNavigate } from "react-router-dom"
+import { useState } from "react"
+import { ToastMessage, type ToastStatusType } from "../toast/toast"
+
+const loginToastId = "login-toast"
 
 export function LoginForm({
   className,
@@ -21,13 +24,51 @@ export function LoginForm({
   const dispatch = useDispatch<AppDispatch>()
   const navigate = useNavigate()
 
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const [loading, setLoading] = useState(false)
+
+  const [toastStatus, setToastStatus] = useState<ToastStatusType | null>(null)
+  const [toastMessage, setToastMessage] = useState<string | null>(null)
+
+  const [phone, setPhone] = useState<string>("")
+  const [password, setPassword] = useState<string>("")
+
+  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    dispatch(login())
-    dispatch(user())
-    const { user: userData } = store.getState()
-    const path = userData.isAdmin ? "/" : `/${userData.role}/`
-    navigate(path)
+    setLoading(true)
+    setToastStatus("loading")
+    setToastMessage("Logging in...")
+    try {
+      const result = await dispatch(login({ username: phone, password }))
+
+      if (login.fulfilled.match(result)) {
+        setToastStatus("success")
+        setToastMessage("Login successful!")
+        const userResult = await dispatch(fetchCurrentUser())
+        if (fetchCurrentUser.fulfilled.match(userResult)) {
+          navigate("/")
+        } else {
+          const errMsg =
+            (userResult.payload as string | undefined) ||
+            "Failed to load user profile"
+          setToastStatus("error")
+          setToastMessage(errMsg)
+        }
+      } else if (login.rejected.match(result)) {
+        const errorMessage = result.payload || "Login failed"
+        setToastStatus("error")
+        setToastMessage(errorMessage)
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        setToastStatus("error")
+        setToastMessage(err.message)
+      } else {
+        setToastStatus("error")
+        setToastMessage("An unknown error occured")
+      }
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -44,11 +85,17 @@ export function LoginForm({
           </p>
         </div>
         <Field>
-          <FieldLabel htmlFor="email">Email</FieldLabel>
-          <Input id="email" type="email" placeholder="m@example.com" required />
+          <FieldLabel htmlFor="email">Phone</FieldLabel>
+          <Input
+            id="phone"
+            type="tel"
+            placeholder="98********"
+            onChange={(e) => setPhone(e.target.value)}
+            required
+          />
         </Field>
         <Field>
-          <div className="flex items-center">
+          <div className="flex items-center" hidden={true}>
             <FieldLabel htmlFor="password">Password</FieldLabel>
             <a
               href="#"
@@ -57,14 +104,21 @@ export function LoginForm({
               Forgot your password?
             </a>
           </div>
-          <Input id="password" type="password" required />
+          <Input
+            id="password"
+            type="password"
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
         </Field>
         <Field>
-          <Button type="submit">Login</Button>
+          <Button type="submit" disabled={loading}>
+            {loading ? "Logging in..." : "Login"}
+          </Button>
         </Field>
         <FieldSeparator hidden>Or continue with</FieldSeparator>
-        <Field>
-          <Button variant="outline" type="button" hidden>
+        <Field hidden>
+          <Button variant="outline" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
               <path
                 d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"
@@ -81,6 +135,13 @@ export function LoginForm({
           </FieldDescription>
         </Field>
       </FieldGroup>
+      {toastMessage && toastStatus && (
+        <ToastMessage
+          status={toastStatus}
+          message={toastMessage}
+          toastId={loginToastId}
+        />
+      )}
     </form>
   )
 }
