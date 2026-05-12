@@ -14,13 +14,13 @@ import {
   SidebarRail,
 } from "@/components/ui/sidebar"
 
-import { data, type DataInterface } from "@/data/navData"
+import { data, type NavigationDataInterface } from "@/data/navData"
 
 export function AppSidebar({
   pvtData,
   ...props
 }: {
-  pvtData: DataInterface
+  pvtData: NavigationDataInterface
 } & React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>

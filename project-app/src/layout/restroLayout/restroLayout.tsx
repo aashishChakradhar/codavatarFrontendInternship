@@ -23,7 +23,8 @@ import type { RootState } from "@/redux/store"
 import { useSelector } from "react-redux"
 import { Button } from "@/components/ui/button"
 export default function RestroLayout() {
-  const currentUser = useSelector((state: RootState) => state.user)
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  if (!currentUser) return
   const location = useLocation()
   const sidebarData = currentUser.isAdmin
     ? { ...restroData, teams: data.teams }

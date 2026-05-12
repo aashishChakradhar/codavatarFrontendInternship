@@ -37,7 +37,8 @@ export function NavMain({
     }[]
   }[]
 }) {
-  const currentUser = useSelector((state: RootState) => state.user)
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  const role = currentUser?.role ?? "none"
   const { isMobile, setOpenMobile } = useSidebar()
   return (
     <SidebarGroup>
@@ -82,12 +83,7 @@ export function NavMain({
             ) : (
               <SidebarMenuButton asChild tooltip={item.title}>
                 <Link
-                  to={
-                    // currentUser.isAdmin
-                    //   ? item.url
-                    //   :
-                    `/${currentUser.role}/${item.url}`
-                  }
+                  to={`./${item.url}`}
                   onClick={() => {
                     if (isMobile) setOpenMobile(false)
                   }}

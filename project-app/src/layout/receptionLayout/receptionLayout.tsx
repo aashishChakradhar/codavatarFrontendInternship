@@ -21,7 +21,8 @@ import { data, receptionData } from "@/data/navData"
 import { useSelector } from "react-redux"
 import type { RootState } from "@/redux/store"
 export default function ReceptionLayout() {
-  const currentUser = useSelector((state: RootState) => state.user)
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  if (!currentUser) return
   const sidebarData = currentUser.isAdmin
     ? { ...receptionData, teams: data.teams }
     : receptionData

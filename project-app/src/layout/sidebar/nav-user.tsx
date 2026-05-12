@@ -34,6 +34,8 @@ import { type AppDispatch, type RootState } from "@/redux/store"
 import { logout } from "@/redux/user/userSlice"
 import { useTheme } from "@/components/theme-provider"
 
+const pp = "/avatars/shadcn.jpg"
+
 export function NavUser() {
   const { isMobile } = useSidebar()
 
@@ -41,7 +43,8 @@ export function NavUser() {
 
   const dispatch = useDispatch<AppDispatch>()
 
-  const user = useSelector((state: RootState) => state.user)
+  const user = useSelector((state: RootState) => state.user.currentUser)
+  if (!user) return
 
   const handleLogout = () => {
     dispatch(logout())
@@ -57,12 +60,14 @@ export function NavUser() {
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
               <Avatar className="h-8 w-8 rounded-lg">
-                <AvatarImage src={user.avatar} alt={user.name} />
+                <AvatarImage src={pp} alt={`${user.firstName} `} />
                 <AvatarFallback className="rounded-lg">CN</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name}</span>
-                <span className="truncate text-xs">{user.email}</span>
+                <span className="truncate font-medium">
+                  {user.firstName} {user.lastName}
+                </span>
+                <span className="truncate text-xs">{user.phone}</span>
               </div>
               <ChevronsUpDown className="ml-auto size-4" />
             </SidebarMenuButton>
@@ -76,12 +81,14 @@ export function NavUser() {
             <DropdownMenuLabel className="p-0 font-normal">
               <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
                 <Avatar className="h-8 w-8 rounded-lg">
-                  <AvatarImage src={user.avatar} alt={user.name} />
+                  <AvatarImage src={pp} alt={`${user.firstName} `} />
                   <AvatarFallback className="rounded-lg">CN</AvatarFallback>
                 </Avatar>
                 <div className="grid flex-1 text-left text-sm leading-tight">
-                  <span className="truncate font-medium">{user.name}</span>
-                  <span className="truncate text-xs">{user.email}</span>
+                  <span className="truncate font-medium">
+                    {user.firstName} {user.lastName}
+                  </span>
+                  <span className="truncate text-xs">{user.phone}</span>
                 </div>
               </div>
             </DropdownMenuLabel>

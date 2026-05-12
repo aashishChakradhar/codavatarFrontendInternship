@@ -23,7 +23,8 @@ import type { RootState } from "@/redux/store"
 import { Button } from "@/components/ui/button"
 
 export default function KitchenLayout() {
-  const currentUser = useSelector((state: RootState) => state.user)
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  if (!currentUser) return
   const sidebarData = currentUser.isAdmin
     ? { ...kitchenData, teams: data.teams }
     : kitchenData
