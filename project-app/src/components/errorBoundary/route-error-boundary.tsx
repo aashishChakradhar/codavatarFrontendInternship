@@ -1,6 +1,5 @@
 import { changeRole } from "@/constants/role"
 import type { RootState } from "@/redux/store"
-import type { Role } from "@/utils/authentication/authentication"
 import { useSelector } from "react-redux"
 import {
   Link,
