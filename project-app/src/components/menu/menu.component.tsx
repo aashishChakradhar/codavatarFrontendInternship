@@ -7,12 +7,12 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-import type { MenuDataInterface } from "@/data/menuData"
 import { type AppDispatch, type RootState } from "@/redux/store"
 
 import { useDispatch, useSelector } from "react-redux"
 import { addItem, removeItem } from "@/redux/order/orderSlice"
 import image from "../../assets/react.svg"
+import type { MenuDataInterface } from "@/redux/menu/menuSlice"
 
 export function MenuCardComponent(item: MenuDataInterface) {
   const count = useSelector((state: RootState) => {
