@@ -1,5 +1,5 @@
+import type { TableDataInterface } from "@/redux/table/tableSlice"
 import { type TableComponentProps } from "./table.container"
-import { type TableDataInterface } from "@/data/tableData"
 import { TableDrop } from "./tableDrop"
 
 function TableComponent(props: TableComponentProps) {

@@ -1,8 +1,7 @@
-import { type AppDispatch, type RootState } from "@/redux/store"
-import { fetchTable } from "@/redux/table/tableSlice"
-import { useEffect } from "react"
-import { useDispatch, useSelector } from "react-redux"
-import type { TableDataInterface } from "@/data/tableData"
+import { type RootState } from "@/redux/store"
+import { type TableDataInterface } from "@/redux/table/tableSlice"
+
+import { useSelector } from "react-redux"
 import TableComponent from "@/components/table/table.component"
 
 export interface TableComponentProps {
@@ -14,7 +13,7 @@ function groupTablesBySection(
 ): Record<string, TableDataInterface[]> {
   return tables.reduce(
     (acc, table) => {
-      const section = table.section
+      const section = table.section.name
       if (!acc[section]) {
         acc[section] = []
       }
@@ -26,23 +25,10 @@ function groupTablesBySection(
 }
 
 function TableContainer() {
-  const dispatch = useDispatch<AppDispatch>()
-  const { tables, status } = useSelector((state: RootState) => state.table)
-
-  useEffect(() => {
-    if (status === "idle") dispatch(fetchTable())
-  }, [dispatch, status])
+  const { tables } = useSelector((state: RootState) => state.table)
 
   // Get grouped tables
   const groupedTables = groupTablesBySection(tables)
-
-  if (status === "pending") {
-    return <div className="text-sm">Loading tables...</div>
-  }
-
-  if (status === "failed") {
-    return <div className="text-sm text-red-500">Error loading tables</div>
-  }
 
   return (
     <div className="flex flex-col gap-4">

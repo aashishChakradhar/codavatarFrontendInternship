@@ -7,20 +7,20 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import type { TableDataInterface } from "@/data/tableData"
 import type { AppDispatch } from "@/redux/store"
 import {
   selectTable,
   cleanTable,
-  emptyTable,
+  availableTable,
   occupyTable,
   reserveTable,
+  type TableDataInterface,
 } from "@/redux/table/tableSlice"
 import { useDispatch } from "react-redux"
 
 const buttonClass = (status: string) => {
   switch (status) {
-    case "empty":
+    case "available":
       return "bg-green-400"
     case "occupied":
       return "bg-red-400"
@@ -36,9 +36,9 @@ const buttonClass = (status: string) => {
 export function TableDrop({ table }: { table: TableDataInterface }) {
   const dispatch = useDispatch<AppDispatch>()
   const handleClick = (table: TableDataInterface, action: string) => {
-    console.log(`${table.section} ${table.number}`)
+    console.log(`${table.sectionId} ${table.number}`)
     switch (action) {
-      case "occupy":
+      case "occupied":
         dispatch(occupyTable(table))
         dispatch(
           selectTable({
@@ -53,8 +53,8 @@ export function TableDrop({ table }: { table: TableDataInterface }) {
       case "reserved":
         dispatch(reserveTable(table))
         break
-      case "empty":
-        dispatch(emptyTable(table))
+      case "available":
+        dispatch(availableTable(table))
         break
 
       default:
@@ -63,21 +63,23 @@ export function TableDrop({ table }: { table: TableDataInterface }) {
   }
   return (
     <DropdownMenu>
-      <div className={`${buttonClass(table.state)}`}>
+      <div className={``}>
         <DropdownMenuTrigger
           className={`flex h-20 w-20 items-center justify-center rounded-none border`}
           asChild
         >
-          <Button variant="outline">Table-{table.number}</Button>
+          <Button variant="outline" className={`${buttonClass(table.state)} `}>
+            Table-{table.number}
+          </Button>
         </DropdownMenuTrigger>
       </div>
       <DropdownMenuContent className="w-40" align="start">
         <DropdownMenuGroup>
           <DropdownMenuLabel>Set Table</DropdownMenuLabel>
-          <DropdownMenuItem onSelect={() => handleClick(table, "empty")}>
-            Empty
+          <DropdownMenuItem onSelect={() => handleClick(table, "available")}>
+            Available
           </DropdownMenuItem>
-          <DropdownMenuItem onSelect={() => handleClick(table, "occupy")}>
+          <DropdownMenuItem onSelect={() => handleClick(table, "occupied")}>
             Occupy
           </DropdownMenuItem>
           <DropdownMenuItem onSelect={() => handleClick(table, "reserved")}>
