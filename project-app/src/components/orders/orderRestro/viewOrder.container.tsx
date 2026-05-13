@@ -1,41 +1,41 @@
-import { useDispatch, useSelector } from "react-redux"
+import { useSelector } from "react-redux"
 import { ViewOrderComponent } from "./viewOrder.component"
-import { type AppDispatch, type RootState } from "@/redux/store"
-import { fetchOrder } from "@/redux/order/orderSlice"
+import { type RootState } from "@/redux/store"
 import { useEffect, useState } from "react"
-import type { OrderDataInterface } from "@/data/orderData"
+import { type OrderListInterface } from "@/redux/order/orderNextSlice"
 
 function OrderRestro() {
-  const dispatch = useDispatch<AppDispatch>()
-  const { orders, status, error } = useSelector(
-    (state: RootState) => state.order
-  )
-  const user = useSelector((state: RootState) => state.user)
+  const orders = useSelector((state: RootState) => state.item.orders ?? [])
+  const user = useSelector((state: RootState) => state.user.currentUser)
+  if (!user) return
 
-  const [availableOrders, setAvailableOrders] = useState<OrderDataInterface[]>(
+  const [availableOrders, setAvailableOrders] = useState<OrderListInterface[]>(
     []
   )
-  useEffect(() => {
-    dispatch(fetchOrder())
-  }, [dispatch])
 
   //provide menu state append option as per user role
   useEffect(() => {
     if (user.isAdmin) {
-      setAvailableOrders([...orders])
+      setAvailableOrders(orders)
       return
     }
 
-    if (user.role === "restro") {
-      setAvailableOrders(orders.filter((order) => order.state === "completed"))
-      return
-    }
-
-    if (user.role === "reception") {
+    if (user.role === "waiter") {
       setAvailableOrders(
         orders.filter((order) =>
-          ["preparing", "completed", "delivered", "cancelled"].includes(
-            order.state
+          order.items.some((item) => item.status === "ready")
+        )
+      )
+      return
+    }
+
+    if (user.role === "receptionist") {
+      setAvailableOrders(
+        orders.filter((order) =>
+          order.items.some((item) =>
+            ["in-progress", "ready", "delivered", "cancelled"].includes(
+              item.status
+            )
           )
         )
       )
@@ -44,20 +44,6 @@ function OrderRestro() {
 
     setAvailableOrders([])
   }, [user.isAdmin, user.role, orders])
-
-  if (status === "pending") {
-    return <div className="text-sm">Loading Menu...</div>
-  }
-
-  if (status === "failed") {
-    return (
-      <div className="text-sm text-red-500">
-        Error loading Menu
-        <hr />
-        {error}
-      </div>
-    )
-  }
 
   return <ViewOrderComponent orders={availableOrders} />
 }

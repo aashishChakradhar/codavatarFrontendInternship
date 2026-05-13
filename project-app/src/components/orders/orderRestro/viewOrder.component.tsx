@@ -13,13 +13,16 @@ import { useDispatch } from "react-redux"
 import type { AppDispatch } from "@/redux/store"
 import { orderStateColor } from "@/constants/constants"
 import { useState } from "react"
-import { ConfirmChange } from "./changeOrder"
 import type { OrderDataInterface } from "@/data/orderData"
+import type {
+  ItemsListInterface,
+  OrderListInterface,
+} from "@/redux/order/orderNextSlice"
 
 export function ViewOrderComponent({
   orders,
 }: {
-  orders: OrderDataInterface[]
+  orders?: OrderListInterface[]
 }) {
   const [open, setOpen] = useState<boolean>(false)
   const [selectedOrder, setSelectedOrder] = useState<OrderDataInterface | null>(
@@ -31,8 +34,25 @@ export function ViewOrderComponent({
 
   const dispatch = useDispatch<AppDispatch>()
 
-  const handleClick = (order: OrderDataInterface, state: OrderStateType) => {
-    setSelectedOrder(order)
+  const handleClick = (
+    order: OrderListInterface,
+    item: ItemsListInterface,
+    state: OrderStateType
+  ) => {
+    // build an OrderDataInterface from order + item to match changeOrderState payload
+    const builtOrder: OrderDataInterface = {
+      orderId: Number(order.table?.number ?? 0),
+      itemId: Number(item.id),
+      name: item.dish?.name ?? "",
+      quantity: item.quantity,
+      price: (item.dish as any)?.price ?? 0,
+      section:
+        order.table?.section?.name ?? (order.table as any)?.section ?? "",
+      table: order.table?.number ?? 0,
+      state: state,
+    }
+
+    setSelectedOrder(builtOrder)
     setSelectedState(state)
     setOpen(true)
   }
@@ -47,6 +67,9 @@ export function ViewOrderComponent({
     setSelectedOrder(null)
     setSelectedState(null)
   }
+  const rows = (orders ?? []).flatMap((order) =>
+    (order?.items ?? []).map((item) => ({ order, item }))
+  )
 
   return (
     <Table className="mx-auto justify-center text-center md:w-9/10 lg:w-7/10">
@@ -60,31 +83,38 @@ export function ViewOrderComponent({
         </TableRow>
       </TableHeader>
       <TableBody>
-        {orders.map((order, index) => (
-          <TableRow key={index}>
-            <TableCell className="font-medium">{index + 1}</TableCell>
-            <TableCell>{order.name}</TableCell>
-            <TableCell>{order.quantity}</TableCell>
+        {rows.map(({ order, item }, rowIndex) => (
+          <TableRow
+            key={`${order.table?.number ?? "x"}-${item.id}-${rowIndex}`}
+          >
+            <TableCell className="font-medium">{rowIndex + 1}</TableCell>
+            <TableCell>{item.dish?.name ?? ""}</TableCell>
+            <TableCell>{item.quantity}</TableCell>
             <TableCell>
-              {order.section}-{order.table}
+              {order.table?.section?.name ??
+                order.table?.section?.id ??
+                order.table?.number ??
+                ""}
             </TableCell>
             <TableCell className="text-center">
               <Button
-                className={`${orderStateColor(order.state)}`}
-                onClick={() => handleClick(order, "delivered")}
+                className={orderStateColor(
+                  (item as any).status?.status ?? (item as any).status
+                )}
+                onClick={() => handleClick(order, item, "delivered")}
               >
-                {order.state}
+                {(item as any).status?.status ?? (item as any).status}
               </Button>
             </TableCell>
           </TableRow>
         ))}
       </TableBody>
-      <ConfirmChange
+      {/* <ConfirmChange  
         open={open}
         onOpenChange={setOpen}
         state={selectedState ?? "pending"}
         onConfirm={handleConfirm}
-      />
+      /> */}
     </Table>
   )
 }
