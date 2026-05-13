@@ -1,6 +1,11 @@
 import TableContainer from "@/components/table"
+import useLoadTable from "@/hooks/use-loadTable"
 
-// export function DrawerWithSides() {
 export default function TablePage() {
-  return <TableContainer />
+  useLoadTable()
+  return (
+    <>
+      <TableContainer />
+    </>
+  )
 }
