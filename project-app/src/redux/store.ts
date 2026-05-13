@@ -4,6 +4,8 @@ import userReducer from "./user/userSlice"
 import orderReducer from "./order/orderSlice"
 import menuReducer from "./menu/menuSlice"
 import tableReducer from "./table/tableSlice"
+import itemReducer from "./order/orderNextSlice"
+import toastReducer from "./toast/toastSlice"
 import {
   persistStore,
   persistReducer,
@@ -22,6 +24,8 @@ const rootReducer = combineReducers({
   order: orderReducer,
   menu: menuReducer,
   table: tableReducer,
+  toast: toastReducer,
+  item: itemReducer,
 })
 
 const persistConfig = {
