@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit"
 
 export type RoleDBType = "chef" | "waiter" | "receptionist" | null
 
-interface UserDataInterface {
+export interface UserDataInterface {
   firstName: string
   middleName: string
   lastName: string
@@ -15,7 +15,7 @@ interface UserDataInterface {
   updatedAt: string
 }
 
-interface UserDBInterface {
+export interface UserDBInterface {
   first_name: string
   middle_name: string
   last_name: string
