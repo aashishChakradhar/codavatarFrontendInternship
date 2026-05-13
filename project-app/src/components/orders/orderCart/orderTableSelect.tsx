@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "@/redux/store"
-import { selectTable } from "@/redux/table/tableSlice"
+import { selectTable, type TableDataInterface } from "@/redux/table/tableSlice"
 import {
   Select,
   SelectContent,
@@ -11,13 +11,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import type { TableDataInterface } from "@/data/tableData"
 
 export function SelectOrderTable({ tables }: { tables: TableDataInterface[] }) {
   const dispatch = useDispatch<AppDispatch>()
   const { selectedTable } = useSelector((state: RootState) => state.table)
   const [selectedSection, setSelectedSection] = useState<string | null>(
-    selectedTable?.section ?? null
+    selectedTable.sectionId ?? null
   )
   const [selectedTableId, setSelectedTableId] = useState<string | null>(
     selectedTable?.section && selectedTable.number
@@ -29,10 +28,10 @@ export function SelectOrderTable({ tables }: { tables: TableDataInterface[] }) {
   const sections = useMemo(() => {
     const grouped = new Map<string, typeof tables>()
     tables.forEach((table) => {
-      if (!grouped.has(table.section)) {
-        grouped.set(table.section, [])
+      if (!grouped.has(table.section.name)) {
+        grouped.set(table.section.name, [])
       }
-      grouped.get(table.section)!.push(table)
+      grouped.get(table.section.name)!.push(table)
     })
     return Array.from(grouped.entries())
   }, [tables])
@@ -40,7 +39,7 @@ export function SelectOrderTable({ tables }: { tables: TableDataInterface[] }) {
   // Get tables for selected section
   const tablesInSection = useMemo(() => {
     if (!selectedSection) return []
-    return tables.filter((t) => t.section === selectedSection)
+    return tables.filter((t) => t.section.name === selectedSection)
   }, [selectedSection, tables])
 
   const handleTableChange = (tableId: string) => {
@@ -57,13 +56,6 @@ export function SelectOrderTable({ tables }: { tables: TableDataInterface[] }) {
         ...nextSelectedTable,
       })
     )
-    //
-    // dispatch(
-    //   placeOrder({
-    //     orderSection: selectedSection,
-    //     orderTable: nextSelectedTable.number,
-    //   })
-    // )
   }
 
   return (

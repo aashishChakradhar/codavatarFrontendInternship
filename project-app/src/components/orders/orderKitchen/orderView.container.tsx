@@ -51,7 +51,9 @@ function OrderKitchen() {
   const { orders, status, error } = useSelector(
     (state: RootState) => state.order
   )
-  const user = useSelector((state: RootState) => state.user)
+  const user = useSelector((state: RootState) => state.user.currentUser)
+  if (!user) return
+
   const [availableOrders, setAvailableOrders] = useState<OrderDataInterface[]>(
     []
   )
@@ -73,7 +75,7 @@ function OrderKitchen() {
     if (user.isAdmin) {
       setAvailableState([...orderState])
     }
-    if (user.role === "kitchen") {
+    if (user.role === "chef") {
       setAvailableState(["preparing", "completed"])
     }
   }, [user.isAdmin, user.role])
@@ -84,7 +86,7 @@ function OrderKitchen() {
       setAvailableOrders([...orders])
       setArrangedOrder(orderArrange(orders))
     }
-    if (user.role === "kitchen") {
+    if (user.role === "chef") {
       const filteredOrders = orders.filter(
         (order) => order.state === "preparing" || order.state === "pending"
       )

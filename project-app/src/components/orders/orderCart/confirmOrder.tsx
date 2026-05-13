@@ -29,7 +29,7 @@ export function ConfirmOrder({ open, onOpenChange }: OpenStateInterface) {
       confirmOrder({
         orderList: orderTemp,
         table: table.number,
-        section: table.section,
+        section: table.sectionId,
       })
     )
     orderTemp.map((orderT) => {
@@ -37,7 +37,7 @@ export function ConfirmOrder({ open, onOpenChange }: OpenStateInterface) {
         Tname:${orderT.name}
         Tprice:${orderT.price}
         table:${table.number},
-        section:${table.section},
+        section:${table.sectionId},
         `)
     })
     console.log("order")
@@ -75,7 +75,7 @@ export function ConfirmOrder({ open, onOpenChange }: OpenStateInterface) {
               <AlertDialogDescription className="flex flex-col text-left">
                 <span>Place order for given details:</span>
                 <span className="font-bold">
-                  Section: {table.section.toUpperCase()}
+                  Section: {table.section.name.toUpperCase()}
                 </span>
                 <span className="font-bold">Table: {table.number}</span>
               </AlertDialogDescription>
