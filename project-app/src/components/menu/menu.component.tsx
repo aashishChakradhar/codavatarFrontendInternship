@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button"
 import {
   Card,
   CardAction,
+  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -34,6 +35,7 @@ export function MenuCardComponent(item: MenuDataInterface) {
           <Badge variant="secondary">Rs. {item.price}</Badge>
         </CardAction>
         <CardTitle>{item.name}</CardTitle>
+        <CardDescription>{item.dishType}</CardDescription>
       </CardHeader>
       <CardFooter className="justify-center gap-3">
         <Button
