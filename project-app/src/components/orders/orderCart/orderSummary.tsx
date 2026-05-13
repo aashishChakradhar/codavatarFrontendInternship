@@ -13,39 +13,24 @@ import {
 import ShoppingBagOutlinedIcon from "@mui/icons-material/ShoppingBagOutlined"
 
 import { OrderList } from "./orderList"
-import { useDispatch, useSelector } from "react-redux"
-import { type AppDispatch, type RootState } from "@/redux/store"
-import { useEffect, useState } from "react"
+import { useSelector } from "react-redux"
+import { type RootState } from "@/redux/store"
+import { useState } from "react"
 
 import ChairIcon from "@mui/icons-material/Chair"
 import { SelectOrderTable } from "./orderTableSelect"
 import { ConfirmOrder } from "./confirmOrder"
-import { fetchTable } from "@/redux/table/tableSlice"
+import useLoadTable from "@/hooks/use-loadTable"
 
 // export function DrawerWithSides() {
 function PlaceOrder() {
-  const { tables, status } = useSelector((state: RootState) => state.table)
+  const { tables } = useSelector((state: RootState) => state.table)
   const { orderTemp } = useSelector((state: RootState) => state.order)
-
   const [open, setOpen] = useState<boolean>(false)
   const [orderOpen, setOrderOpen] = useState<boolean>(false)
   const hasOrder: boolean = orderTemp.length !== 0
 
-  const dispatch = useDispatch<AppDispatch>()
-
-  useEffect(() => {
-    if (status === "idle") {
-      dispatch(fetchTable())
-    }
-  }, [dispatch, status])
-
-  if (status === "pending") {
-    return <div className="text-sm">Loading tables...</div>
-  }
-
-  if (status === "failed") {
-    return <div className="text-sm text-red-500">Error loading tables</div>
-  }
+  useLoadTable()
 
   return (
     <div className="flex flex-wrap gap-2">
