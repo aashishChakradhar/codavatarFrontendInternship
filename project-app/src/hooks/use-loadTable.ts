@@ -6,27 +6,20 @@ import { useDispatch, useSelector } from "react-redux"
 
 const useLoadTable = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const status = useSelector((state: RootState) => state.table.status)
+  const tables = useSelector((state: RootState) => state.table.tables)
 
   useEffect(() => {
-    if (status !== "idle") return
+    if (tables && tables.length > 0) return
 
-    dispatch(
-      activateToast({
-        toastId: "load-table",
-        status: "loading",
-        message: "Loading Tables...",
-      })
-    )
     const fetchData = async () => {
       try {
         const result = await dispatch(fetchTable())
-        if (fetchTable.fulfilled.match(result)) {
+        if (fetchTable.pending.match(result)) {
           dispatch(
             activateToast({
               toastId: "load-table",
-              status: "success",
-              message: "Tables Loaded.",
+              status: "loading",
+              message: "Loading Tables...",
             })
           )
         } else if (fetchTable.rejected.match(result)) {
@@ -39,6 +32,14 @@ const useLoadTable = () => {
               toastId: "load-table",
               status: "error",
               message: errorMessage,
+            })
+          )
+        } else if (fetchTable.fulfilled.match(result)) {
+          dispatch(
+            activateToast({
+              toastId: "load-table",
+              status: "success",
+              message: "Tables Loaded.",
             })
           )
         }
@@ -56,7 +57,7 @@ const useLoadTable = () => {
     }
 
     fetchData()
-  }, [dispatch, status])
+  }, [dispatch, tables])
 }
 
 export default useLoadTable

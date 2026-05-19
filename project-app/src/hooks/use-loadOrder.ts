@@ -1,4 +1,4 @@
-import { fetchItems } from "@/redux/order/orderNextSlice"
+import { fetchAllOrders } from "@/redux/order/orderSlice"
 import type { AppDispatch, RootState } from "@/redux/store"
 import { activateToast } from "@/redux/toast/toastSlice"
 import { useEffect } from "react"
@@ -6,22 +6,23 @@ import { useDispatch, useSelector } from "react-redux"
 
 const useLoadOrder = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const status = useSelector((state: RootState) => state.item.status)
+  const orders = useSelector((state: RootState) => state.order.orders)
 
   useEffect(() => {
-    if (status !== "idle") return
+    if (orders && orders.length > 0) return
 
-    dispatch(
-      activateToast({
-        toastId: "load-items",
-        status: "loading",
-        message: "Loading Orders...",
-      })
-    )
     const loadOrder = async () => {
       try {
-        const result = await dispatch(fetchItems())
-        if (fetchItems.fulfilled.match(result)) {
+        const result = await dispatch(fetchAllOrders())
+        if (fetchAllOrders.pending.match(result)) {
+          dispatch(
+            activateToast({
+              toastId: "load-items",
+              status: "loading",
+              message: "Loading Orders...",
+            })
+          )
+        } else if (fetchAllOrders.fulfilled.match(result)) {
           dispatch(
             activateToast({
               toastId: "load-items",
@@ -29,7 +30,7 @@ const useLoadOrder = () => {
               message: "Orders Loaded.",
             })
           )
-        } else if (fetchItems.rejected.match(result)) {
+        } else if (fetchAllOrders.rejected.match(result)) {
           const errorMessage = result.payload || "Loading menu failed"
           dispatch(
             activateToast({
@@ -53,7 +54,7 @@ const useLoadOrder = () => {
     }
 
     loadOrder()
-  }, [dispatch, status])
+  }, [dispatch, orders])
 }
 
 export default useLoadOrder

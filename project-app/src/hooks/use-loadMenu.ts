@@ -6,21 +6,23 @@ import { useDispatch, useSelector } from "react-redux"
 
 const useLoadMenu = () => {
   const dispatch = useDispatch<AppDispatch>()
-  const status = useSelector((state: RootState) => state.menu.status)
+  const menus = useSelector((state: RootState) => state.menu.menus)
 
   useEffect(() => {
-    if (status !== "idle") return
+    if (menus && menus.length > 0) return // already loaded, do nothing
 
-    dispatch(
-      activateToast({
-        toastId: "load-menu",
-        status: "loading",
-        message: "Loading Menu...",
-      })
-    )
     const loadMenu = async () => {
       try {
+        dispatch(
+          activateToast({
+            toastId: "load-menu",
+            status: "loading",
+            message: "Loading Menu...",
+          })
+        )
+
         const result = await dispatch(fetchMenu())
+
         if (fetchMenu.fulfilled.match(result)) {
           dispatch(
             activateToast({
@@ -41,10 +43,10 @@ const useLoadMenu = () => {
         }
       } catch (err) {
         const message =
-          err instanceof Error ? err.message : "An unknown error occured"
+          err instanceof Error ? err.message : "An unknown error occurred"
         dispatch(
           activateToast({
-            toastId: "load-table",
+            toastId: "load-menu",
             status: "error",
             message,
           })
@@ -53,7 +55,8 @@ const useLoadMenu = () => {
     }
 
     loadMenu()
-  }, [dispatch, status])
+    // only run on mount or when menus length changes
+  }, [dispatch, menus])
 }
 
 export default useLoadMenu
