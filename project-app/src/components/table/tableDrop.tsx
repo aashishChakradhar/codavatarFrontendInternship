@@ -7,15 +7,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import type { TableStateType } from "@/constants/constants"
 import type { AppDispatch } from "@/redux/store"
 import {
   selectTable,
-  cleanTable,
-  availableTable,
-  occupyTable,
-  reserveTable,
   type TableDataInterface,
+  updateOptimisticTableStatus,
+  updateTableStatus,
 } from "@/redux/table/tableSlice"
+import {} from "react"
 import { useDispatch } from "react-redux"
 
 const buttonClass = (status: string) => {
@@ -35,41 +35,47 @@ const buttonClass = (status: string) => {
 
 export function TableDrop({ table }: { table: TableDataInterface }) {
   const dispatch = useDispatch<AppDispatch>()
-  const handleClick = (table: TableDataInterface, action: string) => {
-    console.log(`${table.sectionId} ${table.number}`)
-    switch (action) {
-      case "occupied":
-        dispatch(occupyTable(table))
-        dispatch(
-          selectTable({
-            ...table,
-            state: "occupied",
-          })
-        )
-        break
-      case "cleaning":
-        dispatch(cleanTable(table))
-        break
-      case "reserved":
-        dispatch(reserveTable(table))
-        break
-      case "available":
-        dispatch(availableTable(table))
-        break
+  const handleClick = async (table: TableDataInterface, action: string) => {
+    console.log(`section:${table.section.name}- table:${table.number}`)
+    const map: Record<string, TableStateType> = {
+      occupied: "occupied",
+      cleaning: "cleaning",
+      reserved: "reserved",
+      available: "available",
+    }
+    const newStatus = map[action]
+    if (!newStatus) return
 
-      default:
-        break
+    // optimistic update
+    dispatch(
+      updateOptimisticTableStatus({
+        table,
+        status: newStatus,
+      })
+    )
+    dispatch(selectTable({ ...table, status: newStatus }))
+
+    // persist
+    const res = await dispatch(
+      updateTableStatus({ id: table.id, status: newStatus })
+    )
+    if (updateTableStatus.rejected.match(res)) {
+      console.error("Failed to persist status:", res)
     }
   }
+
   return (
     <DropdownMenu>
       <div className={``}>
         <DropdownMenuTrigger
-          className={`flex h-20 w-20 items-center justify-center rounded-none border`}
+          className={`flex h-22 w-24 items-center justify-center rounded-none border`}
           asChild
         >
-          <Button variant="outline" className={`${buttonClass(table.state)} `}>
-            Table-{table.number}
+          <Button
+            className={`${buttonClass(table.status)} flex flex-col rounded-sm`}
+          >
+            <span>Table-{table.number}</span>
+            <span>{table.status.toUpperCase()}</span>
           </Button>
         </DropdownMenuTrigger>
       </div>
