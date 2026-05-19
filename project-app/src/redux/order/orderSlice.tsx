@@ -175,15 +175,40 @@ const orderSlice = createSlice({
       action: PayloadAction<{ orderId: string; items: ItemInterface[] }>
     ) => {
       const { orderId, items } = action.payload
+      const mergeItems = (
+        existing: ItemInterface[] | undefined,
+        incoming: ItemInterface[]
+      ) => {
+        const merged = [...(existing ?? [])]
+        for (const s of incoming) {
+          const byId = merged.findIndex((it) => String(it.id) === String(s.id))
+          if (byId !== -1) {
+            merged[byId] = s
+            continue
+          }
+          const byDish = merged.findIndex(
+            (it) =>
+              (it.dish as any)?.id === (s.dish as any)?.id &&
+              it.status === "pending"
+          )
+          if (byDish !== -1) {
+            merged[byDish] = s
+            continue
+          }
+          merged.push(s)
+        }
+        return merged
+      }
+
       state.orders = state.orders.map((o) =>
         String(o.id) === String(orderId)
-          ? { ...o, items: [...(o.items ?? []), ...items] }
+          ? { ...o, items: mergeItems(o.items, items) }
           : o
       )
       if (state.order && String(state.order.id) === String(orderId)) {
         state.order = {
           ...state.order,
-          items: [...(state.order.items ?? []), ...items],
+          items: mergeItems(state.order.items, items),
         }
       }
     },
