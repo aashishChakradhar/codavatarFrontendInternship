@@ -1,51 +1,67 @@
 import { useSelector } from "react-redux"
 import { ViewOrderComponent } from "./viewOrder.component"
 import { type RootState } from "@/redux/store"
-import { useEffect, useState } from "react"
-import { type OrderListInterface } from "@/redux/order/orderNextSlice"
+import { useEffect, useMemo, useState } from "react"
+import type { ItemStatusType } from "@/redux/items/itemsSlice"
 
 function OrderRestro() {
-  const orders = useSelector((state: RootState) => state.item.orders ?? [])
+  const orders = useSelector((state: RootState) => state.order.orders ?? [])
+  const items = useSelector((state: RootState) => state.item.items ?? [])
   const user = useSelector((state: RootState) => state.user.currentUser)
-  if (!user) return
+  if (!user) return null
 
-  const [availableOrders, setAvailableOrders] = useState<OrderListInterface[]>(
-    []
-  )
+  const [disabledStatus, setDisabledStatus] = useState<ItemStatusType[]>([])
+  const [inactiveStatus, setInactiveStatus] = useState<ItemStatusType[]>([])
 
-  //provide menu state append option as per user role
   useEffect(() => {
     if (user.isAdmin) {
-      setAvailableOrders(orders)
-      return
+      setInactiveStatus([])
+      setDisabledStatus([])
+    } else if (user.role === "chef") {
+      setInactiveStatus([])
+      setDisabledStatus([])
+    } else if (user.role === "receptionist") {
+      setInactiveStatus([])
+      setDisabledStatus([])
+    } else if (user.role === "waiter") {
+      setInactiveStatus([])
+      setDisabledStatus([])
     }
+  }, [user.isAdmin, user.role, orders, items])
 
-    if (user.role === "waiter") {
-      setAvailableOrders(
-        orders.filter((order) =>
-          order.items.some((item) => item.status === "ready")
-        )
-      )
-      return
-    }
+  const filteredOrders = useMemo(() => {
+    // merge item statuses from the items slice into the orders so UI reflects optimistic updates
+    const ordersWithLatestItems = orders.map((order) => ({
+      ...order,
+      items: (order.items ?? []).map((it) => {
+        const updated = items.find((i) => i.id === it.id)
+        return updated ? { ...it, status: updated.status } : it
+      }),
+    }))
+
+    if (user.isAdmin) return ordersWithLatestItems
+    if (user.role === "waiter") return ordersWithLatestItems
 
     if (user.role === "receptionist") {
-      setAvailableOrders(
-        orders.filter((order) =>
-          order.items.some((item) =>
-            ["in-progress", "ready", "delivered", "cancelled"].includes(
-              item.status
-            )
+      return ordersWithLatestItems.filter((order) =>
+        order.items.some((item) =>
+          ["in-progress", "ready", "delivered", "cancelled"].includes(
+            item.status
           )
         )
       )
-      return
     }
 
-    setAvailableOrders([])
-  }, [user.isAdmin, user.role, orders])
+    return []
+  }, [user.isAdmin, user.role, orders, items])
 
-  return <ViewOrderComponent orders={availableOrders} />
+  return (
+    <ViewOrderComponent
+      orders={filteredOrders}
+      disabledStatus={disabledStatus}
+      inactiveStatus={inactiveStatus}
+    />
+  )
 }
 
 export default OrderRestro
