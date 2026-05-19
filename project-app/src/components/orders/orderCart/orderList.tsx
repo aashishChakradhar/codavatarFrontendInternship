@@ -9,11 +9,40 @@ import {
 import { type AppDispatch, type RootState } from "@/redux/store"
 import { useDispatch, useSelector } from "react-redux"
 import { Button } from "../../ui/button"
-import { addItem, removeItem } from "@/redux/order/orderSlice"
+import {
+  addItem,
+  removeItem,
+  type CreateItemInterface,
+} from "@/redux/items/itemsSlice"
 
 export function OrderList() {
   const dispatch = useDispatch<AppDispatch>()
-  const { orderTemp } = useSelector((state: RootState) => state.order)
+  const itemTable = useSelector((state: RootState) => state.item.createItemData)
+  const order = useSelector((state: RootState) => state.order.order)
+  const handleReduce = (dish: CreateItemInterface) => {
+    dispatch(
+      removeItem({
+        quantity: 1,
+        quantity_type: dish.quantity_type,
+        remark: "",
+        status: "pending",
+        order_id: order?.id,
+        dish_id: dish.dish_id,
+      })
+    )
+  }
+  const handleIncrease = (dish: CreateItemInterface) => {
+    dispatch(
+      addItem({
+        quantity: 1,
+        quantity_type: dish.quantity_type,
+        remark: "",
+        status: "pending",
+        order_id: order?.id,
+        dish_id: dish.dish_id,
+      })
+    )
+  }
   return (
     <Table>
       <TableHeader>
@@ -25,40 +54,22 @@ export function OrderList() {
         </TableRow>
       </TableHeader>
       <TableBody>
-        {orderTemp.map((invoice, index) => (
+        {itemTable.map((entry, index) => (
           <TableRow key={index}>
             <TableCell>{index + 1}</TableCell>
-            <TableCell className="font-medium">{invoice.name}</TableCell>
-            <TableCell>Rs. {invoice.price}</TableCell>
+            <TableCell className="font-medium">{entry.dish.name}</TableCell>
+            <TableCell>Rs. {entry.dish.price}</TableCell>
             <TableCell>
               <Button
                 className="mr-1 h-0 rounded-sm p-2"
-                onClick={() =>
-                  dispatch(
-                    removeItem({
-                      itemId: invoice.itemId,
-                      name: invoice.name,
-                      quantity: 1,
-                      price: invoice.price,
-                    })
-                  )
-                }
+                onClick={() => handleReduce(entry)}
               >
                 -
               </Button>
-              {invoice.quantity}
+              {entry.quantity}
               <Button
                 className="ml-1 h-0 rounded-sm p-2"
-                onClick={() =>
-                  dispatch(
-                    addItem({
-                      itemId: invoice.itemId,
-                      name: invoice.name,
-                      quantity: 1,
-                      price: invoice.price,
-                    })
-                  )
-                }
+                onClick={() => handleIncrease(entry)}
               >
                 +
               </Button>
