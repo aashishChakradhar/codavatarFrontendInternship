@@ -11,62 +11,68 @@ import {
 import { type AppDispatch, type RootState } from "@/redux/store"
 
 import { useDispatch, useSelector } from "react-redux"
-import { addItem, removeItem } from "@/redux/order/orderSlice"
 import image from "../../assets/react.svg"
-import type { MenuDataInterface } from "@/redux/menu/menuSlice"
+import type { DishDBInterface } from "@/redux/menu/menuSlice"
+import { addItem, removeItem } from "@/redux/items/itemsSlice"
 
-export function MenuCardComponent(item: MenuDataInterface) {
+export function MenuCardComponent(dish: DishDBInterface) {
   const count = useSelector((state: RootState) => {
-    const order = state.order.orderTemp.find(
-      (order) => order.itemId === item.id
+    const found = state.item.createItemData.find(
+      (entry) => entry.dish_id === dish.id
     )
-    return order?.quantity ?? 0
+    return found?.quantity ?? 0
   })
+  const order = useSelector((state: RootState) => state.order.order)
   const dispatch = useDispatch<AppDispatch>()
+
+  const handleReduce = () => {
+    dispatch(
+      removeItem({
+        quantity: 1,
+        quantity_type: dish.dish_type,
+        remark: "",
+        status: "pending",
+        order_id: order?.id,
+        dish_id: dish.id,
+        dish: dish,
+      })
+    )
+  }
+
+  const handleIncrease = () => {
+    dispatch(
+      addItem({
+        quantity: 1,
+        quantity_type: dish.dish_type,
+        remark: "",
+        status: "pending",
+        order_id: order?.id,
+        dish_id: dish.id,
+        dish: dish,
+      })
+    )
+  }
+
   return (
-    <Card className="relative w-45 gap-3 pt-0 pb-3">
+    <Card className="relative h-full w-45 gap-3 pt-0 pb-3 md:w-54 lg:w-60">
       <img
         src={image}
-        alt="Event cover"
+        alt="menu image"
         className="relative aspect-video w-full object-contain"
       />
       <CardHeader>
         <CardAction>
-          <Badge variant="secondary">Rs. {item.price}</Badge>
+          <Badge variant="secondary">Rs. {dish.price}</Badge>
         </CardAction>
-        <CardTitle>{item.name}</CardTitle>
-        <CardDescription>{item.dishType}</CardDescription>
+        <CardTitle>{dish.name}</CardTitle>
+        <CardDescription>{dish.dish_type}</CardDescription>
       </CardHeader>
-      <CardFooter className="justify-center gap-3">
-        <Button
-          onClick={() =>
-            dispatch(
-              removeItem({
-                itemId: item.id,
-                name: item.name,
-                quantity: 1,
-                price: item.price,
-              })
-            )
-          }
-          className="rounded-md"
-        >
+      <CardFooter className="mt-auto justify-center gap-3">
+        <Button onClick={handleReduce} className="rounded-md">
           -
         </Button>
         {count}
-        <Button
-          onClick={() =>
-            dispatch(
-              addItem({
-                itemId: item.id,
-                name: item.name,
-                quantity: 1,
-                price: item.price,
-              })
-            )
-          }
-          className="rounded-md"
-        >
+        <Button onClick={handleIncrease} className="rounded-md">
           +
         </Button>
       </CardFooter>
