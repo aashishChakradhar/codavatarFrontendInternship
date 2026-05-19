@@ -22,8 +22,10 @@ import { data, restroData } from "@/data/navData"
 import type { RootState } from "@/redux/store"
 import { useSelector } from "react-redux"
 import { Button } from "@/components/ui/button"
+import { ToastMessage } from "@/components/toast/toast"
 export default function RestroLayout() {
   const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  const toast = useSelector((state: RootState) => state.toast)
   if (!currentUser) return
   const location = useLocation()
   const sidebarData = currentUser.isAdmin
@@ -74,6 +76,13 @@ export default function RestroLayout() {
         <div className="flex flex-1 flex-col gap-4 p-4 pt-0">
           <Outlet />
         </div>
+        {toast.toastStatus && (
+          <ToastMessage
+            toastId={toast.toastId}
+            status={toast.toastStatus}
+            message={toast.toastMessage}
+          />
+        )}
       </SidebarInset>
     </SidebarProvider>
   )
