@@ -5,7 +5,7 @@ import type { RootState } from "@/redux/store"
 import OrderSummary from "@/components/orders/orderCart/orderSummary"
 
 function Menu() {
-  const { menus } = useSelector((state: RootState) => state.menu)
+  const menus = useSelector((state: RootState) => state.menu.menus)
 
   return (
     <div className="flex w-full flex-col flex-wrap justify-center gap-5">
@@ -13,10 +13,10 @@ function Menu() {
         <SearchBar />
         <OrderSummary />
       </div>
-      <div className="flex w-full flex-wrap justify-center gap-5">
-        {menus.map((item, index) => (
-          <div key={index}>
-            <MenuCardComponent {...item} />
+      <div className="flex h-full w-full flex-1 flex-wrap justify-center gap-5">
+        {menus.map((dish) => (
+          <div key={dish.id}>
+            <MenuCardComponent {...dish} />
           </div>
         ))}
       </div>
