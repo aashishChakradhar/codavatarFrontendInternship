@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react"
+import { useState, useMemo, useEffect } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "@/redux/store"
 import { selectTable, type TableDataInterface } from "@/redux/table/tableSlice"
@@ -11,20 +11,34 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import useLoadTable from "@/hooks/use-loadTable"
 
 export function SelectOrderTable({ tables }: { tables: TableDataInterface[] }) {
+  useLoadTable()
   const dispatch = useDispatch<AppDispatch>()
   const { selectedTable } = useSelector((state: RootState) => state.table)
   const [selectedSection, setSelectedSection] = useState<string | null>(
-    selectedTable.sectionId ?? null
+    selectedTable.section.name ?? null
   )
   const [selectedTableId, setSelectedTableId] = useState<string | null>(
-    selectedTable?.section && selectedTable.number
-      ? `${selectedTable.section}-${selectedTable.number}`
+    selectedTable?.section?.id && selectedTable.number
+      ? `${selectedTable.section.id}-${selectedTable.number}`
       : null
   )
 
-  // Group tables by section
+  // Keep local select state in sync when selectedTable in Redux changes
+  useEffect(() => {
+    setSelectedSection(selectedTable.section.name ?? null)
+    setSelectedTableId(
+      selectedTable?.section?.id && selectedTable.number
+        ? `${selectedTable.section.id}-${selectedTable.number}`
+        : null
+    )
+  }, [selectedTable])
+
+  console.log(`selected: ${selectedTable.number}-${selectedTable.section.name}`)
+
+  // Group tables by section and sort sections/tables ascending
   const sections = useMemo(() => {
     const grouped = new Map<string, typeof tables>()
     tables.forEach((table) => {
@@ -33,20 +47,32 @@ export function SelectOrderTable({ tables }: { tables: TableDataInterface[] }) {
       }
       grouped.get(table.section.name)!.push(table)
     })
-    return Array.from(grouped.entries())
+
+    // Sort tables inside each section numerically ascending
+    for (const [, arr] of grouped) {
+      arr.sort((t1, t2) => (Number(t1.number) || 0) - (Number(t2.number) || 0))
+    }
+
+    // Return sections sorted by section name ascending
+    return Array.from(grouped.entries()).sort((a, b) =>
+      a[0].localeCompare(b[0])
+    )
   }, [tables])
 
-  // Get tables for selected section
+  // Get tables for selected section (sorted ascending)
   const tablesInSection = useMemo(() => {
     if (!selectedSection) return []
-    return tables.filter((t) => t.section.name === selectedSection)
+    return tables
+      .filter((t) => t.section.name === selectedSection)
+      .slice()
+      .sort((a, b) => (Number(a.number) || 0) - (Number(b.number) || 0))
   }, [selectedSection, tables])
 
   const handleTableChange = (tableId: string) => {
     setSelectedTableId(tableId)
 
     const nextSelectedTable = tables.find(
-      (table) => `${table.section}-${table.number}` === tableId
+      (table) => `${table.section.id}-${table.number}` === tableId
     )
 
     if (!nextSelectedTable || !selectedSection) return
@@ -98,10 +124,10 @@ export function SelectOrderTable({ tables }: { tables: TableDataInterface[] }) {
             {tablesInSection.length > 0 ? (
               tablesInSection.map((table) => (
                 <SelectItem
-                  key={`${table.section}-${table.number}`}
-                  value={`${table.section}-${table.number}`}
+                  key={`${table.section.id}-${table.number}`}
+                  value={`${table.section.id}-${table.number}`}
                 >
-                  Table {table.number} ({table.capacity} seats, {table.state})
+                  Table {table.number} ({table.capacity} seats, {table.status})
                 </SelectItem>
               ))
             ) : (
