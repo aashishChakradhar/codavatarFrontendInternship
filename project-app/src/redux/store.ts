@@ -4,7 +4,7 @@ import userReducer from "./user/userSlice"
 import orderReducer from "./order/orderSlice"
 import menuReducer from "./menu/menuSlice"
 import tableReducer from "./table/tableSlice"
-import itemReducer from "./order/orderNextSlice"
+import itemReducer from "./items/itemsSlice"
 import toastReducer from "./toast/toastSlice"
 import {
   persistStore,
