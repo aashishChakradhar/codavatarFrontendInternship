@@ -1,10 +1,6 @@
-import { useDispatch, useSelector } from "react-redux"
-import { OrderKitchenComponent } from "./orderView.component"
-import type { AppDispatch, RootState } from "@/redux/store"
-import { fetchOrder } from "@/redux/order/orderSlice"
 import { useEffect, useState } from "react"
-import type { OrderDataInterface } from "@/data/orderData"
-import { orderState, type OrderStateType } from "@/constants/constants"
+import { useSelector } from "react-redux"
+import type { RootState } from "@/redux/store"
 
 import { Button } from "@/components/ui/button"
 import {
@@ -12,146 +8,197 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuSeparator,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-function orderArrange(orderList: OrderDataInterface[]) {
-  const grouped: Record<number, OrderDataInterface[]> = {}
+import type { OrderInterface } from "@/redux/order/orderSlice"
+import { OrderCardComponent } from "./orderView.component"
 
-  orderList.forEach((order) => {
-    if (!grouped[order.orderId]) {
-      grouped[order.orderId] = []
+export type GroupType = "order" | "table" | "dish"
+
+function mergeGroupedItems(orders: OrderInterface[]) {
+  const itemsByStatusAndDish = new Map<
+    string,
+    OrderInterface["items"][number] & { orderId?: string }
+  >()
+
+  for (const ord of orders) {
+    for (const item of ord.items) {
+      const dishId = (item.dish as any).id ?? item.id
+      const status = item.status ?? ord.status
+      const key = `${dishId}-${status}`
+      const existing = itemsByStatusAndDish.get(key)
+
+      if (existing) {
+        existing.quantity = (existing.quantity ?? 0) + (item.quantity ?? 0)
+        existing.backendIds = Array.from(
+          new Set([...(existing.backendIds ?? []), String(item.id)])
+        )
+      } else {
+        itemsByStatusAndDish.set(key, {
+          ...item,
+          id: `${dishId}-${status}`,
+          backendIds: [String(item.id)],
+          orderId: ord.id,
+        } as OrderInterface["items"][number] & { orderId?: string })
+      }
     }
-    grouped[order.orderId].push(order)
-  })
+  }
 
-  return Object.entries(grouped).map(([orderId, items]) => ({
-    [Number(orderId)]: items,
-  }))
+  return Array.from(itemsByStatusAndDish.values())
 }
 
-function itemArrange(orderList: OrderDataInterface[]) {
-  const grouped: Record<number, OrderDataInterface[]> = {}
+function groupOrder(orders: OrderInterface[]) {
+  if (!Array.isArray(orders) || orders.length === 0) return []
 
-  orderList.forEach((order) => {
-    if (!grouped[order.itemId]) {
-      grouped[order.itemId] = []
-    }
-    grouped[order.itemId].push(order)
-  })
+  // Return all orders sorted alphabetically by order id
 
-  return Object.entries(grouped).map(([itemId, items]) => ({
-    [Number(itemId)]: items,
-  }))
+  return [...orders].sort((a, b) => String(a.id).localeCompare(String(b.id)))
 }
 
-function OrderKitchen() {
-  const dispatch = useDispatch<AppDispatch>()
-  const { orders, status, error } = useSelector(
-    (state: RootState) => state.order
+function groupTable(orders: OrderInterface[]) {
+  if (!Array.isArray(orders) || orders.length === 0) return []
+
+  // Sort orders alphabetically by order id first
+  const sortedOrders = [...orders].sort((a, b) =>
+    String(a.id).localeCompare(String(b.id))
   )
-  const user = useSelector((state: RootState) => state.user.currentUser)
-  if (!user) return
 
-  const [availableOrders, setAvailableOrders] = useState<OrderDataInterface[]>(
-    []
+  const tableMap = new Map<string, OrderInterface[]>()
+
+  // Group sorted orders by table
+  for (const ord of sortedOrders) {
+    const table = ord.table
+    const key =
+      table?.id ??
+      `${(table as any)?.section?.name ?? "unknown"}-${table?.number ?? "0"}`
+
+    const list = tableMap.get(key) ?? []
+    list.push(ord)
+    tableMap.set(key, list)
+  }
+
+  // Sort table entries alphabetically by key (section-number format)
+  const sortedTableEntries = Array.from(tableMap.entries()).sort((a, b) =>
+    a[0].localeCompare(b[0])
   )
-  const [availableOrdersState, setAvailableState] = useState<OrderStateType[]>([
-    ...orderState,
-  ])
-  const [groupBy, setGroupBy] = useState<"order" | "items">("order")
-  const [arrangedOrder, setArrangedOrder] = useState<
-    { [key: number]: OrderDataInterface[] }[]
-  >([])
 
-  //fetch order data
+  // Merge items for each table while preserving order ids
+  const results: OrderInterface[] = []
+  for (const [key, tableOrders] of sortedTableEntries) {
+    results.push({
+      id: `table-${key}`,
+      items: mergeGroupedItems(tableOrders),
+      status: tableOrders[0].status,
+      remark: "",
+      table: tableOrders[0].table ?? null,
+      user: null,
+    })
+  }
+
+  return results
+}
+
+function groupDish(orders: OrderInterface[]) {
+  if (!Array.isArray(orders) || orders.length === 0) return []
+
+  const dishMap = new Map<
+    string,
+    (OrderInterface["items"][number] & { orderId?: string })[]
+  >()
+
+  for (const ord of orders) {
+    for (const it of ord.items) {
+      const dishName = it.dish?.name ?? "Dish"
+      const items = dishMap.get(dishName) ?? []
+
+      items.push({
+        ...it,
+        orderId: ord.id,
+      } as OrderInterface["items"][number] & { orderId?: string })
+
+      dishMap.set(dishName, items)
+    }
+  }
+
+  const results: OrderInterface[] = []
+  for (const [dishName, items] of dishMap.entries()) {
+    // Sort items by orderId, then by status
+    const sortedItems = [...items].sort((a, b) => {
+      const orderCmp = String(a.orderId).localeCompare(String(b.orderId))
+      if (orderCmp !== 0) return orderCmp
+      return String(a.status).localeCompare(String(b.status))
+    })
+
+    results.push({
+      id: dishName,
+      items: sortedItems,
+      status: sortedItems[0]?.status ?? "pending",
+      remark: "",
+      table: null,
+      user: null,
+    })
+  }
+
+  return results
+}
+
+export default function KitchenOrderView() {
+  const orders = useSelector((state: RootState) => state.order.orders)
+  const [groupBy, setGroupBy] = useState<GroupType>("dish")
+  const [processedData, setProcessedData] = useState<OrderInterface[]>([])
+
+  const handleGroupChange = (group: GroupType) => {
+    setGroupBy(group)
+  }
+
   useEffect(() => {
-    if (status === "idle") dispatch(fetchOrder())
-  }, [dispatch, status])
-
-  //assign order state
-  useEffect(() => {
-    if (user.isAdmin) {
-      setAvailableState([...orderState])
+    if (!Array.isArray(orders) || orders.length === 0) {
+      setProcessedData([])
+      return
     }
-    if (user.role === "chef") {
-      setAvailableState(["preparing", "completed"])
+
+    if (groupBy === "order") {
+      setProcessedData(groupOrder(orders))
+    } else if (groupBy === "table") {
+      setProcessedData(groupTable(orders))
+    } else {
+      setProcessedData(groupDish(orders))
     }
-  }, [user.isAdmin, user.role])
-
-  // filter perticular available orders
-  useEffect(() => {
-    if (user.isAdmin) {
-      setAvailableOrders([...orders])
-      setArrangedOrder(orderArrange(orders))
-    }
-    if (user.role === "chef") {
-      const filteredOrders = orders.filter(
-        (order) => order.state === "preparing" || order.state === "pending"
-      )
-      setAvailableOrders(filteredOrders)
-      setArrangedOrder(orderArrange(filteredOrders))
-    }
-  }, [user.isAdmin, user.role, orders])
-
-  if (status === "pending") {
-    return <div className="text-sm">Loading Menu...</div>
-  }
-
-  if (status === "failed") {
-    return (
-      <div className="text-sm text-red-500">
-        Error loading Menu
-        <hr />
-        {error}
-      </div>
-    )
-  }
-
-  const onArrangeOrder = () => {
-    setGroupBy("order")
-    setArrangedOrder(orderArrange(availableOrders))
-  }
-
-  const onArrangeItems = () => {
-    setGroupBy("items")
-    setArrangedOrder(itemArrange(availableOrders))
-  }
+  }, [orders, groupBy])
 
   return (
-    <>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button variant="outline">Sort</Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent className="w-40" align="start">
-          <DropdownMenuGroup>
-            <DropdownMenuItem onClick={onArrangeOrder}>
-              By Order
-            </DropdownMenuItem>
-            <DropdownMenuItem onClick={onArrangeItems}>
-              By Items
-            </DropdownMenuItem>
-          </DropdownMenuGroup>
-          <DropdownMenuSeparator />
-        </DropdownMenuContent>
-      </DropdownMenu>
-      <div className="flex flex-row flex-wrap items-start justify-around gap-5">
-        {arrangedOrder.map((group) => {
-          const [groupId, items] = Object.entries(group)[0]
-          return (
-            <OrderKitchenComponent
-              key={groupId}
-              orderId={Number(groupId)}
-              items={items}
-              states={availableOrdersState}
-              group={groupBy}
-            />
-          )
-        })}
+    <div className="gap-5">
+      <div className="flex w-full">
+        <DropdownMenu>
+          <DropdownMenuTrigger className="ml-auto" asChild>
+            <Button className="min-w-40" variant="outline">
+              Group By : {groupBy.toUpperCase()}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-40" align="start">
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>Group Orders</DropdownMenuLabel>
+              <DropdownMenuItem onClick={() => handleGroupChange("table")}>
+                Table
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleGroupChange("order")}>
+                Order
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => handleGroupChange("dish")}>
+                Dish
+              </DropdownMenuItem>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
-    </>
+
+      <div className="flex flex-wrap justify-center gap-5">
+        {processedData.map((order) => (
+          <OrderCardComponent key={order.id} order={order} groupBy={groupBy} />
+        ))}
+      </div>
+    </div>
   )
 }
-export default OrderKitchen
