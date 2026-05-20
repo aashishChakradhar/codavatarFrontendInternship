@@ -1,161 +1,180 @@
-import { Badge } from "@/components/ui/badge"
+import { useEffect, useState } from "react"
+
 import { Button } from "@/components/ui/button"
 import {
   Card,
-  CardAction,
+  CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { orderStateColor, type OrderStateType } from "@/constants/constants"
-import type { OrderDataInterface } from "@/data/orderData"
-import { changeOrderState } from "@/redux/order/orderSlice"
-import type { AppDispatch } from "@/redux/store"
-import { useState } from "react"
+import {
+  orderStatus,
+  type OrderInterface,
+  type OrderStatusType,
+  updateOrderItemStatus,
+} from "@/redux/order/orderSlice"
+import {
+  updateOptimisticItemStatus,
+  type ItemInterface,
+  type ItemStatusType,
+} from "@/redux/items/itemsSlice"
+import type { GroupType } from "./orderView.container"
+import { ItemRow } from "./itemRow"
 import { useDispatch } from "react-redux"
-import { ConfirmChange } from "../orderRestro/changeOrder"
+import type { AppDispatch } from "@/redux/store"
+import useUpdateItem from "@/hooks/use-updateItem"
 
-export function OrderKitchenComponent({
-  orderId,
-  items,
-  states,
-  group,
+export function OrderCardComponent({
+  order,
+  groupBy,
 }: {
-  orderId: number
-  items: OrderDataInterface[]
-  states: OrderStateType[]
-  group: "order" | "items"
+  order: OrderInterface
+  groupBy: GroupType
 }) {
-  const [open, setOpen] = useState<boolean>(false)
-  const [selectedOrder, setSelectedOrder] = useState<OrderDataInterface | null>(
-    null
-  )
-  const [selectedState, setSelectedState] = useState<OrderStateType | null>(
-    null
-  )
+  const [displayTitle, setDisplayTitle] = useState<string>("")
+  const [orderStat, setOrderStat] = useState<OrderStatusType>("pending")
+  const disabledOrderStatus = [
+    "open",
+    "idle",
+    "pending",
+    "delivered",
+    "cancelled",
+  ]
+  const disabledItemStatus = ["pending", "delivered", "cancelled"]
+
+  const handleOrderStatusUpdate = (statChange: OrderStatusType) => {
+    setOrderStat(statChange)
+  }
 
   const dispatch = useDispatch<AppDispatch>()
+  const { updateItem } = useUpdateItem()
 
-  const handleClick = (order: OrderDataInterface, state: OrderStateType) => {
-    setSelectedOrder(order)
-    setSelectedState(state)
-    setOpen(true)
+  const applyItemStatusOptimistically = (
+    item: ItemInterface,
+    statusUpdate: ItemStatusType
+  ) => {
+    const backendIds = item.backendIds?.length ? item.backendIds : [item.id]
+
+    backendIds.forEach((itemID) => {
+      dispatch(updateOrderItemStatus({ itemID, status: statusUpdate }))
+      dispatch(
+        updateOptimisticItemStatus({
+          item: { ...item, id: itemID },
+          status: statusUpdate,
+        })
+      )
+    })
   }
 
-  const handleConfirm = () => {
-    if (selectedOrder && selectedState) {
-      dispatch(
-        changeOrderState({ order: selectedOrder, orderState: selectedState })
-      )
-    }
-    setOpen(false)
-    setSelectedOrder(null)
-    setSelectedState(null)
+  // Group items by order id if present
+  const itemsByOrder =
+    groupBy !== "order"
+      ? order.items.reduce(
+          (acc, item) => {
+            const orderId = (item as any).orderId ?? "ungrouped"
+            if (!acc[orderId]) acc[orderId] = []
+            acc[orderId].push(item)
+            return acc
+          },
+          {} as Record<string, OrderInterface["items"]>
+        )
+      : undefined
+
+  useEffect(() => {
+    groupBy === "order"
+      ? setDisplayTitle(`Order: ${order.id}`)
+      : groupBy === "table"
+        ? setDisplayTitle(
+            `Table: ${order.table?.section.name}-${order.table?.number}`
+          )
+        : setDisplayTitle(`Dish: ${order.items[0]?.dish.name ?? "Unknown"}`)
+  }, [groupBy, order.items])
+
+  const handleItemStatusUpdate = ({
+    item,
+    statusUpdate,
+  }: {
+    item: ItemInterface
+    statusUpdate: ItemStatusType
+  }) => {
+    //backend
+    updateItem(item, statusUpdate)
+    // ui
+    applyItemStatusOptimistically(item, statusUpdate)
   }
 
   return (
-    <Card className="relative mx-auto w-full max-w-xs">
+    <Card
+      size="sm"
+      className="w-full max-w-sm sm:max-w-80 lg:max-w-sm xl:max-w-sm"
+    >
       <CardHeader>
-        <div className="flex justify-between">
-          <CardTitle>
-            {group === "order" ? <> Order: {orderId}</> : <>Item: {orderId}</>}
-          </CardTitle>
-          <Badge variant="secondary">Items: x{items.length}</Badge>
-        </div>
-
-        <CardDescription>
-          {items.map((item) => (
-            <div className="flex items-center justify-between">
-              <div>
-                {item.name} x{item.quantity}
-              </div>
-              <DropdownMenu key={item.itemId}>
-                <DropdownMenuTrigger asChild>
-                  <Button
-                    className={`${orderStateColor(item.state)} rounded-sm`}
-                  >
-                    {item.state}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  {states.map((s) => (
-                    <DropdownMenuItem
-                      key={s}
-                      onClick={() => handleClick(item, s)}
-                      hidden={s === item.state}
-                    >
-                      {s}
-                    </DropdownMenuItem>
-                  ))}
-                </DropdownMenuContent>
-              </DropdownMenu>
-            </div>
-          ))}
-        </CardDescription>
+        <CardTitle className="max-w-80 overflow-hidden font-semibold text-ellipsis whitespace-nowrap">
+          {displayTitle}
+        </CardTitle>
+        <CardDescription></CardDescription>
       </CardHeader>
-      {/* <CardFooter className="flex flex-col gap-2">
-        {items.map((order) => (
-          <DropdownMenu key={order.itemId}>
-            <DropdownMenuTrigger asChild>
-              <Button className={`${orderStateColor(order.state)} w-full`}>
-                {order.name} - {order.state}
-                <span className="sr-only">{order.state}</span>
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {states.map((s) => (
+      <CardContent>
+        {itemsByOrder
+          ? Object.entries(itemsByOrder).map(([orderId, items]) => (
+              <div key={orderId} className="mb-3 border-b pb-2 last:border-b-0">
+                {/* Order group */}
+                <div className="mb-1 max-w-60 overflow-hidden text-xs font-semibold text-ellipsis whitespace-nowrap text-gray-600">
+                  Order: {orderId}
+                </div>
+                {/* items group */}
+                {items.map((item) => (
+                  <ItemRow
+                    key={`${order.id}-${item.id}`}
+                    item={item}
+                    disabledItemStatus={disabledItemStatus}
+                    onStatusChange={handleItemStatusUpdate}
+                  />
+                ))}
+              </div>
+            ))
+          : order.items.map((item) => (
+              <ItemRow
+                key={`${order.id}-${item.id}`}
+                item={item}
+                disabledItemStatus={disabledItemStatus}
+                onStatusChange={handleItemStatusUpdate}
+              />
+            ))}
+      </CardContent>
+      <CardFooter className="mt-auto w-full">
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button className="w-full" size="sm">
+              {orderStat}
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-full" align="end">
+            <DropdownMenuGroup>
+              <DropdownMenuLabel>Order Status</DropdownMenuLabel>
+              {orderStatus.map((stat, index) => (
                 <DropdownMenuItem
-                  key={s}
-                  onClick={() => handleClick(order, s)}
-                  hidden={s === order.state}
+                  key={`${stat}-${index}`}
+                  onClick={() => handleOrderStatusUpdate(stat)}
+                  hidden={disabledOrderStatus.includes(stat)}
                 >
-                  {s}
+                  {stat}
                 </DropdownMenuItem>
               ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
-        ))}
-      </CardFooter> */}
-      <ConfirmChange
-        open={open}
-        onOpenChange={setOpen}
-        state={selectedState ?? "pending"}
-        onConfirm={handleConfirm}
-      />
-    </Card>
-  )
-}
-
-export function CardImage() {
-  return (
-    <Card className="relative mx-auto w-full max-w-sm pt-0">
-      <div className="absolute inset-0 z-30 aspect-video bg-black/35" />
-      <img
-        src="https://avatar.vercel.sh/shadcn1"
-        alt="Event cover"
-        className="relative z-20 aspect-video w-full object-cover brightness-60 grayscale dark:brightness-40"
-      />
-      <CardHeader>
-        <CardAction>
-          <Badge variant="secondary">Featured</Badge>
-        </CardAction>
-        <CardTitle>Design systems meetup</CardTitle>
-        <CardDescription>
-          A practical talk on component APIs, accessibility, and shipping
-          faster.
-        </CardDescription>
-      </CardHeader>
-      <CardFooter>
-        <Button className="w-full">View Event</Button>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </CardFooter>
     </Card>
   )
