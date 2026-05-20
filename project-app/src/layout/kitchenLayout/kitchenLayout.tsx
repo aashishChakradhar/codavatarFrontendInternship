@@ -21,9 +21,11 @@ import { data, kitchenData } from "@/data/navData"
 import { useSelector } from "react-redux"
 import type { RootState } from "@/redux/store"
 import { Button } from "@/components/ui/button"
+import { ToastMessage } from "@/components/toast/toast"
 
 export default function KitchenLayout() {
   const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  const toast = useSelector((state: RootState) => state.toast)
   if (!currentUser) return
   const sidebarData = currentUser.isAdmin
     ? { ...kitchenData, teams: data.teams }
@@ -73,6 +75,13 @@ export default function KitchenLayout() {
           <Outlet />
         </div>
       </SidebarInset>
+      {toast.toastStatus && (
+        <ToastMessage
+          toastId={toast.toastId}
+          status={toast.toastStatus}
+          message={toast.toastMessage}
+        />
+      )}
     </SidebarProvider>
   )
 }
