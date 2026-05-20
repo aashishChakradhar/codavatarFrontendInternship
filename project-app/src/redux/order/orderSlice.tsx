@@ -5,7 +5,7 @@ import {
 } from "@reduxjs/toolkit"
 import { VITE_API_URL } from "@/constants/url"
 import type { UserDataInterface, UserDBInterface } from "../user/userSlice"
-import type { ItemInterface } from "../items/itemsSlice"
+import type { ItemInterface, ItemStatusType } from "../items/itemsSlice"
 import type { TableDataInterface } from "../table/tableSlice"
 
 export const orderStatus = [
@@ -144,7 +144,7 @@ const orderSlice = createSlice({
   name: "order",
   initialState,
   reducers: {
-    addOptimisticOrder: (state, action: PayloadAction<OrderInterface>) => {
+    addOptimisticOrderList: (state, action: PayloadAction<OrderInterface>) => {
       state.orders = [action.payload, ...state.orders]
     },
 
@@ -212,6 +212,30 @@ const orderSlice = createSlice({
         }
       }
     },
+
+    updateOrderItemStatus: (
+      state,
+      action: PayloadAction<{ itemID: string; status: ItemStatusType }>
+    ) => {
+      const { itemID, status } = action.payload
+      // update all orders lists
+      state.orders = state.orders.map((o) => ({
+        ...o,
+        items: o.items.map((it) =>
+          String(it.id) === String(itemID) ? { ...it, status } : it
+        ),
+      }))
+
+      // update currently selected order if present
+      if (state.order) {
+        state.order = {
+          ...state.order,
+          items: state.order.items.map((it) =>
+            String(it.id) === String(itemID) ? { ...it, status } : it
+          ),
+        }
+      }
+    },
   },
 
   extraReducers: (builder) => {
@@ -262,10 +286,11 @@ const orderSlice = createSlice({
 })
 
 export const {
-  addOptimisticOrder,
+  addOptimisticOrderList,
   removeOrderById,
   replaceOrderTempId,
   addItemsToOrder,
+  updateOrderItemStatus,
 } = orderSlice.actions
 
 export default orderSlice.reducer
