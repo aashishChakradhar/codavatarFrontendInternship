@@ -22,6 +22,7 @@ export interface ItemInterface {
   status: ItemStatusType
   dish: DishDBInterface
   id: string
+  backendIds?: string[]
 }
 export interface CreateItemInterface {
   quantity: number
@@ -35,14 +36,12 @@ export interface CreateItemInterface {
 
 interface ItemDataInterface {
   items: ItemInterface[]
-  // item: ItemInterface | null
   createItemData: CreateItemInterface[]
   loading: boolean
   error: string | null
 }
 const initialState: ItemDataInterface = {
   items: [],
-  // item: null,
   createItemData: [],
   loading: false,
   error: null,
@@ -328,9 +327,5 @@ export const {
   removeItem,
   clearItems,
   updateOptimisticItemStatus,
-  // confirmOrder,
-  // changeOrderState,
-  // clearOrder,
-  // clearOrderTemp,
 } = itemSlice.actions
 export default itemSlice.reducer
