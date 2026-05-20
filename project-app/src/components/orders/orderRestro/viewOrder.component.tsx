@@ -7,7 +7,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { orderStateColor } from "@/constants/constants"
+import { itemStateColor } from "@/constants/constants"
 import { type OrderInterface } from "@/redux/order/orderSlice"
 import {
   DropdownMenu,
@@ -152,7 +152,7 @@ export function ViewOrderComponent({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      className={orderStateColor(item.status)}
+                      className={itemStateColor(item.status)}
                       disabled={inactiveStatus.includes(item.status)}
                     >
                       {item.status}
