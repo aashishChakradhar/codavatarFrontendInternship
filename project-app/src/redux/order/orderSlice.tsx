@@ -33,6 +33,7 @@ export interface OrderInterface {
 export interface OrderDataInterface {
   orders: OrderInterface[]
   order: OrderInterface | null
+  orderTemp: OrderInterface[] | null
   pendingItems: ItemInterface[]
   items: ItemInterface[]
   item: ItemInterface | null
@@ -42,6 +43,7 @@ export interface OrderDataInterface {
 const initialState: OrderDataInterface = {
   orders: [],
   order: null,
+  orderTemp: null,
   items: [],
   item: null,
   pendingItems: [],
@@ -134,6 +136,47 @@ export const fetchOrder = createAsyncThunk<
     }
     const data = await response.json()
     return data as OrderInterface
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err)
+    return thunkAPI.rejectWithValue(message)
+  }
+})
+
+export const updateOrderStatus = createAsyncThunk<
+  OrderInterface,
+  { orderId: string; updateStatus: OrderStatusType },
+  { rejectValue: string }
+>("orders/updateStatus", async ({ orderId, updateStatus }, thunkAPI) => {
+  try {
+    const token = localStorage.getItem("access_token")
+    if (!token) {
+      return thunkAPI.rejectWithValue("Missing access token")
+    }
+
+    const url = `${VITE_API_URL}/orders/${orderId}`
+    console.debug("updateOrderStatus: PATCH", url, { status: updateStatus })
+
+    const response = await fetch(url, {
+      method: "PATCH",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ status: updateStatus }),
+    })
+    if (!response.ok) {
+      const text = await response.text().catch(() => "")
+      // eslint-disable-next-line no-console
+      console.error(
+        "updateOrderStatus: server returned non-OK",
+        response.status,
+        text
+      )
+      return thunkAPI.rejectWithValue(`HTTP ${response.status}: ${text}`)
+    }
+    const data = await response.json().catch(() => null)
+    console.debug("gotIt", data)
+    return (data as OrderInterface) ?? ({} as OrderInterface)
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err)
     return thunkAPI.rejectWithValue(message)
@@ -236,6 +279,81 @@ const orderSlice = createSlice({
         }
       }
     },
+
+    selectOrder: (
+      state,
+      action: PayloadAction<OrderInterface | { order: OrderInterface }>
+    ) => {
+      state.order =
+        "order" in action.payload ? action.payload.order : action.payload
+    },
+
+    clearOrder: (state) => {
+      state.order = null
+    },
+
+    selectTempOrder: (
+      state,
+      action: PayloadAction<
+        | OrderInterface
+        | OrderInterface[]
+        | { order: OrderInterface }
+        | Record<string, ItemInterface[]>
+        | any
+      >
+    ) => {
+      const payload = action.payload
+
+      // If payload is already an array of orders, store directly
+      if (Array.isArray(payload)) {
+        state.orderTemp = payload as OrderInterface[]
+        return
+      }
+
+      // If payload is a map of orderId -> items (grouped), convert to OrderInterface[]
+      if (
+        payload &&
+        typeof payload === "object" &&
+        !("id" in payload) &&
+        Object.values(payload).every((v) => Array.isArray(v))
+      ) {
+        const orders = Object.entries(payload).map(([orderId, items]) => {
+          // try to find an existing order to copy table/user info
+          const existing = state.orders.find(
+            (o) => String(o.id) === String(orderId)
+          )
+          return {
+            id: orderId,
+            items: items as ItemInterface[],
+            status: (existing?.status as OrderStatusType) ?? "pending",
+            remark: existing?.remark ?? "",
+            table: existing?.table ?? null,
+            user: existing?.user ?? null,
+          }
+        })
+        state.orderTemp = orders
+        return
+      }
+
+      // If payload is a wrapped { order } or single OrderInterface
+      if (payload && typeof payload === "object") {
+        if ("order" in payload && payload.order) {
+          state.orderTemp = [payload.order as OrderInterface]
+          return
+        }
+        if ("id" in payload) {
+          state.orderTemp = [payload as OrderInterface]
+          return
+        }
+      }
+
+      // Fallback: clear temp
+      state.orderTemp = null
+    },
+
+    clearTempOrder: (state) => {
+      state.orderTemp = null
+    },
   },
 
   extraReducers: (builder) => {
@@ -282,6 +400,34 @@ const orderSlice = createSlice({
         state.error =
           (action.payload as string) || action.error.message || "Unknown error"
       })
+
+      .addCase(updateOrderStatus.pending, (state) => {
+        state.loading = true
+        state.error = null
+      })
+      .addCase(updateOrderStatus.fulfilled, (state, action) => {
+        const payload = action.payload
+        state.loading = false
+        state.error = null
+        // replace existing order if present, otherwise prepend
+        const idx = state.orders.findIndex(
+          (o) => String(o.id) === String(payload.id)
+        )
+        if (idx !== -1) {
+          state.orders[idx] = payload
+        } else {
+          state.orders = [payload, ...state.orders]
+        }
+        // update currently selected order if it matches
+        if (state.order && String(state.order.id) === String(payload.id)) {
+          state.order = payload
+        }
+      })
+      .addCase(updateOrderStatus.rejected, (state, action) => {
+        state.loading = false
+        state.error =
+          (action.payload as string) || action.error.message || "Unknown error"
+      })
   },
 })
 
@@ -291,6 +437,8 @@ export const {
   replaceOrderTempId,
   addItemsToOrder,
   updateOrderItemStatus,
+  selectOrder,
+  selectTempOrder,
 } = orderSlice.actions
 
 export default orderSlice.reducer
