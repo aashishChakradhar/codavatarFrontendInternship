@@ -23,6 +23,8 @@ import {
   type OrderInterface,
   type OrderStatusType,
   updateOrderItemStatus,
+  selectTempOrder,
+  updateOrderStatus,
 } from "@/redux/order/orderSlice"
 import {
   updateOptimisticItemStatus,
@@ -31,9 +33,10 @@ import {
 } from "@/redux/items/itemsSlice"
 import type { GroupType } from "./orderView.container"
 import { ItemRow } from "./itemRow"
-import { useDispatch } from "react-redux"
-import type { AppDispatch } from "@/redux/store"
+import { useDispatch, useSelector } from "react-redux"
+import type { AppDispatch, RootState } from "@/redux/store"
 import useUpdateItem from "@/hooks/use-updateItem"
+import { useNavigate } from "react-router-dom"
 
 export function OrderCardComponent({
   order,
@@ -42,8 +45,9 @@ export function OrderCardComponent({
   order: OrderInterface
   groupBy: GroupType
 }) {
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
   const [displayTitle, setDisplayTitle] = useState<string>("")
-  const [orderStat, setOrderStat] = useState<OrderStatusType>("pending")
+  const [orderStat, setOrderStat] = useState<OrderStatusType>(order.status)
   const disabledOrderStatus = [
     "open",
     "idle",
@@ -53,10 +57,28 @@ export function OrderCardComponent({
   ]
   const disabledItemStatus = ["pending", "delivered", "cancelled"]
 
-  const handleOrderStatusUpdate = (statChange: OrderStatusType) => {
+  const handleOrderStatusUpdate = async (statChange: OrderStatusType) => {
     setOrderStat(statChange)
+    try {
+      const result = await dispatch(
+        updateOrderStatus({ orderId: order.id, updateStatus: statChange })
+      )
+      if (updateOrderStatus.fulfilled.match(result)) {
+        console.log("order updated", result.payload)
+      } else if (updateOrderStatus.rejected.match(result)) {
+        console.error(
+          "updateOrderStatus rejected",
+          result.payload ?? result.error
+        )
+      } else {
+        console.warn("updateOrderStatus unexpected result", result)
+      }
+    } catch (err) {
+      console.error(String(err))
+    }
   }
 
+  const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
   const { updateItem } = useUpdateItem()
 
@@ -114,6 +136,18 @@ export function OrderCardComponent({
     applyItemStatusOptimistically(item, statusUpdate)
   }
 
+  const handleProceedPay = () => {
+    if (itemsByOrder) {
+      // user selected grouped items across orders — store as temp orders
+      dispatch(selectTempOrder(itemsByOrder as any))
+    } else {
+      // normal single-order flow
+      dispatch(selectTempOrder(order))
+    }
+    console.log(`dispatch hit`)
+    navigate("/billing")
+  }
+
   return (
     <Card
       size="sm"
@@ -153,9 +187,20 @@ export function OrderCardComponent({
               />
             ))}
       </CardContent>
-      <CardFooter className="mt-auto w-full">
+      <CardFooter className="mt-auto flex w-full flex-col">
+        <Button
+          className="w-full"
+          size="sm"
+          onClick={handleProceedPay}
+          hidden={!currentUser?.isAdmin}
+        >
+          Proceed To Pay
+        </Button>
         <DropdownMenu>
-          <DropdownMenuTrigger asChild>
+          <DropdownMenuTrigger
+            hidden={!(currentUser?.isAdmin && groupBy === "order")}
+            asChild
+          >
             <Button className="w-full" size="sm">
               {orderStat}
             </Button>
