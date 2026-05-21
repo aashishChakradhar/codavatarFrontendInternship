@@ -1,6 +1,6 @@
 import { Outlet } from "react-router-dom"
 
-import { AdminAppSidebar } from "../sidebar/app-sidebar"
+import { AppSidebar } from "../sidebar/app-sidebar"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -16,13 +16,24 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar"
 import ThemeToggle from "@/components/themeToggle/themeToggle"
+import type { RootState } from "@/redux/store"
+import { useSelector } from "react-redux"
+import { ToastMessage } from "@/components/toast/toast"
+import { data } from "@/data/navData"
 
 export default function AdminLayout() {
+  const currentUser = useSelector((state: RootState) => state.user.currentUser)
+  if (!currentUser || !currentUser.isAdmin) return
+
+  const sidebarData = data
+
+  const toast = useSelector((state: RootState) => state.toast)
   return (
     <SidebarProvider>
-      <AdminAppSidebar />
+      {/* <AdminAppSidebar /> */}
+      <AppSidebar pvtData={sidebarData} />
       <SidebarInset>
-        <header className="flex h-16 shrink-0 items-center justify-between gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+        <header className="sticky top-0 z-2 flex h-16 shrink-0 items-center justify-between gap-2 bg-background transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
           <div className="flex items-center gap-2 px-4">
             <SidebarTrigger className="-ml-1" />
             <Separator
@@ -41,20 +52,21 @@ export default function AdminLayout() {
               </BreadcrumbList>
             </Breadcrumb>
           </div>
-          <div className="justify-end pr-4">
+          <div className="flex justify-end gap-1 pr-4">
             <ThemeToggle />
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
           <Outlet />
-          {/* <div className="grid auto-rows-min gap-4 md:grid-cols-3">
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-            <div className="aspect-video rounded-xl bg-muted/50" />
-          </div>
-          <div className="min-h-[100vh] flex-1 rounded-xl bg-muted/50 md:min-h-min" /> */}
         </div>
       </SidebarInset>
+      {toast.toastStatus && (
+        <ToastMessage
+          toastId={toast.toastId}
+          status={toast.toastStatus}
+          message={toast.toastMessage}
+        />
+      )}
     </SidebarProvider>
   )
 }
