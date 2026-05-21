@@ -13,7 +13,9 @@ const ReceptionLayout = lazy(
 )
 const All = lazy(() => import("@/pages/all"))
 const Report = lazy(() => import("@/pages/forms/reportFormPage"))
-const DashboardPage = lazy(() => import("@/pages/menuPage/menuPage"))
+const Billing = lazy(() => import("@/pages/billingPage/billingPage"))
+const TablesPage = lazy(() => import("@/pages/tablePage/tablePage"))
+const OrdersPage = lazy(() => import("@/pages/orderPage/orderKitchenPage"))
 
 export const receptionRoutes: RouteObject[] = [
   {
@@ -27,19 +29,27 @@ export const receptionRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: withSuspense(<All />),
+        element: withSuspense(<Billing />),
       },
       {
-        path: "dashboard",
-        element: withSuspense(<DashboardPage />),
+        path: "tables",
+        element: withSuspense(<TablesPage />),
       },
       {
-        path: "all",
-        element: withSuspense(<All />),
+        path: "orders",
+        element: withSuspense(<OrdersPage />),
+      },
+      {
+        path: "billing",
+        element: withSuspense(<Billing />),
       },
       {
         path: "report",
         element: withSuspense(<Report />),
+      },
+      {
+        path: "all",
+        element: withSuspense(<All />),
       },
     ],
   },

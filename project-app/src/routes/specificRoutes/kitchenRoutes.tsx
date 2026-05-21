@@ -9,7 +9,7 @@ const withSuspense = (node: React.ReactNode) => {
 }
 
 const KitchenLayout = lazy(() => import("@/layout/kitchenLayout/kitchenLayout"))
-const All = lazy(() => import("@/pages/all"))
+const AllPage = lazy(() => import("@/pages/all"))
 const Report = lazy(() => import("@/pages/forms/reportFormPage"))
 const OrderPage = lazy(() => import("@/pages/orderPage/orderKitchenPage"))
 
@@ -25,7 +25,7 @@ export const kitchenRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: withSuspense(<All />),
+        element: withSuspense(<OrderPage />),
       },
       {
         path: "order",
@@ -34,6 +34,10 @@ export const kitchenRoutes: RouteObject[] = [
       {
         path: "report",
         element: withSuspense(<Report />),
+      },
+      {
+        path: "all",
+        element: withSuspense(<AllPage />),
       },
     ],
   },

@@ -11,7 +11,10 @@ const withSuspense = (node: React.ReactNode) => {
 const AdminLayout = lazy(() => import("../../layout/adminLayout/adminLayout"))
 const All = lazy(() => import("../../pages/all"))
 const Report = lazy(() => import("../../pages/forms/reportFormPage"))
-// const DashboardPage = lazy(() => import("../../pages/menuPage/menuPage"))
+const MenuPage = lazy(() => import("../../pages/menuPage/menuPage"))
+const OrderPage = lazy(() => import("../../pages/orderPage/orderKitchenPage"))
+const BillingPage = lazy(() => import("../../pages/billingPage/billingPage"))
+const TablePage = lazy(() => import("../../pages/tablePage/tablePage"))
 
 export const adminRoutes: RouteObject[] = [
   {
@@ -25,19 +28,31 @@ export const adminRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: withSuspense(<All />),
+        element: withSuspense(<MenuPage />),
       },
-      // {
-      //   path: "dashboard",
-      //   element: withSuspense(<DashboardPage />),
-      // },
       {
-        path: "all",
-        element: withSuspense(<All />),
+        path: "menu",
+        element: withSuspense(<MenuPage />),
+      },
+      {
+        path: "tables",
+        element: withSuspense(<TablePage />),
+      },
+      {
+        path: "orders",
+        element: withSuspense(<OrderPage />),
+      },
+      {
+        path: "billing",
+        element: withSuspense(<BillingPage />),
       },
       {
         path: "report",
         element: withSuspense(<Report />),
+      },
+      {
+        path: "all",
+        element: withSuspense(<All />),
       },
     ],
   },
