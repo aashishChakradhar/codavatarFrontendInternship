@@ -1,20 +1,30 @@
-import { useSelector } from "react-redux"
-import type { RootState } from "@/redux/store"
-import { useCallback, useMemo, useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import type { AppDispatch, RootState } from "@/redux/store"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import type { ChangeEvent } from "react"
 import { BillingComponent } from "./billing.component"
-export default function Billing() {
-  const currentUser = useSelector((state: RootState) => state.user.currentUser)
-  const orderTemp = useSelector((state: RootState) => state.order.orderTemp)
+import useBill from "@/hooks/useBill"
+import { activateToast } from "@/redux/toast/toastSlice"
+import { useNavigate } from "react-router-dom"
 
-  if (!orderTemp || orderTemp.length === 0) return <div>No items to bill</div>
+export default function Billing() {
+  const orderTemp = useSelector((state: RootState) => state.order.orderTemp)
   const [discountValue, setDiscountValue] = useState<number>(0)
   const [discountOption, setDiscountOption] = useState<string>("Rs")
+  const { createBill } = useBill()
+  const dispatch = useDispatch<AppDispatch>()
+  const navigate = useNavigate()
 
-  const flatItems = useMemo(
-    () => orderTemp.flatMap((invoice) => invoice.items ?? []),
-    [orderTemp]
-  )
+  const flatItems = useMemo(() => {
+    const items = orderTemp?.flatMap((invoice) => invoice.items ?? []) ?? []
+    return items
+      .slice()
+      .sort((a, b) =>
+        String((a as any)?.dish?.name ?? a.id).localeCompare(
+          String((b as any)?.dish?.name ?? b.id)
+        )
+      )
+  }, [orderTemp])
 
   const totalAmount = useMemo(() => {
     return flatItems.reduce((sum, content) => {
@@ -46,22 +56,27 @@ export default function Billing() {
     [totalAmount, discountAmount]
   )
 
+  useEffect(() => {
+    if (orderTemp && orderTemp.length > 0) return
+
+    dispatch(
+      activateToast({
+        toastId: "order-notselected-error",
+        status: "error",
+        message: "Select Order First",
+      })
+    )
+    navigate("/checkout")
+  }, [dispatch, navigate, orderTemp])
+
   const handleCheckout = useCallback(
     (fullName: string, phoneNumber: string, payMethod: string) => {
-      orderTemp.map((ot) =>
-        console.log(
-          `fullName: ${fullName}
-        \nphone: ${phoneNumber}
-        \npaid:${totalAmount}-${payMethod}
-        \norderId:${ot.id}
-        \ncurrent:${currentUser?.userId}
-        \ntable:${ot.table?.id}
-        `
-        )
-      )
+      void createBill(fullName, phoneNumber, payMethod)
     },
-    []
+    [createBill]
   )
+
+  if (!orderTemp || orderTemp.length === 0) return null
 
   return (
     <div className="flex flex-col">
