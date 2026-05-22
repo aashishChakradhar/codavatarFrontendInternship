@@ -47,7 +47,7 @@ const initialState: ItemDataInterface = {
   error: null,
 }
 
-export const createItems = createAsyncThunk<
+export const _createItems = createAsyncThunk<
   ItemInterface[],
   { itemList: CreateItemInterface[] },
   { rejectValue: string }
@@ -123,7 +123,7 @@ export const createItems = createAsyncThunk<
   }
 })
 
-export const updateItemStatus = createAsyncThunk<
+export const _updateItemStatus = createAsyncThunk<
   ItemInterface,
   { itemID: string; status: string },
   { rejectValue: string }
@@ -245,11 +245,11 @@ const itemSlice = createSlice({
 
   extraReducers: (builder) => {
     builder
-      .addCase(createItems.pending, (state) => {
+      .addCase(_createItems.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase(createItems.fulfilled, (state, action) => {
+      .addCase(_createItems.fulfilled, (state, action) => {
         state.loading = false
         state.error = null
         const serverItems = action.payload || []
@@ -274,17 +274,17 @@ const itemSlice = createSlice({
         }
         state.items = merged
       })
-      .addCase(createItems.rejected, (state, action) => {
+      .addCase(_createItems.rejected, (state, action) => {
         state.loading = false
         state.error =
           (action.payload as string) || action.error.message || "Unknown error"
       })
 
-      .addCase(updateItemStatus.pending, (state) => {
+      .addCase(_updateItemStatus.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase(updateItemStatus.fulfilled, (state, action) => {
+      .addCase(_updateItemStatus.fulfilled, (state, action) => {
         state.loading = false
         // merge server-confirmed item into items list
         const updated = action.payload
@@ -297,7 +297,7 @@ const itemSlice = createSlice({
         }
         state.error = null
       })
-      .addCase(updateItemStatus.rejected, (state, action) => {
+      .addCase(_updateItemStatus.rejected, (state, action) => {
         state.loading = false
         state.error =
           (action.payload as string) || action.error.message || "Unknown error"
