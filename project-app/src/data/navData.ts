@@ -6,6 +6,7 @@ import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined"
 import RestaurantOutlinedIcon from "@mui/icons-material/RestaurantOutlined"
 import ChairOutlinedIcon from "@mui/icons-material/ChairOutlined"
 import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined"
+import TimelineOutlinedIcon from "@mui/icons-material/TimelineOutlined"
 
 export interface TeamsDataInterface {
   name: string
@@ -63,6 +64,12 @@ export const data: NavigationDataInterface = {
   ],
 
   navMain: [
+    {
+      title: "Dashboard",
+      url: "/dashboard",
+      icon: TimelineOutlinedIcon,
+      isActive: true,
+    },
     {
       title: "Menu",
       url: "/menu",
