@@ -15,7 +15,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import useUpdateItem from "@/hooks/use-updateItem"
 import { useState } from "react"
 import { ConfirmAlert } from "../../alert/confirmAlert"
 import {
@@ -27,6 +26,7 @@ import {
 import type { AppDispatch } from "@/redux/store"
 import { useDispatch } from "react-redux"
 import { SortSelect, type SortByType } from "./sortSelect"
+import useItem from "@/hooks/useItem"
 
 export function ViewOrderComponent({
   orders,
@@ -38,7 +38,7 @@ export function ViewOrderComponent({
   inactiveStatus: ItemStatusType[]
 }) {
   const dispatch = useDispatch<AppDispatch>()
-  const { updateItem } = useUpdateItem()
+  const { updateItemStatus } = useItem()
 
   const [pendingUpdate, setPendingUpdate] = useState<{
     item: ItemInterface
@@ -55,7 +55,7 @@ export function ViewOrderComponent({
   const handleConfirmChange = () => {
     if (pendingUpdate) {
       //backend
-      updateItem(pendingUpdate.item, pendingUpdate.status)
+      updateItemStatus(pendingUpdate.item, pendingUpdate.status)
 
       // ui
       dispatch(
