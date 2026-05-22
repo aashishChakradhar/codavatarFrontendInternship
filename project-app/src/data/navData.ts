@@ -1,5 +1,3 @@
-// This is sample data.
-
 import type { ElementType } from "react"
 import { AudioWaveform, Command, GalleryVerticalEnd } from "lucide-react"
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined"
