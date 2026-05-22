@@ -15,7 +15,6 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar"
-import ThemeToggle from "@/components/themeToggle/themeToggle"
 import type { RootState } from "@/redux/store"
 import { useSelector } from "react-redux"
 import { ToastMessage } from "@/components/toast/toast"
@@ -30,7 +29,6 @@ export default function AdminLayout() {
   const toast = useSelector((state: RootState) => state.toast)
   return (
     <SidebarProvider>
-      {/* <AdminAppSidebar /> */}
       <AppSidebar pvtData={sidebarData} />
       <SidebarInset>
         <header className="sticky top-0 z-2 flex h-16 shrink-0 items-center justify-between gap-2 bg-background transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
@@ -51,9 +49,6 @@ export default function AdminLayout() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-          </div>
-          <div className="flex justify-end gap-1 pr-4">
-            <ThemeToggle />
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
