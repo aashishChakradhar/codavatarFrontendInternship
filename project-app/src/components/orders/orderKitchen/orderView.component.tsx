@@ -35,8 +35,8 @@ import type { GroupType } from "./orderView.container"
 import { ItemRow } from "./itemRow"
 import { useDispatch, useSelector } from "react-redux"
 import type { AppDispatch, RootState } from "@/redux/store"
-import useUpdateItem from "@/hooks/use-updateItem"
 import { useNavigate } from "react-router-dom"
+import useItem from "@/hooks/useItem"
 
 export function OrderCardComponent({
   order,
@@ -80,7 +80,7 @@ export function OrderCardComponent({
 
   const navigate = useNavigate()
   const dispatch = useDispatch<AppDispatch>()
-  const { updateItem } = useUpdateItem()
+  const { updateItemStatus } = useItem()
 
   const applyItemStatusOptimistically = (
     item: ItemInterface,
@@ -131,7 +131,7 @@ export function OrderCardComponent({
     statusUpdate: ItemStatusType
   }) => {
     //backend
-    updateItem(item, statusUpdate)
+    updateItemStatus(item, statusUpdate)
     // ui
     applyItemStatusOptimistically(item, statusUpdate)
   }
@@ -187,7 +187,7 @@ export function OrderCardComponent({
               />
             ))}
       </CardContent>
-      <CardFooter className="mt-auto flex w-full flex-col">
+      <CardFooter className="mt-auto flex w-full flex-col" hidden>
         <Button
           className="w-full"
           size="sm"
