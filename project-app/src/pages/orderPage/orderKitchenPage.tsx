@@ -1,7 +1,13 @@
 import OrderKitchen from "@/components/orders/orderKitchen"
-import useLoadOrder from "@/hooks/use-loadOrder"
+import useOrder from "@/hooks/useOrder"
+import { useEffect } from "react"
 
 export default function OrderPage() {
-  useLoadOrder()
+  const [, readOrder] = useOrder()
+
+  useEffect(() => {
+    void readOrder()
+  }, [readOrder])
+
   return <OrderKitchen />
 }
