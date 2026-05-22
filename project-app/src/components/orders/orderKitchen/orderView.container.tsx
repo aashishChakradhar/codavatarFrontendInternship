@@ -15,7 +15,8 @@ import {
 import type { OrderInterface } from "@/redux/order/orderSlice"
 import { OrderCardComponent } from "./orderView.component"
 
-export type GroupType = "order" | "table" | "dish"
+const groupOptions = ["table", "order", "dish"] as const
+export type GroupType = (typeof groupOptions)[number]
 
 function mergeGroupedItems(orders: OrderInterface[]) {
   const itemsByStatusAndDish = new Map<
@@ -49,19 +50,32 @@ function mergeGroupedItems(orders: OrderInterface[]) {
   return Array.from(itemsByStatusAndDish.values())
 }
 
-function groupOrder(orders: OrderInterface[]) {
+function groupOrder({
+  orders,
+  removedOrder,
+}: {
+  orders: OrderInterface[]
+  removedOrder: string[]
+}) {
   if (!Array.isArray(orders) || orders.length === 0) return []
 
   // Return all orders sorted alphabetically by order id
-
-  return [...orders].sort((a, b) => String(a.id).localeCompare(String(b.id)))
+  const filtered = orders.filter((o) => !removedOrder.includes(o.status))
+  return [...filtered].sort((a, b) => String(a.id).localeCompare(String(b.id)))
 }
 
-function groupTable(orders: OrderInterface[]) {
+function groupTable({
+  orders,
+  removedOrder,
+}: {
+  orders: OrderInterface[]
+  removedOrder: string[]
+}) {
   if (!Array.isArray(orders) || orders.length === 0) return []
 
   // Sort orders alphabetically by order id first
-  const sortedOrders = [...orders].sort((a, b) =>
+  const filtered = orders.filter((o) => !removedOrder.includes(o.status))
+  const sortedOrders = [...filtered].sort((a, b) =>
     String(a.id).localeCompare(String(b.id))
   )
 
@@ -100,53 +114,9 @@ function groupTable(orders: OrderInterface[]) {
   return results
 }
 
-function groupDish(orders: OrderInterface[]) {
-  if (!Array.isArray(orders) || orders.length === 0) return []
-
-  const dishMap = new Map<
-    string,
-    (OrderInterface["items"][number] & { orderId?: string })[]
-  >()
-
-  for (const ord of orders) {
-    for (const it of ord.items) {
-      const dishName = it.dish?.name ?? "Dish"
-      const items = dishMap.get(dishName) ?? []
-
-      items.push({
-        ...it,
-        orderId: ord.id,
-      } as OrderInterface["items"][number] & { orderId?: string })
-
-      dishMap.set(dishName, items)
-    }
-  }
-
-  const results: OrderInterface[] = []
-  for (const [dishName, items] of dishMap.entries()) {
-    // Sort items by orderId, then by status
-    const sortedItems = [...items].sort((a, b) => {
-      const orderCmp = String(a.orderId).localeCompare(String(b.orderId))
-      if (orderCmp !== 0) return orderCmp
-      return String(a.status).localeCompare(String(b.status))
-    })
-
-    results.push({
-      id: dishName,
-      items: sortedItems,
-      status: sortedItems[0]?.status ?? "pending",
-      remark: "",
-      table: null,
-      user: null,
-    })
-  }
-
-  return results
-}
-
 export default function KitchenOrderView() {
   const orders = useSelector((state: RootState) => state.order.orders)
-  const [groupBy, setGroupBy] = useState<GroupType>("dish")
+  const [groupBy, setGroupBy] = useState<GroupType>(groupOptions[0])
   const [processedData, setProcessedData] = useState<OrderInterface[]>([])
 
   const handleGroupChange = (group: GroupType) => {
@@ -160,11 +130,13 @@ export default function KitchenOrderView() {
     }
 
     if (groupBy === "order") {
-      setProcessedData(groupOrder(orders))
+      setProcessedData(
+        groupOrder({ orders: orders, removedOrder: ["in_progress"] })
+      )
     } else if (groupBy === "table") {
-      setProcessedData(groupTable(orders))
-    } else {
-      setProcessedData(groupDish(orders))
+      setProcessedData(
+        groupTable({ orders: orders, removedOrder: ["in_progress"] })
+      )
     }
   }, [orders, groupBy])
 
@@ -180,15 +152,14 @@ export default function KitchenOrderView() {
           <DropdownMenuContent className="w-40" align="start">
             <DropdownMenuGroup>
               <DropdownMenuLabel>Group Orders</DropdownMenuLabel>
-              <DropdownMenuItem onClick={() => handleGroupChange("table")}>
-                Table
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleGroupChange("order")}>
-                Order
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => handleGroupChange("dish")}>
-                Dish
-              </DropdownMenuItem>
+              {groupOptions.map((group, index) => (
+                <DropdownMenuItem
+                  key={index}
+                  onClick={() => handleGroupChange(group)}
+                >
+                  {group}
+                </DropdownMenuItem>
+              ))}
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
