@@ -30,7 +30,9 @@ import {
 
 import { Input } from "@/components/ui/input"
 import { useState, type ChangeEvent } from "react"
-import { ToastMessage } from "../toast/toast"
+import { activateToast } from "@/redux/toast/toastSlice"
+import { useDispatch } from "react-redux"
+import type { AppDispatch } from "@/redux/store"
 
 export function BillingComponent(props: {
   flatItems: any[]
@@ -59,12 +61,17 @@ export function BillingComponent(props: {
   const [fullName, setFullName] = useState<string>("")
   const [phone, setPhone] = useState<string>("")
   const payMethod = "cash"
-  const [showValidationToast, setShowValidationToast] = useState(false)
-
+  
+  const dispatch = useDispatch<AppDispatch>()
   const onConfirm = () => {
     if (!fullName.trim() || !phone.trim()) {
-      setShowValidationToast(true)
-      setTimeout(() => setShowValidationToast(false), 2500)
+      dispatch(
+        activateToast({
+          toastId: "bill-data-fail",
+          status: "error",
+          message: "Check the input data...",
+        })
+      )
       return
     }
     handleCheckout(fullName, phone, payMethod)
@@ -194,13 +201,6 @@ export function BillingComponent(props: {
         <Button className="max-w-40 self-end" onClick={onConfirm}>
           Confirm Pay
         </Button>
-        {showValidationToast && (
-          <ToastMessage
-            toastId="bill-payment"
-            status="error"
-            message="Please enter full name and phone number"
-          />
-        )}
       </div>
     </div>
   )
