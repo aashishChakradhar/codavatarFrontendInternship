@@ -88,7 +88,7 @@ export const fetchAllOrders = createAsyncThunk<
   }
 })
 
-export const createOrder = createAsyncThunk<
+export const _createOrder = createAsyncThunk<
   OrderInterface,
   { tableID: string; userID: string; status: string; remark: string },
   { rejectValue: string }
@@ -364,7 +364,18 @@ const orderSlice = createSlice({
       })
       .addCase(fetchAllOrders.fulfilled, (state, action) => {
         state.loading = false
-        state.orders = action.payload
+        // Ensure items inside each order are sorted alphabetically by dish name (fallback to id)
+        const sortedOrders = (action.payload ?? []).map((o) => ({
+          ...o,
+          items: [...o.items]
+            .slice()
+            .sort((a, b) =>
+              String((a as any)?.dish?.name ?? a.id).localeCompare(
+                String((b as any)?.dish?.name ?? b.id)
+              )
+            ),
+        }))
+        state.orders = sortedOrders
       })
       .addCase(fetchAllOrders.rejected, (state, action) => {
         state.loading = false
@@ -372,16 +383,16 @@ const orderSlice = createSlice({
           (action.payload as string) || action.error.message || "Unknown error"
       })
 
-      .addCase(createOrder.pending, (state) => {
+      .addCase(_createOrder.pending, (state) => {
         state.loading = true
         state.error = null
       })
-      .addCase(createOrder.fulfilled, (state, action) => {
+      .addCase(_createOrder.fulfilled, (state, action) => {
         state.loading = false
         state.error = null
         state.order = action.payload
       })
-      .addCase(createOrder.rejected, (state, action) => {
+      .addCase(_createOrder.rejected, (state, action) => {
         state.loading = false
         state.error =
           (action.payload as string) || action.error.message || "Unknown error"
