@@ -15,6 +15,10 @@ const MenuPage = lazy(() => import("../../pages/menuPage/menuPage"))
 const OrderPage = lazy(() => import("../../pages/orderPage/orderKitchenPage"))
 const BillingPage = lazy(() => import("../../pages/billingPage/billingPage"))
 const TablePage = lazy(() => import("../../pages/tablePage/tablePage"))
+const DashboardPage = lazy(
+  () => import("../../pages/dashboardPage/dashboardPage")
+)
+const CheckoutPage = lazy(() => import("../../pages/checkoutPage/checkoutPage"))
 
 export const adminRoutes: RouteObject[] = [
   {
@@ -28,7 +32,11 @@ export const adminRoutes: RouteObject[] = [
     children: [
       {
         index: true,
-        element: withSuspense(<MenuPage />),
+        element: withSuspense(<DashboardPage />),
+      },
+      {
+        path: "dashboard",
+        element: withSuspense(<DashboardPage />),
       },
       {
         path: "menu",
@@ -43,8 +51,12 @@ export const adminRoutes: RouteObject[] = [
         element: withSuspense(<OrderPage />),
       },
       {
-        path: "billing",
+        path: "checkout/billing",
         element: withSuspense(<BillingPage />),
+      },
+      {
+        path: "checkout",
+        element: withSuspense(<CheckoutPage />),
       },
       {
         path: "report",

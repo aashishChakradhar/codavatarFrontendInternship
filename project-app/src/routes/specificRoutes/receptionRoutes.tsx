@@ -16,6 +16,7 @@ const Report = lazy(() => import("@/pages/forms/reportFormPage"))
 const Billing = lazy(() => import("@/pages/billingPage/billingPage"))
 const TablesPage = lazy(() => import("@/pages/tablePage/tablePage"))
 const OrdersPage = lazy(() => import("@/pages/orderPage/orderKitchenPage"))
+const CheckoutPage = lazy(() => import("@/pages/checkoutPage/checkoutPage"))
 
 export const receptionRoutes: RouteObject[] = [
   {
@@ -40,8 +41,12 @@ export const receptionRoutes: RouteObject[] = [
         element: withSuspense(<OrdersPage />),
       },
       {
-        path: "billing",
+        path: "checkout/billing",
         element: withSuspense(<Billing />),
+      },
+      {
+        path: "checkout",
+        element: withSuspense(<CheckoutPage />),
       },
       {
         path: "report",
