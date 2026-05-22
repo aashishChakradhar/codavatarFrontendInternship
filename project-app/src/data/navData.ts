@@ -1,21 +1,11 @@
 // This is sample data.
 
 import type { ElementType } from "react"
-import {
-  AudioWaveform,
-  BookOpen,
-  Bot,
-  Command,
-  Frame,
-  GalleryVerticalEnd,
-  Map,
-  PieChart,
-  Settings2,
-  SquareTerminal,
-} from "lucide-react"
+import { AudioWaveform, Command, GalleryVerticalEnd } from "lucide-react"
 import MenuBookOutlinedIcon from "@mui/icons-material/MenuBookOutlined"
 import RestaurantOutlinedIcon from "@mui/icons-material/RestaurantOutlined"
 import ChairOutlinedIcon from "@mui/icons-material/ChairOutlined"
+import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined"
 
 export interface TeamsDataInterface {
   name: string
@@ -47,16 +37,22 @@ export interface NavigationDataInterface {
 export const data: NavigationDataInterface = {
   teams: [
     {
-      name: "Restify Reception",
+      name: "Restify Admin",
       logo: GalleryVerticalEnd,
-      plan: "Reception",
-      path: "/reception/",
+      plan: "Admin",
+      path: "/",
     },
     {
       name: "Restify Kitchen",
       logo: AudioWaveform,
       plan: "Kitchen",
       path: "/kitchen/",
+    },
+    {
+      name: "Restify Reception",
+      logo: AudioWaveform,
+      plan: "Kitchen",
+      path: "/reception/",
     },
     {
       name: "Restify Restro",
@@ -68,115 +64,32 @@ export const data: NavigationDataInterface = {
 
   navMain: [
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: SquareTerminal,
+      title: "Menu",
+      url: "/menu",
+      icon: MenuBookOutlinedIcon,
       isActive: true,
     },
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      // isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      title: "Orders",
+      url: "/orders",
+      icon: RestaurantOutlinedIcon,
+      isActive: true,
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
+      title: "Table",
+      url: "/tables",
+      icon: ChairOutlinedIcon,
+      isActive: true,
     },
     {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      title: "Checkout",
+      url: "/checkout",
+      icon: PrintOutlinedIcon,
+      isActive: true,
     },
   ],
 
-  projects: [
-    {
-      name: "Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
+  projects: null,
 }
 
 export const restroData: NavigationDataInterface = {
@@ -208,111 +121,9 @@ export const restroData: NavigationDataInterface = {
       icon: RestaurantOutlinedIcon,
       isActive: true,
     },
-    // {
-    //   title: "Cart",
-    //   url: "/cart",
-    //   icon: SquareTerminal,
-    // isActive: true,
-    // items: [
-    //   {
-    //     title: "History",
-    //     url: "#",
-    //   },
-    //   {
-    //     title: "Starred",
-    //     url: "#",
-    //   },
-    //   {
-    //     title: "Settings",
-    //     url: "#",
-    //   },
-    // ],
-    // },
-    // {
-    //   title: "Models",
-    //   url: "#",
-    //   icon: Bot,
-    //   items: [
-    //     {
-    //       title: "Genesis",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Explorer",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Quantum",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Documentation",
-    //   url: "#",
-    //   icon: BookOpen,
-    //   items: [
-    //     {
-    //       title: "Introduction",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Get Started",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Tutorials",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Changelog",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
-    // {
-    //   title: "Settings",
-    //   url: "#",
-    //   icon: Settings2,
-    //   items: [
-    //     {
-    //       title: "General",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Team",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Billing",
-    //       url: "#",
-    //     },
-    //     {
-    //       title: "Limits",
-    //       url: "#",
-    //     },
-    //   ],
-    // },
   ],
 
   projects: null,
-  // [
-  // {
-  //   name: "Restro Design Engineering",
-  //   url: "#",
-  //   icon: Frame,
-  // },
-  // {
-  //   name: "Sales & Marketing",
-  //   url: "#",
-  //   icon: PieChart,
-  // },
-  // {
-  //   name: "Travel",
-  //   url: "#",
-  //   icon: Map,
-  // },
-  // ],
 }
 
 export const receptionData: NavigationDataInterface = {
@@ -327,115 +138,26 @@ export const receptionData: NavigationDataInterface = {
 
   navMain: [
     {
-      title: "Dashboard",
-      url: "/dashboard",
-      icon: SquareTerminal,
+      title: "Table",
+      url: "/tables",
+      icon: ChairOutlinedIcon,
       isActive: true,
     },
     {
-      title: "Playground",
-      url: "#",
-      icon: SquareTerminal,
-      // isActive: true,
-      items: [
-        {
-          title: "History",
-          url: "#",
-        },
-        {
-          title: "Starred",
-          url: "#",
-        },
-        {
-          title: "Settings",
-          url: "#",
-        },
-      ],
+      title: "Orders",
+      url: "/orders",
+      icon: RestaurantOutlinedIcon,
+      isActive: true,
     },
     {
-      title: "Models",
-      url: "#",
-      icon: Bot,
-      items: [
-        {
-          title: "Genesis",
-          url: "#",
-        },
-        {
-          title: "Explorer",
-          url: "#",
-        },
-        {
-          title: "Quantum",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Documentation",
-      url: "#",
-      icon: BookOpen,
-      items: [
-        {
-          title: "Introduction",
-          url: "#",
-        },
-        {
-          title: "Get Started",
-          url: "#",
-        },
-        {
-          title: "Tutorials",
-          url: "#",
-        },
-        {
-          title: "Changelog",
-          url: "#",
-        },
-      ],
-    },
-    {
-      title: "Settings",
-      url: "#",
-      icon: Settings2,
-      items: [
-        {
-          title: "General",
-          url: "#",
-        },
-        {
-          title: "Team",
-          url: "#",
-        },
-        {
-          title: "Billing",
-          url: "#",
-        },
-        {
-          title: "Limits",
-          url: "#",
-        },
-      ],
+      title: "Checkout",
+      url: "/checkout",
+      icon: PrintOutlinedIcon,
+      isActive: true,
     },
   ],
 
-  projects: [
-    {
-      name: "Reception Design Engineering",
-      url: "#",
-      icon: Frame,
-    },
-    {
-      name: "Sales & Marketing",
-      url: "#",
-      icon: PieChart,
-    },
-    {
-      name: "Travel",
-      url: "#",
-      icon: Map,
-    },
-  ],
+  projects: null,
 }
 
 export const kitchenData: NavigationDataInterface = {
@@ -449,116 +171,12 @@ export const kitchenData: NavigationDataInterface = {
   ],
 
   navMain: [
-    // {
-    //   title: "Dashboard",
-    //   url: "/dashboard",
-    //   icon: SquareTerminal,
-    //   isActive: true,
-    // },
     {
       title: "Orders",
       url: "order",
-      icon: SquareTerminal,
-      // isActive: true,
-      // items: [
-      //   {
-      //     title: "History",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Starred",
-      //     url: "#",
-      //   },
-      //   {
-      //     title: "Settings",
-      //     url: "#",
-      //   },
-      // ],
+      icon: RestaurantOutlinedIcon,
     },
-
-    //   {
-    //     title: "Models",
-    //     url: "#",
-    //     icon: Bot,
-    //     items: [
-    //       {
-    //         title: "Genesis",
-    //         url: "#",
-    //       },
-    //       {
-    //         title: "Explorer",
-    //         url: "#",
-    //       },
-    //       {
-    //         title: "Quantum",
-    //         url: "#",
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     title: "Documentation",
-    //     url: "#",
-    //     icon: BookOpen,
-    //     items: [
-    //       {
-    //         title: "Introduction",
-    //         url: "#",
-    //       },
-    //       {
-    //         title: "Get Started",
-    //         url: "#",
-    //       },
-    //       {
-    //         title: "Tutorials",
-    //         url: "#",
-    //       },
-    //       {
-    //         title: "Changelog",
-    //         url: "#",
-    //       },
-    //     ],
-    //   },
-    //   {
-    //     title: "Settings",
-    //     url: "#",
-    //     icon: Settings2,
-    //     items: [
-    //       {
-    //         title: "General",
-    //         url: "#",
-    //       },
-    //       {
-    //         title: "Team",
-    //         url: "#",
-    //       },
-    //       {
-    //         title: "Billing",
-    //         url: "#",
-    //       },
-    //       {
-    //         title: "Limits",
-    //         url: "#",
-    //       },
-    //     ],
-    //   },
   ],
 
   projects: null,
-  // projects: [
-  //   {
-  //     name: "Kitchen Design Engineering",
-  //     url: "#",
-  //     icon: Frame,
-  //   },
-  //   {
-  //     name: "Sales & Marketing",
-  //     url: "#",
-  //     icon: PieChart,
-  //   },
-  //   {
-  //     name: "Travel",
-  //     url: "#",
-  //     icon: Map,
-  //   },
-  // ],
 }
