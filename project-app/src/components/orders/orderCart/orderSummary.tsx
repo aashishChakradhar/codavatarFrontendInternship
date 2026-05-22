@@ -20,7 +20,7 @@ import { useState } from "react"
 import ChairIcon from "@mui/icons-material/Chair"
 import { SelectOrderTable } from "./orderTableSelect"
 import { ConfirmAlert } from "@/components/alert/confirmAlert"
-import { useCreateOrder } from "@/hooks/useCreateOrder"
+import useOrder from "@/hooks/useOrder"
 
 function PlaceOrder() {
   const { tables } = useSelector((state: RootState) => state.table)
@@ -35,11 +35,11 @@ function PlaceOrder() {
   const hasNoOrder: boolean = createItem.length === 0
   const hasNoTable: boolean = selectedTable.number === 0
 
-  const selectOrder = useCreateOrder()
+  const [createOrder] = useOrder()
 
   const confirmOrder = async () => {
     try {
-      await selectOrder()
+      await createOrder()
       setOpen(false)
     } catch (err) {
       console.error("ConfirmOrder.selectOrder error:", err)
