@@ -1,8 +1,8 @@
-import { Outlet, useNavigate } from "react-router-dom"
+import { Outlet } from "react-router-dom"
 
-import { AppSidebar } from "../sidebar/app-sidebar"
+import { useSelector } from "react-redux"
+import type { RootState } from "@/redux/store"
 
-import PrintOutlinedIcon from "@mui/icons-material/PrintOutlined"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -19,12 +19,9 @@ import {
 } from "@/components/ui/sidebar"
 
 import { data, receptionData } from "@/data/navData"
-
-import { useSelector } from "react-redux"
-import type { RootState } from "@/redux/store"
-
+import { AppSidebar } from "../sidebar/app-sidebar"
 import { ToastMessage } from "@/components/toast/toast"
-import { Button } from "@/components/ui/button"
+
 export default function ReceptionLayout() {
   const currentUser = useSelector((state: RootState) => state.user.currentUser)
   const toast = useSelector((state: RootState) => state.toast)
@@ -40,8 +37,6 @@ export default function ReceptionLayout() {
     ?.replace(/-/g, " ")
     .replace(/\b\w/g, (character) => character.toUpperCase())
   const pageTitle = page === "reception" ? "" : page
-
-  const navigate = useNavigate()
 
   return (
     <SidebarProvider>
@@ -65,11 +60,6 @@ export default function ReceptionLayout() {
                 </BreadcrumbItem>
               </BreadcrumbList>
             </Breadcrumb>
-          </div>
-          <div className="flex justify-end gap-1 pr-4">
-            <Button variant={"outline"} onClick={() => navigate("billing")}>
-              <PrintOutlinedIcon />
-            </Button>
           </div>
         </header>
         <div className="flex flex-1 flex-col gap-4 p-4">
