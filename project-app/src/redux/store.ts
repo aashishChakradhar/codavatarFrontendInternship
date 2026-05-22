@@ -6,6 +6,7 @@ import menuReducer from "./menu/menuSlice"
 import tableReducer from "./table/tableSlice"
 import itemReducer from "./items/itemsSlice"
 import toastReducer from "./toast/toastSlice"
+import billReducer from "./bill/billSlice"
 import {
   persistStore,
   persistReducer,
@@ -26,6 +27,7 @@ const rootReducer = combineReducers({
   table: tableReducer,
   toast: toastReducer,
   item: itemReducer,
+  bill: billReducer,
 })
 
 const persistConfig = {
