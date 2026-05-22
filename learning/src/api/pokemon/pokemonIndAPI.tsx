@@ -5,8 +5,6 @@ interface PokemonProps {
   name: string;
 }
 
-// export type PokemonData = NonNullable<GetPokemonQueryProps["pokemon"]>;
-
 interface GetPokemonQueryProps {
   pokemon: {
     sprites: {
